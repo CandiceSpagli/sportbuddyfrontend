@@ -10,12 +10,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // screens 🖥️
-import buddiesScreen from "./screens/buddiesScreen";
-import profilScreen from "./screens/profilScreen";
-import signIn from "./screens/signIn";
-import signUp from "./screens/signUp";
-import session from "./screens/session";
-import setting from "./screens/settings";
+import buddiesScreen from "./screens/BuddiesScreen";
+import profilScreen from "./screens/ProfilScreen";
+import signIn from "./screens/SignIn";
+import signUp from "./screens/SignUp";
+import session from "./screens/Session";
+import setting from "./screens/Settings";
 
 function App() {
   const Stack = createStackNavigator();
@@ -23,7 +23,7 @@ function App() {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator screenOptions={{headerShown: false}}>
         <Tab.Screen name="Buddies" component={buddiesScreen} />
         <Tab.Screen name="Profil" component={profilScreen} />
         <Tab.Screen name="SignIn" component={signIn} />
