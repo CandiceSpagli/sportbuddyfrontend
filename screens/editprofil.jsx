@@ -1,12 +1,12 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-function profilScreen() {
+function editProfil () {
     return(
         <View>
-            <Text>Page du profil</Text>
+            <Text>Edit profil</Text>
         </View>
     )
 }
 
-export default profilScreen
+export default editProfil

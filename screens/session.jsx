@@ -1,12 +1,12 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-function profilScreen() {
+function session () {
     return(
         <View>
-            <Text>Page du profil</Text>
+            <Text>Ajout d'une session</Text>
         </View>
     )
 }
 
-export default profilScreen
+export default session

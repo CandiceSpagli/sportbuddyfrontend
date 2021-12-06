@@ -1,12 +1,12 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-function profilScreen() {
+function signIn () {
     return(
         <View>
-            <Text>Page du profil</Text>
+            <Text>Sign In</Text>
         </View>
     )
 }
 
-export default profilScreen
+export default signIn
