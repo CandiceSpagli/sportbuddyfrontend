@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-function profilScreen() {
+function ProfilScreen() {
   return (
     <View
       style={{
@@ -15,4 +15,4 @@ function profilScreen() {
   );
 }
 
-export default profilScreen;
+export default ProfilScreen;
