@@ -21,16 +21,10 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     "react-native-country-picker-modal": "^2.0.0",
     "react-native-date-picker": "^4.1.2",
     "react-native-datepicker": "^1.7.2",
     "react-native-element-dropdown": "^1.5.5",
->>>>>>> spag
-=======
->>>>>>> elieBranch
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-reanimated": "~2.2.0",
