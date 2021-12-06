@@ -23,7 +23,7 @@ function App() {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator screenOptions={{headerShown: false}}>
         <Tab.Screen name="Buddies" component={buddiesScreen} />
         <Tab.Screen name="Profil" component={profilScreen} />
         <Tab.Screen name="SignIn" component={signIn} />
