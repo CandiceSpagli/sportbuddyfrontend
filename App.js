@@ -17,19 +17,22 @@ import signUp from "./screens/SignUp";
 import session from "./screens/Session";
 import setting from "./screens/Settings";
 
+// import {createStore, combineReducers} from 'redux';
+import { Provider } from "react-redux";
+
 function App() {
   const Stack = createStackNavigator();
   const Tab = createBottomTabNavigator();
 
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{headerShown: false}}>
+      <Tab.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen name="SignIn" component={signIn} />
         <Tab.Screen name="Buddies" component={buddiesScreen} />
         <Tab.Screen name="Profil" component={profilScreen} />
-        <Tab.Screen name="SignIn" component={signIn} />
         <Tab.Screen name="SignUp" component={signUp} />
         <Tab.Screen name="Session" component={session} />
-        <Tab.Screen name="Setting" component={setting} />
+        <Tab.Screen name="Settings" component={setting} />
       </Tab.Navigator>
     </NavigationContainer>
   );
