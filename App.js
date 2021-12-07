@@ -18,7 +18,6 @@ import session from "./screens/Session";
 import setting from "./screens/Settings";
 
 // import {createStore, combineReducers} from 'redux';
-import { Provider } from "react-redux";
 
 function App() {
   const Stack = createStackNavigator();
