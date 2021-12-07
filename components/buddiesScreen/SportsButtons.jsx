@@ -6,6 +6,7 @@ import { Button } from "react-native-elements";
 
 
 function SportsButtons() {
+
   return (
     <>
       <Button
@@ -14,7 +15,7 @@ function SportsButtons() {
           color: "black",
           fontSize: 30,
         }}
-        type="clear"
+        type='clear'
         title="Fitness"
       />
       <Button
