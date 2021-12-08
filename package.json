@@ -19,6 +19,7 @@
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/stack": "^6.0.11",
     "expo": "~43.0.2",
+    "expo-blur": "~10.0.3",
     "expo-dev-client": "^0.6.3",
     "expo-location": "~13.0.4",
     "expo-permissions": "~13.0.3",
@@ -39,6 +40,7 @@
     "react-native-web": "0.17.1",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.0.2",
+    "redux": "^4.1.2",
     "rn-range-slider": "^2.1.1"
   },
   "devDependencies": {
