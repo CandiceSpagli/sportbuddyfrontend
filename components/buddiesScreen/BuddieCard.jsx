@@ -1,18 +1,40 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableHighlight } from "react-native";
+import { connect } from "react-redux";
 
 // icons
 import { FontAwesome5 } from "@expo/vector-icons";
 
-function BuddieCard() {
+function BuddieCard(props) {
+
+  const user = {
+    firstname: 'Christelle',
+    lastname: 'Degiovanni',
+    sport: 'Fitness'
+  }
+
+
+  const onCardPress = () => {
+    // console.log('hey');
+    props.cardPressed(user)
+    // console.log('users Array !!', user);
+  }
+
   return (
+    <TouchableHighlight
+      style={{
+        borderRadius: 50
+      }}
+      underlayColor='white'
+      onPress={() => onCardPress()}
+    >
     <View style={{marginBottom: 15}}>
-      <View>
-        <Image
-          style={styles.profilBox}
-          source={require('../../img/staticImg/user.jpg')}
-        />
-      </View>
+        <View>
+          <Image
+            style={styles.profilBox}
+            source={require('../../img/staticImg/user.jpg')}
+          />
+        </View>
       <View>
         <Text style={styles.kmContent}>à 0.2km</Text>
         <View
@@ -23,8 +45,8 @@ function BuddieCard() {
           }}
         >
           <View>
-            <Text style={styles.textContent}>Christelle</Text>
-            <Text style={styles.textContent}>Degiovanni</Text>
+            <Text style={styles.textContent}>{user.firstname}</Text>
+            <Text style={styles.textContent}>{user.lastname}</Text>
           </View>
           <View style={{ alignItems: "center" }}>
             <View style={{ flexDirection: "row" }}>
@@ -32,11 +54,12 @@ function BuddieCard() {
               <FontAwesome5 name="medal" size={24} color="#f42c04" />
               <FontAwesome5 name="medal" size={24} color="#f42c04" />
             </View>
-            <Text style={styles.textContentwColor}>Course</Text>
+            <Text style={styles.textContentwColor}>{user.sport}</Text>
           </View>
         </View>
       </View>
     </View>
+    </TouchableHighlight>
   );
 }
 
@@ -63,4 +86,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BuddieCard;
+function mapDispatchToProps(dispatch) {
+  return{
+    cardPressed: function(user) {
+      console.log('cardPressed!');
+      dispatch({type: 'cardClicked', user})
+    }
+  }
+}
+
+export default connect (
+  null,
+  mapDispatchToProps
+) (BuddieCard);

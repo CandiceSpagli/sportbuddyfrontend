@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Slider from "@react-native-community/slider";
 
 import { View, Text, TextInput, StyleSheet, Picker } from "react-native";
 import { Button, Image, Card, ListItem, Divider } from "react-native-elements";
@@ -15,42 +16,73 @@ function Settings() {
   const [selectedSport, setSelectedSport] = useState();
   const [currentLatitude, setCurrentLatitude] = useState(0);
   const [currentLongitude, setCurrentLongitude] = useState(0);
-  console.log("CURRENTLATITUDE", currentLatitude);
+  const [currentAdress, setCurrentAdress] = useState("");
+  const [slider, setSlider] = useState();
+  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  console.log("FIRSTNAME", firstName);
+  console.log("LASTNAME", lastName);
+
+  // console.log("CURRENTLATITUDE", currentLatitude);
+  // console.log("CURRENTLONGITUDE", currentLongitude);
+  // console.log("CURRENT ADDRESS", currentAdress);
+
+  // USEEFFECT
   useEffect(() => {
     async function askPermissions() {
-      let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      let { status } = await Location.requestForegroundPermissionsAsync();
       if (status === "granted") {
         Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
-          // setCurrentLatitude(location.coords.latitude);
-          // setCurrentLongitude(location.coords.longitude);
-          // console.log("LOCATION", location);
-          // console.log("LONG", location.coords.longitude);
+          setCurrentLatitude(location.coords.latitude);
+          setCurrentLongitude(location.coords.longitude);
         });
       }
-      setCurrentLatitude(location.coords.latitude);
-      setCurrentLongitude(location.coords.longitude);
     }
     askPermissions();
   }, []);
+  // GEOCODER
 
-  Geocoder.from(41.89, 12.49).then(
-    (json) => {
-      var addressComponent = json.results[0].address_components[0];
-      alert(address_components.long_name);
-      console.log("ADRESS COMPONENT", addressComponent);
-    },
-    (error) => {
-      alert(error);
-    }
-  );
+  Geocoder.from(currentLatitude, currentLongitude)
+    .then((json) => {
+      // console.log("JSON GEOCODER", json);
+      var addressComponent = json.results[0].formatted_address;
+      setCurrentAdress(addressComponent);
+
+      // console.log("ADRESSE", addressComponent);
+    })
+    .catch((error) => console.warn(error));
+
+  var handleSubmitContinue = async () => {
+    const data = await fetch("http://10.3.11.6:3000/settings", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `lastname=${lastName}&firstname=${firstName}`,
+    });
+
+    const body = await data.json();
+
+    console.log("body", body);
+  };
 
   return (
     <View>
       <ScrollView>
         <Text style={styles.step}> STEP 2/3</Text>
-        <Text style={styles.text}> Enter your name</Text>
-        <TextInput style={styles.input} value={""} />
-        <Text style={styles.text}> Date of birth</Text>
+        <Text style={styles.text}> Nom</Text>
+        <TextInput
+          style={styles.input}
+          value={lastName}
+          placeholder="Langoustine"
+          onChangeText={(value) => setLastName(value)}
+        />
+        <Text style={styles.text}> Prénom</Text>
+        <TextInput
+          style={styles.input}
+          value={firstName}
+          placeholder="de Jordanie"
+          onChangeText={(value) => setFirstName(value)}
+        />
+        <Text style={styles.text}> Date de naissance</Text>
         <DatePicker
           customStyles={{ dateInput: { borderWidth: 0 } }}
           showIcon={false}
@@ -194,22 +226,37 @@ function Settings() {
           </View>
         </ScrollView>
         <View>
-          <Divider style={{ marginTop: 30 }} orientation="vertical" width={5} />
-          <Text style={{ marginTop: 30, marginLeft: 20 }}>Localisation : </Text>
-          {/* <Text style={styles.text}>Localisation</Text>
-          <Text style={styles.localisation}>{currentLatitude}</Text> */}
-          <Divider style={{ marginTop: 30 }} orientation="vertical" width={5} />
-        </View>
-        <View>
           <Text style={{ marginTop: 30, marginLeft: 20 }}>
             {" "}
             Distance max :{" "}
+            <Slider
+              style={{ width: 200, height: 10 }}
+              minimumValue={1}
+              maximumValue={15}
+              minimumTrackTintColor="#FFFFFF"
+              maximumTrackTintColor="#000000"
+              value={slider}
+              onValueChange={(sliderValue) => setSlider(sliderValue)}
+              step={1}
+            />
+            {slider}
           </Text>
           <Divider style={{ marginTop: 30 }} orientation="vertical" width={5} />
         </View>
         <View>
+          <Divider style={{ marginTop: 30 }} orientation="vertical" width={5} />
+          <Text style={{ marginTop: 30, marginLeft: 20 }}>
+            Localisation : {currentAdress}
+          </Text>
+          {/* <Text style={styles.text}>Localisation</Text>
+          <Text style={styles.localisation}>{currentLatitude}</Text> */}
+          <Divider style={{ marginTop: 30 }} orientation="vertical" width={5} />
+        </View>
+
+        <View>
           <Button
             titleStyle={{ color: "black" }}
+            onPress={() => handleSubmitContinue()}
             style={styles.continue}
             type="clear"
             title="Continuer"

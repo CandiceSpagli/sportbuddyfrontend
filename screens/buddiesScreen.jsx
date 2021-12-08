@@ -25,14 +25,15 @@ import { Entypo } from "@expo/vector-icons";
 // components
 import BuddieCard from "../components/buddiesScreen/BuddieCard";
 import SportsButtons from "../components/buddiesScreen/SportsButtons";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import BuddiePopUp from '../components/buddiesScreen/BuddiePopUp'
+import { connect } from "react-redux";
 
-function BuddiesScreen() {
-  const [isPlusClicked, setIsPlusClicked] = useState(false);
-  const [myLevel, setMyLevel] = useState(0);
-  const [isInputClicked, setIsInputClicked] = useState(false);
+function BuddiesScreen(props) {
+  const [isPlusClicked, setIsPlusClicked] = useState(false)
+  const [myLevel, setMyLevel] = useState(0)
+  const [isInputClicked, setIsInputClicked] = useState(false)
   // date picker
-  (" const [date, setDate] = useState(new Date());");
+  const [date, setDate] = useState(new Date());
 
   // console.log('composant relancé');
   // const inputRef = useRef(null)
@@ -50,7 +51,7 @@ function BuddiesScreen() {
     setIsPlusClicked(isPlusClicked === false ? true : false);
   };
 
-  function plusIcon() {
+  const plusIcon = () => {
     if (!isPlusClicked) {
       return (
         <EvilIcons
@@ -99,7 +100,7 @@ function BuddiesScreen() {
     setMyLevel(0);
   };
 
-  function plusBtn() {
+  const plusBtn = () => {
     if (isPlusClicked) {
       return (
         <View style={styles.plusContainer}>
@@ -200,7 +201,7 @@ function BuddiesScreen() {
     }
   }
 
-  console.log("isInputClicked", isInputClicked);
+  // console.log('isInputClicked', isInputClicked);
   const inputBooleanValue = () => {
     setIsInputClicked(isInputClicked === false ? true : false);
   };
@@ -209,7 +210,7 @@ function BuddiesScreen() {
     Keyboard.dismiss();
   };
 
-  function searchInput() {
+  const searchInput = () => {
     if (!isInputClicked) {
       return (
         <View style={styles.boxInteraction}>
@@ -273,8 +274,15 @@ function BuddiesScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={{ alignItems: "center", paddingTop: 35 }}>
-        <Text style={styles.title}>Buddies</Text>
+      <BuddiePopUp
+        user={props.userInfosModal}
+      />
+      <View style={{alignItems:'center',paddingTop:35}}>
+          <Text style={styles.title}>Buddies</Text>
+      </View>
+        {searchInput()}
+      <View style={{alignItems: 'center'}}>
+        {plusBtn()}
       </View>
       {searchInput()}
       <View style={{ alignItems: "center" }}>{plusBtn()}</View>
@@ -292,30 +300,12 @@ function BuddiesScreen() {
           }}
           showsVerticalScrollIndicator={false}
         >
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
-          <BuddieCard />
+          <BuddieCard/>
+          <BuddieCard/>
+          <BuddieCard/>
+          <BuddieCard/>
+          <BuddieCard/>
+          <BuddieCard/>
         </ScrollView>
       </View>
     </View>
@@ -323,11 +313,7 @@ function BuddiesScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center'
-  },
+  container: {},
   title: {
     fontSize: 135,
   },
@@ -381,4 +367,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BuddiesScreen;
+function mapStateToProps(state) {
+  return {userInfosModal: state.userInfosModal}
+}
+
+export default connect(
+  mapStateToProps,
+  null
+) (BuddiesScreen);
