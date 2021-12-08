@@ -1,11 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, Text, StyleSheet, TextInput, ScrollView, Keyboard } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  Keyboard,
+} from "react-native";
 
 // native elements
 import { Button } from "react-native-elements";
 
 // datePicker
-import DatePicker from 'react-native-datepicker'
+import DatePicker from "react-native-datepicker";
 
 // f42c04
 
@@ -13,7 +20,7 @@ import DatePicker from 'react-native-datepicker'
 import { Feather } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Entypo } from '@expo/vector-icons';
+import { Entypo } from "@expo/vector-icons";
 
 // components
 import BuddieCard from "../components/buddiesScreen/BuddieCard";
@@ -21,15 +28,15 @@ import SportsButtons from "../components/buddiesScreen/SportsButtons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 function BuddiesScreen() {
-  const [isPlusClicked, setIsPlusClicked] = useState(false)
-  const [myLevel, setMyLevel] = useState(0)
-  const [isInputClicked, setIsInputClicked] = useState(false)
+  const [isPlusClicked, setIsPlusClicked] = useState(false);
+  const [myLevel, setMyLevel] = useState(0);
+  const [isInputClicked, setIsInputClicked] = useState(false);
   // date picker
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState(new Date());
 
   // console.log('composant relancé');
   // const inputRef = useRef(null)
-  
+
   // useEffect(() => {
   //   console.log('useEffect inputRef', isInputClicked);
   //   if (isInputClicked) {
@@ -40,64 +47,76 @@ function BuddiesScreen() {
 
   // console.log('isPlusClicked' , isPlusClicked);
   const morePrecise = () => {
-    setIsPlusClicked(isPlusClicked === false ? true : false)
-  }
+    setIsPlusClicked(isPlusClicked === false ? true : false);
+  };
 
   function plusIcon() {
     if (!isPlusClicked) {
-      return(
+      return (
         <EvilIcons
-          name="plus" size={75} color="black"
-          onPress={() => {morePrecise()}}
+          name="plus"
+          size={75}
+          color="black"
+          onPress={() => {
+            morePrecise();
+          }}
         />
-      )
+      );
     } else {
       return (
         <EvilIcons
-          name="minus" size={75} color="black"
-          onPress={() => {morePrecise()}}
+          name="minus"
+          size={75}
+          color="black"
+          onPress={() => {
+            morePrecise();
+          }}
         />
-      )
+      );
     }
   }
 
-  const tabLevel = []
-  for (var i=0; i<3; i++) {
-    let color = '#DCDCDC'
-    if (i<myLevel) {
-      color = 'black'
+  const tabLevel = [];
+  for (var i = 0; i < 3; i++) {
+    let color = "#DCDCDC";
+    if (i < myLevel) {
+      color = "black";
     }
-    let count = i+1
+    let count = i + 1;
     tabLevel.push(
       <FontAwesome5
-        style={{marginLeft:5,marginRight:5}}
-        name="medal" size={45} color={color}
-        onPress={()=>setMyLevel(count)}
+        style={{ marginLeft: 5, marginRight: 5 }}
+        name="medal"
+        size={45}
+        color={color}
+        onPress={() => setMyLevel(count)}
       />
-    )
+    );
   }
 
   const onValidate = () => {
-    setIsPlusClicked(false)
-    setMyLevel(0)
-  }
+    setIsPlusClicked(false);
+    setMyLevel(0);
+  };
 
   function plusBtn() {
     if (isPlusClicked) {
-      return(
+      return (
         <View style={styles.plusContainer}>
-          <View style={{margin: 30}}>
-            <View style={{
-              borderBottomWidth: 2,
-              paddingBottom: 5,
-              marginBottom: 20,
-              flexDirection: 'row'
-            }}>
+          <View style={{ margin: 30 }}>
+            <View
+              style={{
+                borderBottomWidth: 2,
+                paddingBottom: 5,
+                marginBottom: 20,
+                flexDirection: "row",
+              }}
+            >
               <Text style={styles.textPlus}>Date</Text>
               <DatePicker
                 style={{
                   width: 90,
-                  justifyContent:'center',
+                  justifyContent: "center",
                 }}
                 date={date}
                 mode="date"
@@ -110,30 +129,36 @@ function BuddiesScreen() {
                 customStyles={{
                   dateInput: {
                     borderWidth: 0,
-                  }
+                  },
                 }}
-                onDateChange={(date) => {setDate(date)}}
+                onDateChange={(date) => {
+                  setDate(date);
+                }}
                 showIcon={false}
                 hideText={false}
                 // allowFontScaling={true}
               />
             </View>
-            <View style={{
-              borderBottomWidth: 2,
-              paddingBottom: 5,
-              marginBottom: 20
-            }}>
+            <View
+              style={{
+                borderBottomWidth: 2,
+                paddingBottom: 5,
+                marginBottom: 20,
+              }}
+            >
               <Text style={styles.textPlus}>Heure</Text>
             </View>
-            <View style={{
-              marginTop: 5,
-              flexDirection:'row',
-              alignItems:'center',
-              justifyContent:'space-between'
-            }}>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
               <Button
                 style={{
-                  backgroundColor: 'black',
+                  backgroundColor: "black",
                   borderRadius: 60,
                   width: 110,
                 }}
@@ -144,55 +169,59 @@ function BuddiesScreen() {
                 type="clear"
                 title="Spot"
               />
-              <View style={{
-                flexDirection:'row',
-              }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                }}
+              >
                 {tabLevel}
               </View>
             </View>
             <Button
-                style={{
-                  marginTop:20,
-                  borderRadius: 60,
-                  borderWidth: 2,
-                  borderColor: '#f42c04'
-                }}
-                titleStyle={{
-                  color: "#f42c04",
-                  fontSize: 30,
-                }}
-                type="clear"
-                title="Valider !"
-                onPress={() => onValidate()}
-              />
+              style={{
+                marginTop: 20,
+                borderRadius: 60,
+                borderWidth: 2,
+                borderColor: "#f42c04",
+              }}
+              titleStyle={{
+                color: "#f42c04",
+                fontSize: 30,
+              }}
+              type="clear"
+              title="Valider !"
+              onPress={() => onValidate()}
+            />
           </View>
         </View>
-      )
+      );
     } else {
-      null
+      null;
     }
   }
 
-  console.log('isInputClicked', isInputClicked);
+  console.log("isInputClicked", isInputClicked);
   const inputBooleanValue = () => {
-    setIsInputClicked(isInputClicked === false ? true : false)
-  }
+    setIsInputClicked(isInputClicked === false ? true : false);
+  };
   const inputBooleanValueWhenClosed = () => {
-    setIsInputClicked(isInputClicked === false ? true : false)
-    Keyboard.dismiss()
-  }
+    setIsInputClicked(isInputClicked === false ? true : false);
+    Keyboard.dismiss();
+  };
 
   function searchInput() {
     if (!isInputClicked) {
       return (
         <View style={styles.boxInteraction}>
-          <View style={{flexDirection: 'row',alignItems:'center'}}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Feather
               style={{
-                position: 'absolute',
-                marginLeft: 15
+                position: "absolute",
+                marginLeft: 15,
               }}
-              name="search" size={24} color="black"
+              name="search"
+              size={24}
+              color="black"
             />
             <TextInput
               style={styles.input}
@@ -200,25 +229,27 @@ function BuddiesScreen() {
               onFocus={() => inputBooleanValue()}
               keyboardShouldPersistTaps={true}
               // ref={inputRef}
-              value=''
+              value=""
             />
           </View>
-          <View style={{flexDirection: 'row',alignItems:'center'}}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Button style={styles.buddiesBtn} type="clear" title="" />
             {plusIcon()}
           </View>
         </View>
-      )
+      );
     } else {
       return (
         <View style={styles.boxInteraction}>
-          <View style={{flexDirection: 'row',alignItems:'center'}}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Feather
               style={{
-                position: 'absolute',
-                marginLeft: 15
+                position: "absolute",
+                marginLeft: 15,
               }}
-              name="search" size={24} color="black"
+              name="search"
+              size={24}
+              color="black"
             />
             <TextInput
               style={styles.inputClicked}
@@ -226,33 +257,30 @@ function BuddiesScreen() {
             />
             <Entypo
               style={{
-                position: 'absolute',
-                marginLeft: 335
+                position: "absolute",
+                marginLeft: 335,
               }}
-              name="cross" size={24} color="black"
+              name="cross"
+              size={24}
+              color="black"
               onPress={() => inputBooleanValueWhenClosed()}
             />
           </View>
         </View>
-      )
+      );
     }
   }
 
   return (
     <View style={styles.container}>
-      <View style={{alignItems:'center',paddingTop:35}}>
-          <Text style={styles.title}>Buddies</Text>
+      <View style={{ alignItems: "center", paddingTop: 35 }}>
+        <Text style={styles.title}>Buddies</Text>
       </View>
-        {searchInput()}
-      <View style={{alignItems: 'center'}}>
-        {plusBtn()}
-      </View>
+      {searchInput()}
+      <View style={{ alignItems: "center" }}>{plusBtn()}</View>
       <View>
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        >
-          <SportsButtons/>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <SportsButtons />
         </ScrollView>
       </View>
       <View>
@@ -260,34 +288,34 @@ function BuddiesScreen() {
           contentContainerStyle={{
             flexDirection: "row",
             flexWrap: "wrap",
-            justifyContent: 'center'
+            justifyContent: "center",
           }}
           showsVerticalScrollIndicator={false}
         >
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
         </ScrollView>
       </View>
     </View>
@@ -301,15 +329,15 @@ const styles = StyleSheet.create({
     // alignItems: 'center'
   },
   title: {
-    fontSize: 135
+    fontSize: 135,
   },
   boxInteraction: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     margin: 5,
     marginLeft: 20,
-    marginRight: 10
+    marginRight: 10,
   },
   input: {
     borderWidth: 2,
@@ -319,7 +347,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     fontSize: 20,
     marginTop: 3,
-    marginBottom:3
+    marginBottom: 3,
   },
   inputClicked: {
     flex: 1,
@@ -330,7 +358,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     fontSize: 20,
     marginTop: 3,
-    marginBottom:3
+    marginBottom: 3,
   },
   buddiesBtn: {
     backgroundColor: "#f42c04",
@@ -345,11 +373,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     height: 300,
-    width: 370
+    width: 370,
   },
   textPlus: {
     fontSize: 30,
-    marginRight: 165
+    marginRight: 165,
   },
 });
 
