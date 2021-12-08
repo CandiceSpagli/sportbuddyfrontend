@@ -5,9 +5,9 @@ function signIn(props) {
   const [signInEmail, setSignInEmail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
   //   const [userExists, setUserExists] = useState(false);
-  console.log("signInEmail", signInEmail);
+  // console.log("signInEmail", signInEmail);
   const [userExists, setUserExists] = useState(false);
-  console.log("userExists", userExists);
+  // console.log("userExists", userExists);
 
   var handleSubmitSignin = async () => {
     console.log("handleSubmitSignin", handleSubmitSignin);
