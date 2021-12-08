@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 
 import { View, Text, TextInput, StyleSheet, Picker } from "react-native";
-import { Button, Image, Card, ListItem, Divider } from "react-native-elements";
+import {
+  Button,
+  Image,
+  Card,
+  ListItem,
+  Divider,
+  Slider,
+} from "react-native-elements";
 
 import DatePicker from "react-native-datepicker";
 import { ScrollView } from "react-native-gesture-handler";
@@ -15,34 +22,36 @@ function Settings() {
   const [selectedSport, setSelectedSport] = useState();
   const [currentLatitude, setCurrentLatitude] = useState(0);
   const [currentLongitude, setCurrentLongitude] = useState(0);
-  console.log("CURRENTLATITUDE", currentLatitude);
+  const [currentAdress, setCurrentAdress] = useState("");
+
+  // console.log("CURRENTLATITUDE", currentLatitude);
+  // console.log("CURRENTLONGITUDE", currentLongitude);
+  console.log("CURRENT ADDRESS", currentAdress);
+
+  // USEEFFECT
   useEffect(() => {
     async function askPermissions() {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
       if (status === "granted") {
         Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
-          // setCurrentLatitude(location.coords.latitude);
-          // setCurrentLongitude(location.coords.longitude);
-          // console.log("LOCATION", location);
-          // console.log("LONG", location.coords.longitude);
+          setCurrentLatitude(location.coords.latitude);
+          setCurrentLongitude(location.coords.longitude);
         });
       }
-      setCurrentLatitude(location.coords.latitude);
-      setCurrentLongitude(location.coords.longitude);
     }
     askPermissions();
   }, []);
+  // GEOCODER
 
-  Geocoder.from(41.89, 12.49).then(
-    (json) => {
-      var addressComponent = json.results[0].address_components[0];
-      alert(address_components.long_name);
-      console.log("ADRESS COMPONENT", addressComponent);
-    },
-    (error) => {
-      alert(error);
-    }
-  );
+  Geocoder.from(currentLatitude, currentLongitude)
+    .then((json) => {
+      console.log("JSON GEOCODER", json);
+      var addressComponent = json.results[0].formatted_address;
+      setCurrentAdress(addressComponent);
+
+      console.log("ADRESSE", addressComponent);
+    })
+    .catch((error) => console.warn(error));
 
   return (
     <View>
@@ -195,7 +204,9 @@ function Settings() {
         </ScrollView>
         <View>
           <Divider style={{ marginTop: 30 }} orientation="vertical" width={5} />
-          <Text style={{ marginTop: 30, marginLeft: 20 }}>Localisation : </Text>
+          <Text style={{ marginTop: 30, marginLeft: 20 }}>
+            Localisation : {currentAdress}
+          </Text>
           {/* <Text style={styles.text}>Localisation</Text>
           <Text style={styles.localisation}>{currentLatitude}</Text> */}
           <Divider style={{ marginTop: 30 }} orientation="vertical" width={5} />
@@ -204,6 +215,16 @@ function Settings() {
           <Text style={{ marginTop: 30, marginLeft: 20 }}>
             {" "}
             Distance max :{" "}
+            <Slider
+              step={10}
+              minimumValue={5}
+              maximumValue={100}
+              minimumTrackTintColor="#009688"
+              onValueChange={(ChangedValue) =>
+                this.setState({ SliderValue: ChangedValue })
+              }
+              style={{ width: "100%" }}
+            />
           </Text>
           <Divider style={{ marginTop: 30 }} orientation="vertical" width={5} />
         </View>
