@@ -32,7 +32,7 @@ function BuddiesScreen() {
   const [myLevel, setMyLevel] = useState(0);
   const [isInputClicked, setIsInputClicked] = useState(false);
   // date picker
-  const [date, setDate] = useState(new Date());
+  (" const [date, setDate] = useState(new Date());");
 
   // console.log('composant relancé');
   // const inputRef = useRef(null)
