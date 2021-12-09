@@ -301,8 +301,6 @@ function BuddiesScreen(props) {
       </View>
       {searchInput()}
       <View style={{ alignItems: "center" }}>{plusBtn()}</View>
-      {searchInput()}
-      <View style={{ alignItems: "center" }}>{plusBtn()}</View>
       <View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <SportsButtons />
