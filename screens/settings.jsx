@@ -20,8 +20,10 @@ function Settings() {
   const [slider, setSlider] = useState();
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
-  console.log("FIRSTNAME", firstName);
-  console.log("LASTNAME", lastName);
+  const [gender, setGender] = useState("Woman");
+  // console.log("FIRSTNAME", firstName);
+  // console.log("LASTNAME", lastName);
+  console.log("GENDER", gender);
 
   // console.log("CURRENTLATITUDE", currentLatitude);
   // console.log("CURRENTLONGITUDE", currentLongitude);
@@ -56,12 +58,20 @@ function Settings() {
     const data = await fetch("http://10.3.11.6:3000/settings", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `lastname=${lastName}&firstname=${firstName}`,
+      body: `lastname=${lastName}&firstname=${firstName}&date=${date}`,
     });
 
     const body = await data.json();
 
     console.log("body", body);
+  };
+
+  const onValidateWoman = () => {
+    setGender("Woman");
+  };
+
+  const onValidateMan = () => {
+    setGender("Man");
   };
 
   return (
@@ -105,13 +115,16 @@ function Settings() {
             titleStyle={{ color: "white" }}
             style={styles.woman}
             type="clear"
-            title="Woman"
+            title={gender}
+            onPress={() => onValidateWoman()}
           />
           <Button
             titleStyle={{ color: "#F53A15" }}
             style={styles.man}
             type="clear"
             title="Man"
+            value={gender}
+            onPress={() => onValidateMan()}
           />
         </View>
         <Text style={styles.level}>Votre niveau en : </Text>
