@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, TextInput, Link, Button, StyleSheet } from "react-native";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 
 function signIn(props) {
   const [signInEmail, setSignInEmail] = useState("");
@@ -97,18 +97,14 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
   return {
-    addToken: function(token){
-      dispatch({type: 'addToken', token: token})
-    }
-  }
+    addToken: function (token) {
+      dispatch({ type: "addToken", token: token });
+    },
+  };
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(SignIn)
+export default connect(null, mapDispatchToProps)(signIn);
 
-
-export default signIn;
+// export default signIn;
