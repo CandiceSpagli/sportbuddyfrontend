@@ -12,7 +12,7 @@ import Geocoder from "react-native-geocoding";
 Geocoder.init("AIzaSyAScpUl6RLneX5V5LB9dNvCxE6j334fR-c");
 
 function Settings() {
-  const [date, setDate] = useState(new Date());
+  const [dateOfBirth, setDateOfBirth] = useState(new Date());
   const [selectedSport, setSelectedSport] = useState();
   const [currentLatitude, setCurrentLatitude] = useState(0);
   const [currentLongitude, setCurrentLongitude] = useState(0);
@@ -20,7 +20,7 @@ function Settings() {
   const [slider, setSlider] = useState();
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [gender, setGender] = useState("Woman");
+  const [gender, setGender] = useState("Man");
   // console.log("FIRSTNAME", firstName);
   // console.log("LASTNAME", lastName);
   console.log("GENDER", gender);
@@ -58,13 +58,30 @@ function Settings() {
     const data = await fetch("http://10.3.11.6:3000/settings", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `lastname=${lastName}&firstname=${firstName}&date=${date}`,
+      body: `lastname=${lastName}&firstname=${firstName}&dateOfBirth=${dateOfBirth}&gender=${gender}`,
     });
 
     const body = await data.json();
 
     console.log("body", body);
   };
+
+  var buttonWTitleStyle = { color: "#F53A15" };
+  var buttonWStyle = styles.buttonNonSelected;
+  var buttonMTitleStyle = { color: "white" };
+  var buttonMStyle = styles.buttonSelected;
+
+  if (gender === "Woman") {
+    buttonWTitleStyle = { color: "white" };
+    buttonWStyle = styles.buttonSelected;
+    buttonMTitleStyle = { color: "#F53A15" };
+    buttonMStyle = styles.buttonNonSelected;
+  } else {
+    buttonWTitleStyle = { color: "#F53A15" };
+    buttonWStyle = styles.buttonNonSelected;
+    buttonMTitleStyle = { color: "white" };
+    buttonMStyle = styles.buttonSelected;
+  }
 
   const onValidateWoman = () => {
     setGender("Woman");
@@ -97,7 +114,7 @@ function Settings() {
           customStyles={{ dateInput: { borderWidth: 0 } }}
           showIcon={false}
           style={styles.date}
-          date={date}
+          date={dateOfBirth}
           mode="date"
           placeholder="select date"
           format="DD/MM/YYYY"
@@ -106,24 +123,24 @@ function Settings() {
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"
           onDateChange={(date) => {
-            setDate(date);
+            setDateOfBirth(date);
           }}
         />
         <Text style={styles.text}>Gender</Text>
         <View style={styles.button}>
           <Button
-            titleStyle={{ color: "white" }}
-            style={styles.woman}
+            titleStyle={buttonWTitleStyle}
+            style={buttonWStyle}
             type="clear"
-            title={gender}
+            title="Woman"
             onPress={() => onValidateWoman()}
           />
+
           <Button
-            titleStyle={{ color: "#F53A15" }}
-            style={styles.man}
+            titleStyle={buttonMTitleStyle}
+            style={buttonMStyle}
             type="clear"
             title="Man"
-            value={gender}
             onPress={() => onValidateMan()}
           />
         </View>
@@ -326,7 +343,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  woman: {
+  buttonSelected: {
     color: "white",
     backgroundColor: "#F53A15",
     borderWidth: 0.5,
@@ -335,7 +352,7 @@ const styles = StyleSheet.create({
     width: 100,
     borderColor: "rgba(244, 44, 4, 0.4)",
   },
-  man: {
+  buttonNonSelected: {
     color: "white",
     // backgroundColor: "#F53A15",
     borderWidth: 0.5,
