@@ -6,6 +6,9 @@ import {
   TextInput,
   ScrollView,
   Keyboard,
+  ImageBackground,
+  Image,
+  TouchableOpacity,
 } from "react-native";
 
 // native elements
@@ -210,6 +213,10 @@ function BuddiesScreen(props) {
     Keyboard.dismiss();
   };
 
+  const onBuddiesBtn = () => {
+    console.log('>>> onBuddiesBtn');
+  }
+
   const searchInput = () => {
     if (!isInputClicked) {
       return (
@@ -234,7 +241,19 @@ function BuddiesScreen(props) {
             />
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Button style={styles.buddiesBtn} type="clear" title="" />
+            {/* <Button style={styles.buddiesBtn} type="clear" title=""/> */}
+            <TouchableOpacity
+              style={styles.buddiesBtn}
+              onPress={() => onBuddiesBtn()}
+            >
+              <Image
+                source={require('../img/staticImg/icons/fight.png')}
+                style={{
+                  height: 55,
+                  width: 55,
+                }}
+              />
+            </TouchableOpacity>
             {plusIcon()}
           </View>
         </View>
@@ -350,6 +369,8 @@ const styles = StyleSheet.create({
     height: 50,
     width: 80,
     marginLeft: 10,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   plusContainer: {
     borderWidth: 2,

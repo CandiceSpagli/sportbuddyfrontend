@@ -23,7 +23,7 @@ function BuddieCard(props) {
   return (
     <TouchableHighlight
       style={{
-        borderRadius: 50
+        borderRadius: 50,
       }}
       underlayColor='white'
       onPress={() => onCardPress()}
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 40,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 });
 
