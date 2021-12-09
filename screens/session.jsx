@@ -10,7 +10,6 @@ import {
 } from "react-native";
 
 //Date & Time Picker
-import DatePicker from "react-native-datepicker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 //DropDown Button
