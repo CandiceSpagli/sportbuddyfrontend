@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,16 +6,16 @@ import {
   TextInput,
   ScrollView,
   Keyboard,
-  ImageBackground,
   Image,
   TouchableOpacity,
 } from "react-native";
 
 // native elements
 import { Button } from "react-native-elements";
-
-// datePicker
-import DatePicker from "react-native-datepicker";
+// redux
+import { connect } from "react-redux";
+// DateTimePicker
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 // f42c04
 
@@ -29,27 +29,27 @@ import { Entypo } from "@expo/vector-icons";
 import BuddieCard from "../components/buddiesScreen/BuddieCard";
 import SportsButtons from "../components/buddiesScreen/SportsButtons";
 import BuddiePopUp from '../components/buddiesScreen/BuddiePopUp'
-import { connect } from "react-redux";
+import SessionPopUp from '../components/buddiesScreen/SessionPopUp'
 
 function BuddiesScreen(props) {
   const [isPlusClicked, setIsPlusClicked] = useState(false)
   const [myLevel, setMyLevel] = useState(0)
   const [isInputClicked, setIsInputClicked] = useState(false)
+
   // date picker
   const [date, setDate] = useState(new Date());
 
-  // console.log('composant relancé');
-  // const inputRef = useRef(null)
+  const [usersCards, setUsersCards] = useState([])
+  console.log('usersCards', usersCards);
+  useEffect(() => {
+    async function buddiesCardsInfos() {
+      const rawResponse = await fetch('http://10.3.11.9:3000/buddiesScreen')
+      const response = await rawResponse.json()
+      setUsersCards(response)
+    }
+    buddiesCardsInfos()
+  }, [])
 
-  // useEffect(() => {
-  //   console.log('useEffect inputRef', isInputClicked);
-  //   if (isInputClicked) {
-  //     console.log('useEffect , isInputClicked');
-  //     inputRef.current.focus()
-  //   }
-  // }, [isInputClicked])
-
-  // console.log('isPlusClicked' , isPlusClicked);
   const morePrecise = () => {
     setIsPlusClicked(isPlusClicked === false ? true : false);
   };
@@ -89,6 +89,7 @@ function BuddiesScreen(props) {
     let count = i + 1;
     tabLevel.push(
       <FontAwesome5
+        key={i}
         style={{ marginLeft: 5, marginRight: 5 }}
         name="medal"
         size={45}
@@ -117,30 +118,16 @@ function BuddiesScreen(props) {
               }}
             >
               <Text style={styles.textPlus}>Date</Text>
-              <DatePicker
+              <DateTimePicker
                 style={{
-                  width: 90,
-                  justifyContent: "center",
+                  flex: 1,
                 }}
-                date={date}
-                mode="date"
-                placeholder="select date"
-                format="DD/MM/YYYY"
-                minDate="01-01-1930"
-                maxDate="01-01-2030"
-                confirmBtnText="Confirmer"
-                cancelBtnText="Annuler"
-                customStyles={{
-                  dateInput: {
-                    borderWidth: 0,
-                  },
-                }}
-                onDateChange={(date) => {
-                  setDate(date);
-                }}
-                showIcon={false}
-                hideText={false}
-                // allowFontScaling={true}
+                testID="dateTimePicker"
+                value={date}
+                mode={"date"}
+                is24Hour={true}
+                display="default"
+                // onChange={(event, date) => onChangeTime(event, date)}
               />
             </View>
             <View
@@ -148,9 +135,21 @@ function BuddiesScreen(props) {
                 borderBottomWidth: 2,
                 paddingBottom: 5,
                 marginBottom: 20,
+                flexDirection: "row",
               }}
             >
               <Text style={styles.textPlus}>Heure</Text>
+              <DateTimePicker
+                style={{
+                  flex: 1,
+                }}
+                testID="dateTimePicker"
+                value={date}
+                mode={"time"}
+                is24Hour={true}
+                display="default"
+                // onChange={(event, date) => onChangeTime(event, date)}
+              />
             </View>
             <View
               style={{
@@ -213,8 +212,10 @@ function BuddiesScreen(props) {
     Keyboard.dismiss();
   };
 
+  const [isSessionBtnClicked, setisSessionBtnClicked] = useState(false)
   const onBuddiesBtn = () => {
     console.log('>>> onBuddiesBtn');
+    setisSessionBtnClicked(isSessionBtnClicked === false ? true : false)
   }
 
   const searchInput = () => {
@@ -293,6 +294,7 @@ function BuddiesScreen(props) {
 
   return (
     <View style={styles.container}>
+      <SessionPopUp visible={isSessionBtnClicked}/>
       <BuddiePopUp
         user={props.userInfosModal}
       />
@@ -308,7 +310,6 @@ function BuddiesScreen(props) {
           <SportsButtons />
         </ScrollView>
       </View>
-      <View>
         <ScrollView
           contentContainerStyle={{
             flexDirection: "row",
@@ -323,14 +324,22 @@ function BuddiesScreen(props) {
           <BuddieCard/>
           <BuddieCard/>
           <BuddieCard/>
+          <BuddieCard/>
+          <BuddieCard/>
+          <BuddieCard/>
+          <BuddieCard/>
+          <BuddieCard/>
+          <BuddieCard/>
+          
         </ScrollView>
-      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex:1
+  },
   title: {
     fontSize: 135,
   },
