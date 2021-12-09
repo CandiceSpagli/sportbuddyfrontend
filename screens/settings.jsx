@@ -22,7 +22,7 @@ function Settings() {
   const [firstName, setFirstName] = useState("");
   console.log("FIRSTNAME", firstName);
   console.log("LASTNAME", lastName);
-
+  console.log("DATE", date);
   // console.log("CURRENTLATITUDE", currentLatitude);
   // console.log("CURRENTLONGITUDE", currentLongitude);
   // console.log("CURRENT ADDRESS", currentAdress);
@@ -56,7 +56,7 @@ function Settings() {
     const data = await fetch("http://10.3.11.6:3000/settings", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `lastname=${lastName}&firstname=${firstName}`,
+      body: `lastname=${lastName}&firstname=${firstName}&date=${date}`,
     });
 
     const body = await data.json();
