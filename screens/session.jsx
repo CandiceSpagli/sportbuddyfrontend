@@ -21,6 +21,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 //MAP
 import MapView from "react-native-maps";
+import { connect } from "react-redux";
 
 function session() {
   // const [date, setDate] = useState(new Date());
@@ -84,10 +85,11 @@ function session() {
   const handleSubmitSession = async () => {
     console.log("create A Session from Session", value);
     setSportChosen(value);
-    const data = await fetch("http://10.3.11.5:3000/sign-in", {
+    console.log("datea la creation", date);
+    const data = await fetch("http://10.3.11.5:3000/sessions", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `date=${date}&time=${time}&sport=${sportChosen} &level=${myLevel}`,
+      body: `date=${date}&sport=${sportChosen} &level=${myLevel}`,
     });
   };
 
@@ -100,6 +102,7 @@ function session() {
     let count = i + 1;
     tabLevel.push(
       <FontAwesome5
+        key={count}
         style={{ marginRight: 40 }}
         name="medal"
         size={40}
@@ -196,6 +199,9 @@ function session() {
         {/* map a mettre ici */}
 
         <MapView
+          // onPressMap={(e) => {
+          //   selectPOI(e);
+          // }}
           style={{ flex: 1 }}
           initialRegion={{
             latitude: 37.78825,
@@ -203,7 +209,9 @@ function session() {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-        />
+        >
+          {/* {markerPOI} */}
+        </MapView>
         <Button
           style={styles.select}
           type="clear"

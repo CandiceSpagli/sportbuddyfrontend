@@ -28,13 +28,13 @@ import { Entypo } from "@expo/vector-icons";
 // components
 import BuddieCard from "../components/buddiesScreen/BuddieCard";
 import SportsButtons from "../components/buddiesScreen/SportsButtons";
-import BuddiePopUp from '../components/buddiesScreen/BuddiePopUp'
+import BuddiePopUp from "../components/buddiesScreen/BuddiePopUp";
 import { connect } from "react-redux";
 
 function BuddiesScreen(props) {
-  const [isPlusClicked, setIsPlusClicked] = useState(false)
-  const [myLevel, setMyLevel] = useState(0)
-  const [isInputClicked, setIsInputClicked] = useState(false)
+  const [isPlusClicked, setIsPlusClicked] = useState(false);
+  const [myLevel, setMyLevel] = useState(0);
+  const [isInputClicked, setIsInputClicked] = useState(false);
   // date picker
   const [date, setDate] = useState(new Date());
 
@@ -78,7 +78,7 @@ function BuddiesScreen(props) {
         />
       );
     }
-  }
+  };
 
   const tabLevel = [];
   for (var i = 0; i < 3; i++) {
@@ -202,7 +202,7 @@ function BuddiesScreen(props) {
     } else {
       null;
     }
-  }
+  };
 
   // console.log('isInputClicked', isInputClicked);
   const inputBooleanValue = () => {
@@ -214,8 +214,8 @@ function BuddiesScreen(props) {
   };
 
   const onBuddiesBtn = () => {
-    console.log('>>> onBuddiesBtn');
-  }
+    console.log(">>> onBuddiesBtn");
+  };
 
   const searchInput = () => {
     if (!isInputClicked) {
@@ -247,7 +247,7 @@ function BuddiesScreen(props) {
               onPress={() => onBuddiesBtn()}
             >
               <Image
-                source={require('../img/staticImg/icons/fight.png')}
+                source={require("../img/staticImg/icons/fight.png")}
                 style={{
                   height: 55,
                   width: 55,
@@ -289,20 +289,16 @@ function BuddiesScreen(props) {
         </View>
       );
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
-      <BuddiePopUp
-        user={props.userInfosModal}
-      />
-      <View style={{alignItems:'center',paddingTop:35}}>
-          <Text style={styles.title}>Buddies</Text>
+      <BuddiePopUp user={props.userInfosModal} />
+      <View style={{ alignItems: "center", paddingTop: 35 }}>
+        <Text style={styles.title}>Buddies</Text>
       </View>
-        {searchInput()}
-      <View style={{alignItems: 'center'}}>
-        {plusBtn()}
-      </View>
+      {searchInput()}
+      <View style={{ alignItems: "center" }}>{plusBtn()}</View>
       <View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <SportsButtons />
@@ -317,12 +313,12 @@ function BuddiesScreen(props) {
           }}
           showsVerticalScrollIndicator={false}
         >
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
+          <BuddieCard />
         </ScrollView>
       </View>
     </View>
@@ -369,8 +365,8 @@ const styles = StyleSheet.create({
     height: 50,
     width: 80,
     marginLeft: 10,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
   plusContainer: {
     borderWidth: 2,
@@ -387,10 +383,7 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  return {userInfosModal: state.userInfosModal}
+  return { userInfosModal: state.userInfosModal };
 }
 
-export default connect(
-  mapStateToProps,
-  null
-) (BuddiesScreen);
+export default connect(mapStateToProps, null)(BuddiesScreen);

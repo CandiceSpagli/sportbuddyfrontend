@@ -21,6 +21,7 @@ function ProfilScreen(props) {
     let count = i + 1;
     tabLevel.push(
       <FontAwesome5
+        key={count}
         name="medal"
         size={15}
         color={color}
