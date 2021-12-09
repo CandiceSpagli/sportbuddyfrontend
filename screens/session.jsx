@@ -19,6 +19,9 @@ import DropDownPicker from "react-native-dropdown-picker";
 //Icon Medaille
 import { FontAwesome5 } from "@expo/vector-icons";
 
+//MAP
+import MapView from "react-native-maps";
+
 function session() {
   // const [date, setDate] = useState(new Date());
   // console.log("datefromSESSION", date);
@@ -26,15 +29,17 @@ function session() {
   console.log("timefromSESSION", time);
 
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState("date");
+  const [mode, setMode] = useState("time");
   console.log("mode set from session", mode);
-  const [show, setShow] = useState(false);
-  // const [date, setDate] = useState("date");
-  console.log("date state from Session", date);
+  const [show, setShow] = useState(true);
+  //const [date, setDate] = useState("date");
+  //console.log("date state from Session", date);
   // const [time, setTime] = useState("time");
   // console.log("time state from Session", time);
   const [sportChosen, setSportChosen] = useState("");
   console.log("sportChosen state from Session", sportChosen);
+  const [myLevel, setMyLevel] = useState(0);
+  console.log("MYLEVEL", myLevel);
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -45,6 +50,8 @@ function session() {
   ]);
 
   const onChangeTime = (event, selectedDate) => {
+    console.log("seletcedDate", selectedDate);
+    // console.log("event", event);
     const currentDate = selectedDate || date;
     setShow(Platform.OS === "ios");
     setDate(currentDate);
@@ -59,25 +66,48 @@ function session() {
     setMode(currentMode);
   };
 
-  // const showDatepicker = () => {
-  //   showMode("date");
-  // };
+  const showDatepicker = () => {
+    showMode("date");
+  };
+
+  const onPressDate = (selectedDate) => {
+    console.log("Selecteddate du picker modifiée", selectedDate);
+    setDate(selectedDate);
+  };
 
   const showTimepicker = () => {
     showMode("time");
   };
 
-  // attention = &sport=${chosenSport} sport est undefined a revoir
-  // attention = time undefined
+  // attention = longitude et latitude  &long${long}&lat=${lat}
 
   const handleSubmitSession = async () => {
     console.log("create A Session from Session", value);
+    setSportChosen(value);
     const data = await fetch("http://10.3.11.5:3000/sign-in", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `date=${date}&time=${time}&level=${level}&long${long}&lat=${lat}`,
+      body: `date=${date}&time=${time}&sport=${sportChosen} &level=${myLevel}`,
     });
   };
+
+  const tabLevel = [];
+  for (var i = 0; i < 3; i++) {
+    let color = "#DCDCDC";
+    if (i < myLevel) {
+      color = "black";
+    }
+    let count = i + 1;
+    tabLevel.push(
+      <FontAwesome5
+        style={{ marginRight: 40 }}
+        name="medal"
+        size={40}
+        color={color}
+        onPress={() => setMyLevel(count)}
+      />
+    );
+  }
 
   return (
     <View
@@ -101,62 +131,42 @@ function session() {
           }}
         >
           <Text style={styles.textPlus}>Date</Text>
-          <DatePicker
+          <DateTimePicker
             style={{
               width: 100,
               justifyContent: "center",
             }}
-            date={date}
-            mode="date"
-            placeholder="select date"
-            format="DD/MM/YYYY"
-            minDate="01-01-1930"
-            maxDate="01-01-2030"
-            confirmBtnText="Confirmer"
-            cancelBtnText="Annuler"
-            customStyles={{
-              dateInput: {
-                borderWidth: 0,
-              },
-            }}
-            // onDateChange={(date) => {
-            //   setDate(date);
-            // }}
-            showIcon={false}
-            hideText={false}
-            allowFontScaling={true}
+            testID="dateTimePicker"
+            value={date}
+            mode={"date"}
+            is24Hour={true}
+            display="default"
+            onChange={(event, date) => onChangeTime(event, date)}
           />
         </View>
         <View
-          style={
-            {
-              // paddingHorizontal: 20,
-              // borderBottomWidth: 2,
-              // marginTop: 20,
-              // paddingBottom: 5,
-              // marginBottom: 20,
-              // flexDirection: "row",
-            }
-          }
+          style={{
+            paddingHorizontal: 20,
+            borderBottomWidth: 2,
+            marginTop: 10,
+            paddingBottom: 5,
+            marginBottom: 20,
+            flexDirection: "row",
+          }}
         >
-          {/* <Text style={styles.textPlus}>Time</Text> */}
-          {/* <Button onPress={showDatepicker} title="Show date picker!" /> */}
-          <Button
-            style={styles.textPlus}
-            onPress={showTimepicker}
-            title="Show time picker!"
+          <Text style={styles.textPlus}>Time</Text>
+          <DateTimePicker
+            style={{
+              width: 100,
+              justifyContent: "center",
+            }}
+            testID="dateTimePicker"
+            value={date}
+            mode={"time"}
+            is24Hour={true}
+            display="default"
+            onChange={(event, date) => onChangeTime(event, date)}
           />
-          {show && (
-            <DateTimePicker
-              style={{ marginHorizontal: 150 }}
-              testID="dateTimePicker"
-              value={date}
-              mode={mode}
-              is24Hour={true}
-              display="default"
-              onChange={onChangeTime}
-            />
-          )}
         </View>
         <DropDownPicker
           open={open}
@@ -168,14 +178,32 @@ function session() {
           placeholder="Select Your Sport"
           onPress={onPressSport}
         />
-        <Text> </Text>
-        <Text>
-          <FontAwesome5 style={styles.icon} name="medal" color="black" />
-          <FontAwesome5 style={styles.icon} name="medal" color="black" />
-          <FontAwesome5 style={styles.icon} name="medal" color="black" />
-        </Text>
+        <View
+          style={{
+            paddingHorizontal: 20,
+            borderBottomWidth: 2,
+            marginTop: 10,
+            paddingBottom: 5,
+            marginBottom: 20,
+            flexDirection: "row",
+          }}
+        >
+          <Text></Text>
+          <Text style={styles.textPlus}>Level</Text>
+          <Text>{tabLevel}</Text>
+        </View>
         <Text> </Text>
         {/* map a mettre ici */}
+
+        <MapView
+          style={{ flex: 1 }}
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        />
         <Button
           style={styles.select}
           type="clear"
@@ -190,7 +218,7 @@ function session() {
 
 const styles = StyleSheet.create({
   card: {
-    height: 600,
+    height: 400,
     width: 300,
     backgroundColor: "rgba(244, 44, 4, 0.4)",
     alignContent: "center",
@@ -205,7 +233,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginTop: 20,
     marginBottom: 20,
-    height: 300,
+    height: 600,
     width: 370,
   },
   select: {
