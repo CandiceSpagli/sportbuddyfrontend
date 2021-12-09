@@ -3,6 +3,7 @@ import Slider from "@react-native-community/slider";
 
 import { View, Text, TextInput, StyleSheet, Picker } from "react-native";
 import { Button, Image, Card, ListItem, Divider } from "react-native-elements";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 import DatePicker from "react-native-datepicker";
 import { ScrollView } from "react-native-gesture-handler";
@@ -21,6 +22,13 @@ function Settings() {
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [gender, setGender] = useState("Man");
+  const [sports, setSports] = useState([
+    { name: "Run", level: 1 },
+    { name: "Fitness", level: 2 },
+    { name: "Yoga", level: 1 },
+  ]);
+  console.log("SPORTS", sports);
+  console.log("SPORTS.NAME", sports.name);
   // console.log("FIRSTNAME", firstName);
   // console.log("LASTNAME", lastName);
   console.log("GENDER", gender);
@@ -145,116 +153,18 @@ function Settings() {
           />
         </View>
         <Text style={styles.level}>Votre niveau en : </Text>
-        <Picker
-          style={styles.picker}
-          selectedValue={selectedSport}
-          onValueChange={(itemValue, itemIndex) => setSelectedSport(itemValue)}
-        >
-          <Picker.Item label="Fitness" value="Fitness" />
-          <Picker.Item label="Run" value="Run" />
-          <Picker.Item label="Yoga" value="Yoga" />
-        </Picker>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <View style={styles.card}>
-            <Image
-              source={require("../img/staticImg/entrainementfit.png")}
-              resizeMode="cover"
-              style={styles.image}
-            ></Image>
-            <Text
-              style={{
-                fontSize: 30,
-                fontFamily: "Cochin",
-                marginLeft: 85,
-                marginTop: 15,
-              }}
-            >
-              Débutant
-            </Text>
-            <Text
-              style={{
-                fontFamily: "Cochin",
-                fontSize: 15,
-                textAlign: "center",
-                marginLeft: 3,
-              }}
-            >
-              Vous vous entrainez rarement ou jamais
-            </Text>
-            <Button
-              style={styles.select}
-              type="clear"
-              title="Selectionner"
-              titleStyle={{ color: "black" }}
-            ></Button>
+        <View>
+          <Text style={{ marginLeft: 40, marginVertical: 10 }}></Text>
+
+          <View
+            style={{ flexDirection: "row", marginLeft: 250, marginTop: -10 }}
+          >
+            <FontAwesome5 name="medal" size={24} color="#f42c04" />
+            <FontAwesome5 name="medal" size={24} color="#f42c04" />
+            <FontAwesome5 name="medal" size={24} color="#f42c04" />
           </View>
-          <View style={styles.card}>
-            <Image
-              source={require("../img/staticImg/entrainementfit.png")}
-              resizeMode="cover"
-              style={styles.image}
-            ></Image>
-            <Text
-              style={{
-                fontSize: 30,
-                fontFamily: "Cochin",
-                marginLeft: 85,
-                marginTop: 15,
-              }}
-            >
-              Intermédiaire
-            </Text>
-            <Text
-              style={{
-                fontFamily: "Cochin",
-                fontSize: 15,
-                textAlign: "center",
-                marginLeft: 3,
-              }}
-            >
-              Vous vous entrainez 2 fois par semaine
-            </Text>
-            <Button
-              style={styles.select}
-              type="clear"
-              title="Selectionner"
-              titleStyle={{ color: "black" }}
-            ></Button>
-          </View>
-          <View style={styles.card}>
-            <Image
-              source={require("../img/staticImg/entrainementfit.png")}
-              resizeMode="cover"
-              style={styles.image}
-            ></Image>
-            <Text
-              style={{
-                fontSize: 30,
-                fontFamily: "Cochin",
-                marginLeft: 100,
-                marginTop: 15,
-                textAlign: "Center",
-              }}
-            >
-              Expert
-            </Text>
-            <Text
-              style={{
-                fontFamily: "Cochin",
-                fontSize: 15,
-                textAlign: "center",
-              }}
-            >
-              Vous êtes un vrai athlète!
-            </Text>
-            <Button
-              style={styles.select}
-              type="clear"
-              title="Selectionner"
-              titleStyle={{ color: "black" }}
-            ></Button>
-          </View>
-        </ScrollView>
+        </View>
+
         <View>
           <Text style={{ marginTop: 30, marginLeft: 20 }}>
             {" "}
@@ -367,7 +277,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
     marginLeft: 50,
-    marginTop: 15,
+    marginTop: 55,
     padding: 10,
   },
   fitness: {
