@@ -1,23 +1,31 @@
 import React, { useState, useEffect } from "react";
 import Slider from "@react-native-community/slider";
 
-import { View, Text, TextInput, StyleSheet, Picker } from "react-native";
+import { View, Text, TextInput, StyleSheet, Picker, Modal } from "react-native";
 import { Button, Image, Card, ListItem, Divider } from "react-native-elements";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { connect } from "react-redux";
 
 import DatePicker from "react-native-datepicker";
 import { ScrollView } from "react-native-gesture-handler";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import Geocoder from "react-native-geocoding";
+import SportsSettingsModal from "../components/buddiesScreen/SportsSettingsModal";
 Geocoder.init("AIzaSyAScpUl6RLneX5V5LB9dNvCxE6j334fR-c");
-
+import { BlurView } from "expo-blur";
+// // const onSettingsPress = () => {
+// //   // console.log('hey');
+// //   props.cardPressed(sports)
+// //   // console.log('users Array !!', user);
+// }
 function Settings() {
   const [dateOfBirth, setDateOfBirth] = useState(new Date());
   const [selectedSport, setSelectedSport] = useState();
   const [currentLatitude, setCurrentLatitude] = useState(0);
   const [currentLongitude, setCurrentLongitude] = useState(0);
   const [currentAdress, setCurrentAdress] = useState("");
+  const [isPlusClicked, setIsPlusClicked] = useState(false);
   const [slider, setSlider] = useState();
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -27,8 +35,15 @@ function Settings() {
     { name: "Fitness", level: 2 },
     { name: "Yoga", level: 1 },
   ]);
+
+  const [currentSport, setCurrentSport] = useState({
+    name: "Course",
+    level: 2,
+  });
+  const [isModalOpen, setIsModalOpen] = useState(true);
   console.log("SPORTS", sports);
-  console.log("SPORTS.NAME", sports.name);
+  console.log("SPORTS.NAME", sports[0].name);
+  console.log("SPORT LEVEL", sports[0].level);
   // console.log("FIRSTNAME", firstName);
   // console.log("LASTNAME", lastName);
   console.log("GENDER", gender);
@@ -99,8 +114,57 @@ function Settings() {
     setGender("Man");
   };
 
+  const onPressModal = () => {};
+
   return (
     <View>
+      <Modal animationType="fade" transparent={true} visible={isModalOpen}>
+        <BlurView style={styles.blur} tint="light" intensity={80}>
+          <View style={styles.box}>
+            <Text> HELLO WORLD</Text>
+            <Text>{currentSport.name}</Text>
+            <Text>{currentSport.level}</Text>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              <View style={styles.card}>
+                <Image
+                  source={require("../img/staticImg/entrainementfit.png")}
+                  resizeMode="cover"
+                  style={styles.image}
+                ></Image>
+                <Text
+                  style={{
+                    fontSize: 30,
+                    fontFamily: "Cochin",
+                    marginLeft: 85,
+                    marginTop: 15,
+                  }}
+                >
+                  Débutant
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: "Cochin",
+                    fontSize: 15,
+                    textAlign: "center",
+                    marginLeft: 3,
+                  }}
+                >
+                  Vous vous entrainez rarement ou jamais
+                </Text>
+                <Button
+                  style={styles.select}
+                  type="clear"
+                  title="Selectionner"
+                  titleStyle={{ color: "black" }}
+                ></Button>
+              </View>
+            </ScrollView>
+          </View>
+        </BlurView>
+      </Modal>
       <ScrollView>
         <Text style={styles.step}> STEP 2/3</Text>
         <Text style={styles.text}> Nom</Text>
@@ -153,16 +217,53 @@ function Settings() {
           />
         </View>
         <Text style={styles.level}>Votre niveau en : </Text>
-        <View>
-          <Text style={{ marginLeft: 40, marginVertical: 10 }}></Text>
-
-          <View
-            style={{ flexDirection: "row", marginLeft: 250, marginTop: -10 }}
+        <View style={{ marginLeft: 40, marginVertical: 10 }}>
+          {sports.map((sportsinfo, index) => {
+            console.log("SPORTSINFO", sportsinfo);
+            const tabLevel = [];
+            for (var i = 0; i < 3; i++) {
+              let color = "#DCDCDC";
+              if (i < sportsinfo.level) {
+                color = "#f42c04";
+              }
+              let count = i + 1;
+              tabLevel.push(
+                <FontAwesome5
+                  key={count}
+                  style={{ marginRight: 15 }}
+                  name="medal"
+                  size={25}
+                  color={color}
+                />
+              );
+            }
+            return (
+              <View>
+                <View>
+                  <Text style={styles.sportsetting}>{sportsinfo.name}</Text>
+                  <Text>{tabLevel}</Text>
+                </View>
+              </View>
+            );
+          })}
+        </View>
+        <View style={{ alignItems: "center" }}>
+          <Button
+            style={{
+              backgroundColor: "#f42c04",
+              width: 200,
+              borderRadius: 30,
+              marginBottom: 30,
+              marginTop: 30,
+            }}
+            type="clear"
+            titleStyle={{ color: "white" }}
+            title="Changer"
+            onPress={() => onPressModal()}
           >
-            <FontAwesome5 name="medal" size={24} color="#f42c04" />
-            <FontAwesome5 name="medal" size={24} color="#f42c04" />
-            <FontAwesome5 name="medal" size={24} color="#f42c04" />
-          </View>
+            {" "}
+            Changer
+          </Button>
         </View>
 
         <View>
@@ -300,7 +401,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(244, 44, 4, 0.4)",
     alignContent: "center",
     borderRadius: 30,
-    marginLeft: 35,
+    marginLeft: 4,
+    marginTop: 150,
   },
   image: {
     height: 180,
@@ -334,6 +436,27 @@ const styles = StyleSheet.create({
     width: 100,
     marginLeft: 130,
     borderColor: "rgba(244, 44, 4, 0.4)",
+    marginTop: 20,
+  },
+  sportsetting: {
+    fontSize: 15,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  box: {
+    backgroundColor: "white",
+    borderRadius: 60,
+    height: 720,
+    width: 350,
+    shadowColor: "black",
+    shadowRadius: 12,
+    shadowOpacity: 0.1,
+    alignItems: "center",
+  },
+  blur: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 20,
   },
 });
