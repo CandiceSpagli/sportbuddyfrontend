@@ -15,13 +15,12 @@ import { connect } from "react-redux";
 // expo blur
 import { BlurView } from "expo-blur";
 // mapView
-import MapView from 'react-native-maps'
+import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
 
 // icons
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Entypo } from '@expo/vector-icons';
-
+import { Entypo } from "@expo/vector-icons";
 
 function BuddiePopUp(props) {
   // const [visible, setVisible] = useState(true);
@@ -29,7 +28,7 @@ function BuddiePopUp(props) {
   const exitPopUp = () => {
     // console.log('exitPopUp clicked');
     // setVisible(visible === true ? false : true);
-    props.removeUser()
+    props.removeUser();
   };
 
   if (props.user === null) {
@@ -39,9 +38,7 @@ function BuddiePopUp(props) {
   return (
     <View>
       <Modal animationType="fade" transparent={true} visible={true}>
-  
         <BlurView style={styles.container} tint="light" intensity={80}>
-        
           <View style={styles.box}>
             <Image
               style={styles.profil}
@@ -75,18 +72,18 @@ function BuddiePopUp(props) {
                   height: 200,
                   width: 300,
                 }}
-                mapType = 'mutedStandard'
+                mapType="mutedStandard"
                 initialRegion={{
                   latitude: 48.866667,
                   longitude: 2.333333,
                   latitudeDelta: 0.0922,
-                  longitudeDelta: 0.0421
+                  longitudeDelta: 0.0421,
                 }}
                 minZoomLevel={17}
               >
                 <Marker
-                  coordinate={{latitude: 48.866667, longitude: 2.333333}}
-                  title='Av. des Guelfes, 98000 Monaco'
+                  coordinate={{ latitude: 48.866667, longitude: 2.333333 }}
+                  title="Av. des Guelfes, 98000 Monaco"
                 />
               </MapView>
             </View>
@@ -95,20 +92,18 @@ function BuddiePopUp(props) {
               <Text style={styles.locaText}>Av. des Guelfes, 98000 Monaco</Text>
             </View>
             <Button
-              style={styles.buddiesBtn} type="clear" title="Buddie !"
+              style={styles.buddiesBtn}
+              type="clear"
+              title="Buddie !"
               titleStyle={{
                 fontSize: 30,
-                color: 'white'
+                color: "white",
               }}
             />
           </View>
-          <TouchableOpacity
-            onPress={() => exitPopUp()}
-          >
-          <Text style={styles.closeBtn}>
-            Fermer
-          </Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => exitPopUp()}>
+            <Text style={styles.closeBtn}>Fermer</Text>
+          </TouchableOpacity>
         </BlurView>
       </Modal>
     </View>
@@ -120,8 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20
-    
+    marginTop: 20,
   },
   box: {
     backgroundColor: "white",
@@ -141,53 +135,53 @@ const styles = StyleSheet.create({
   },
   closeBtn: {
     fontSize: 20,
-    justifyContent: 'center',
-    marginTop: 20
+    justifyContent: "center",
+    marginTop: 20,
   },
   firstname: {
     fontSize: 30,
     marginTop: -50,
-    backgroundColor: 'black',
-    color: 'white',
+    backgroundColor: "black",
+    color: "white",
     paddingTop: 3,
     paddingLeft: 15,
     paddingRight: 15,
   },
   lastname: {
     fontSize: 30,
-    backgroundColor: 'black',
-    color: 'white',
+    backgroundColor: "black",
+    color: "white",
     paddingBottom: 6,
     paddingLeft: 15,
     paddingRight: 15,
   },
   userSessionContent: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
     margin: 20,
     marginTop: 5,
-    marginBottom: 10
+    marginBottom: 10,
   },
   contentPart: {
     // backgroundColor: 'red',
-    justifyContent: 'space-between',
-    margin: 10
+    justifyContent: "space-between",
+    margin: 10,
   },
   levelPart: {
-    flexDirection: 'row',
+    flexDirection: "row",
     // backgroundColor: 'red',
     margin: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   contentTitle: {
-    fontSize: 30
+    fontSize: 30,
   },
   userContent: {
-    fontSize: 40
+    fontSize: 40,
   },
-  map : {
-    justifyContent: 'center',
+  map: {
+    justifyContent: "center",
     backgroundColor: "white",
     borderRadius: 60,
     height: 200,
@@ -198,11 +192,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   locaPart: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginLeft: 60,
     marginRight: 60,
-    alignItems: 'center',
-    marginTop: 10
+    alignItems: "center",
+    marginTop: 10,
   },
   locaText: {
     fontSize: 30,
@@ -212,20 +206,17 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     paddingLeft: 20,
     paddingRight: 20,
-    marginTop: 20
+    marginTop: 20,
   },
 });
 
 function mapDispatchToProps(dispatch) {
-  return{
-    removeUser: function(user) {
+  return {
+    removeUser: function (user) {
       // console.log('removeUser!');
-      dispatch({type: 'removeUser', user})
-    }
-  }
+      dispatch({ type: "removeUser", user });
+    },
+  };
 }
 
-export default connect (
-  null,
-  mapDispatchToProps
-) (BuddiePopUp);
+export default connect(null, mapDispatchToProps)(BuddiePopUp);

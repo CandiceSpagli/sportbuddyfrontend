@@ -23,7 +23,7 @@ function signIn(props) {
     console.log("body", body);
 
     if (body.result === true) {
-      //   props.addToken(body.token);
+      props.addToken(body.token);
       setUserExists(true);
       props.navigation.navigate("Buddies");
     } else {

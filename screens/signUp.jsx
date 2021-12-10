@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { View, TextInput, Text, Button, StyleSheet } from "react-native";
+import { connect } from "react-redux";
 
 function signUp(props) {
-  const [usernameFromFront, setUsernameFromFront] = useState("");
+  const [firstnameFromFront, setFirstnameFromFront] = useState("");
+  const [lastnameFromFront, setLastnameFromFront] = useState("");
+
   const [emailFromFront, setEmailFromFront] = useState("");
   const [passwordFromFront, setPasswordFromFront] = useState("");
 
@@ -12,14 +15,15 @@ function signUp(props) {
 
   var handleSubmitSignup = async () => {
     console.log("handleSubmitSignup", handleSubmitSignup);
-    console.log("usernameFromFront", usernameFromFront);
+    console.log("firstnameFromFront", firstnameFromFront);
+    console.log("lastnameFromFront", lastnameFromFront);
     console.log("emailFromFront", emailFromFront);
     console.log("passwordFromFront", passwordFromFront);
 
     const data = await fetch("http://10.3.11.5:3000/sign-up", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `username=${usernameFromFront}&email=${emailFromFront}&password=${passwordFromFront}`,
+      body: `firstname=${firstnameFromFront}&lastname=${lastnameFromFront}&email=${emailFromFront}&password=${passwordFromFront}`,
     });
 
     const body = await data.json();
@@ -49,10 +53,17 @@ function signUp(props) {
     <View className="sign-Up">
       <TextInput
         style={styles.input}
-        onChangeText={(value) => setUsernameFromFront(value)}
+        onChangeText={(value) => setFirstnameFromFront(value)}
         className="Login-input"
-        placeholder="username"
-        value={usernameFromFront}
+        placeholder="firstname"
+        value={firstnameFromFront}
+      />
+      <TextInput
+        style={styles.input}
+        onChangeText={(value) => setLastnameFromFront(value)}
+        className="Login-input"
+        placeholder="lastname"
+        value={lastnameFromFront}
       />
 
       <TextInput
@@ -102,4 +113,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default signUp;
+function mapDispatchToProps(dispatch) {
+  return {
+    addToken: function (token) {
+      dispatch({ type: "addToken", token: token });
+    },
+  };
+}
+
+export default connect(null, mapDispatchToProps)(signUp);
