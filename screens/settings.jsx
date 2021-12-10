@@ -40,7 +40,7 @@ function Settings() {
     name: "Course",
     level: 2,
   });
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   console.log("SPORTS", sports);
   console.log("SPORTS.NAME", sports[0].name);
   console.log("SPORT LEVEL", sports[0].level);
