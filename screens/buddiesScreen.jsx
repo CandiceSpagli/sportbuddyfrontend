@@ -30,6 +30,8 @@ import BuddieCard from "../components/buddiesScreen/BuddieCard";
 import SportsButtons from "../components/buddiesScreen/SportsButtons";
 import BuddiePopUp from '../components/buddiesScreen/BuddiePopUp'
 import SessionPopUp from '../components/buddiesScreen/SessionPopUp'
+import BuddiesListFilter from '../components/buddiesScreen/BuddiesListFilter'
+import UserSearch from '../components/buddiesScreen/UserSearch'
 
 function BuddiesScreen(props) {
   const [isPlusClicked, setIsPlusClicked] = useState(false)
@@ -39,16 +41,29 @@ function BuddiesScreen(props) {
   // date picker
   const [date, setDate] = useState(new Date());
 
-  const [usersCards, setUsersCards] = useState([])
-  console.log('usersCards', usersCards);
-  useEffect(() => {
-    async function buddiesCardsInfos() {
-      const rawResponse = await fetch('http://10.3.11.9:3000/buddiesScreen')
-      const response = await rawResponse.json()
-      setUsersCards(response)
-    }
-    buddiesCardsInfos()
-  }, [])
+  // const [sessionsCards, setSessionsCards] = useState([])
+  // console.log('sessionsCards', sessionsCards);
+  // useEffect(() => {
+  //   async function buddiesCardsInfos() {
+  //     // const rawResponse = await fetch('http://192.168.1.29:3000/buddiesScreen')
+  //     const rawResponse = await fetch('http://10.3.11.9:3000/buddiesScreen')
+  //     const response = await rawResponse.json()
+  //     setSessionsCards(response.sessions)
+  //   }
+  //   buddiesCardsInfos()
+  // }, [])
+
+  // const sessionsCardsMAP = sessionsCards.map((sessionInfos, index) => {
+  //   // console.log('sessionInfos', sessionInfos);
+  //   return <BuddieCard
+  //     key={index}
+  //     firstname={sessionInfos.creatorId.firstname}
+  //     lastname={sessionInfos.creatorId.lastname}
+  //     sport={sessionInfos.sport}
+  //     level={sessionInfos.level}
+  //     // pic={sessionInfos.pic}
+  //   />
+  // })
 
   const morePrecise = () => {
     setIsPlusClicked(isPlusClicked === false ? true : false);
@@ -305,33 +320,14 @@ function BuddiesScreen(props) {
       <View style={{alignItems: 'center'}}>
         {plusBtn()}
       </View>
-      <View>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <SportsButtons />
-        </ScrollView>
-      </View>
-        <ScrollView
-          contentContainerStyle={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "center",
-          }}
-          showsVerticalScrollIndicator={false}
-        >
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          <BuddieCard/>
-          
-        </ScrollView>
+      {
+        !isInputClicked &&
+        <BuddiesListFilter/>
+      }
+      {
+        isInputClicked &&
+        <UserSearch />
+      }
     </View>
   );
 }

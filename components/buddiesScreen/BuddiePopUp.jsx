@@ -24,17 +24,38 @@ import { Entypo } from '@expo/vector-icons';
 
 
 function BuddiePopUp(props) {
-  // const [visible, setVisible] = useState(true);
-  // console.log('visibleState' , visible);
   const exitPopUp = () => {
-    // console.log('exitPopUp clicked');
-    // setVisible(visible === true ? false : true);
     props.removeUser()
   };
-
+  
   if (props.user === null) {
     return null;
   }
+
+  console.log('props.user.level', props);
+  const tabLevel = [];
+  for (var i = 0; i < 3; i++) {
+    let color = "#DCDCDC";
+    if (i < props.user.level) {
+      color = "black";
+    }
+    tabLevel.push(
+      <FontAwesome5
+        key={i}
+        name="medal"
+        size={40}
+        color={color}
+      />
+    );
+  }
+  const date = new Date(props.user.date)
+  const sessionDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()
+
+  const time = new Date(props.user.time)
+  const sessionTime = JSON.stringify(time).substring(12).substring(5,0)
+  console.log('date', date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
+  console.log('time', time.getHours() + ':' + time.getSeconds());
+  console.log('time test', JSON.stringify(time).substring(12).substring(5,0));
 
   return (
     <View>
@@ -52,20 +73,18 @@ function BuddiePopUp(props) {
             <View style={styles.userSessionContent}>
               <View style={styles.contentPart}>
                 <Text style={styles.contentTitle}>Date</Text>
-                <Text style={styles.userContent}>06/12/21</Text>
+                <Text style={styles.userContent}>{sessionDate}</Text>
               </View>
               <View style={styles.contentPart}>
                 <Text style={styles.contentTitle}>Heure</Text>
-                <Text style={styles.userContent}>06/12/21</Text>
+                <Text style={styles.userContent}>{sessionTime}</Text>
               </View>
               <View style={styles.contentPart}>
                 <Text style={styles.contentTitle}>Sport</Text>
-                <Text style={styles.userContent}>06/12/21</Text>
+                <Text style={styles.userContent}>{props.user.sport}</Text>
               </View>
               <View style={styles.levelPart}>
-                <FontAwesome5 name="medal" size={40} color="black" />
-                <FontAwesome5 name="medal" size={40} color="black" />
-                <FontAwesome5 name="medal" size={40} color="black" />
+                {tabLevel}
               </View>
             </View>
             <View style={styles.map}>
@@ -77,15 +96,18 @@ function BuddiePopUp(props) {
                 }}
                 mapType = 'mutedStandard'
                 initialRegion={{
-                  latitude: 48.866667,
-                  longitude: 2.333333,
+                  latitude: props.user.location.lat,
+                  longitude: props.user.location.long,
                   latitudeDelta: 0.0922,
                   longitudeDelta: 0.0421
                 }}
                 minZoomLevel={17}
               >
                 <Marker
-                  coordinate={{latitude: 48.866667, longitude: 2.333333}}
+                  coordinate={{
+                    latitude: props.user.location.lat,
+                    longitude: props.user.location.long
+                  }}
                   title='Av. des Guelfes, 98000 Monaco'
                 />
               </MapView>
@@ -150,6 +172,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     color: 'white',
     paddingTop: 3,
+    paddingBottom: 3,
     paddingLeft: 15,
     paddingRight: 15,
   },
@@ -157,7 +180,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     backgroundColor: 'black',
     color: 'white',
-    paddingBottom: 6,
+    paddingBottom: 3,
     paddingLeft: 15,
     paddingRight: 15,
   },

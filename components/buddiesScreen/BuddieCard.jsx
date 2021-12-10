@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableHighlight } from "react-native";
 import { connect } from "react-redux";
 
@@ -8,16 +8,64 @@ import { FontAwesome5 } from "@expo/vector-icons";
 function BuddieCard(props) {
 
   const user = {
-    firstname: 'Christelle',
-    lastname: 'Degiovanni',
-    sport: 'Fitness'
+    firstname: props.firstname,
+    lastname: props.lastname,
+    sport: props.sport,
+    level: props.level,
+    date: props.date,
+    time: props.time,
+    location: props.location
   }
-
+  console.log('loca', user.loca);
 
   const onCardPress = () => {
     // console.log('hey');
     props.cardPressed(user)
     // console.log('users Array !!', user);
+  }
+
+  // const sessionLevel = () => {
+  //   if (props.level === 1) {
+  //     return (
+  //       <View style={{ flexDirection: "row" }}>
+  //         <FontAwesome5 name="medal" size={24} color="#f42c04" />
+  //         <FontAwesome5 name="medal" size={24} color="#f42c04" />
+  //         <FontAwesome5 name="medal" size={24} color="#f42c04" />
+  //       </View>
+  //     )
+  //   } else if (props.level === 2) {
+  //     return (
+  //     <View style={{ flexDirection: "row" }}>
+  //       <FontAwesome5 name="medal" size={24} color="#f42c04" />
+  //       <FontAwesome5 name="medal" size={24} color="#f42c04" />
+  //       <FontAwesome5 name="medal" size={24} color="#f42c04" />
+  //     </View>
+  //     )
+  //   } else {
+  //     return (
+  //       <View style={{ flexDirection: "row" }}>
+  //         <FontAwesome5 name="medal" size={24} color="#f42c04" />
+  //         <FontAwesome5 name="medal" size={24} color="#f42c04" />
+  //         <FontAwesome5 name="medal" size={24} color="#f42c04" />
+  //       </View>
+  //     )
+  //   }
+  // }
+
+  const tabLevel = [];
+  for (var i = 0; i < 3; i++) {
+    let color = "#DCDCDC";
+    if (i < props.level) {
+      color = "#f42c04";
+    }
+    tabLevel.push(
+      <FontAwesome5
+        key={i}
+        name="medal"
+        size={24}
+        color={color}
+      />
+    );
   }
 
   return (
@@ -35,26 +83,27 @@ function BuddieCard(props) {
             source={require('../../img/staticImg/user.jpg')}
           />
         </View>
-      <View>
+      <View style={{marginLeft:20,marginRight:20}}>
         <Text style={styles.kmContent}>à 0.2km</Text>
         <View
           style={{
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: 'space-between',
           }}
         >
           <View>
-            <Text style={styles.textContent}>{user.firstname}</Text>
-            <Text style={styles.textContent}>{user.lastname}</Text>
+            <Text style={styles.textContent}>{props.firstname}</Text>
+            <Text style={styles.textContent}>{props.lastname}</Text>
           </View>
           <View style={{ alignItems: "center" }}>
             <View style={{ flexDirection: "row" }}>
+              {/* <FontAwesome5 name="medal" size={24} color="#f42c04" />
               <FontAwesome5 name="medal" size={24} color="#f42c04" />
-              <FontAwesome5 name="medal" size={24} color="#f42c04" />
-              <FontAwesome5 name="medal" size={24} color="#f42c04" />
+              <FontAwesome5 name="medal" size={24} color="#f42c04" /> */}
+            {tabLevel}
             </View>
-            <Text style={styles.textContentwColor}>{user.sport}</Text>
+            <Text style={styles.textContentwColor}>{props.sport}</Text>
           </View>
         </View>
       </View>
@@ -66,7 +115,7 @@ function BuddieCard(props) {
 const styles = StyleSheet.create({
   kmContent: {
     fontSize: 20,
-    marginLeft: 22,
+    // marginLeft: 5,
   },
   textContent: {
     fontSize: 20,

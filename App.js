@@ -10,12 +10,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // screens 🖥️
-import buddiesScreen from "./screens/BuddiesScreen";
-import profilScreen from "./screens/ProfilScreen";
-import signIn from "./screens/SignIn";
+import buddiesScreen from "./screens/buddiesScreen";
+import profilScreen from "./screens/profilScreen";
+import signIn from "./screens/signIn";
 import signUp from "./screens/SignUp";
-import session from "./screens/Session";
-import setting from "./screens/Settings";
+import session from "./screens/session";
+import setting from "./screens/settings";
 
 // reducers
 import userInfosModal from './reducers/userInfosModal.reducer'
