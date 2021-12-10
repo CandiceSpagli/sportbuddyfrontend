@@ -19,10 +19,10 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 //MAP
-import MapView from "react-native-maps";
 import { connect } from "react-redux";
+import MapView, { Marker } from "react-native-maps";
 
-function session() {
+function session(props) {
   // const [date, setDate] = useState(new Date());
   // console.log("datefromSESSION", date);
   const [time, setTime] = useState();
@@ -32,12 +32,7 @@ function session() {
   const [mode, setMode] = useState("time");
   console.log("mode set from session", mode);
   const [show, setShow] = useState(true);
-  //const [date, setDate] = useState("date");
-  //console.log("date state from Session", date);
-  // const [time, setTime] = useState("time");
-  // console.log("time state from Session", time);
-  const [sportChosen, setSportChosen] = useState("");
-  console.log("sportChosen state from Session", sportChosen);
+
   const [myLevel, setMyLevel] = useState(0);
   console.log("MYLEVEL", myLevel);
 
@@ -49,16 +44,16 @@ function session() {
     { label: "Yoga", value: "yoga" },
   ]);
 
+  // MARKER POUR LIEU DE RDV
+  const [addRDV, setAddRDV] = useState({});
+  console.log("addRDV", addRDV);
+
   const onChangeTime = (event, selectedDate) => {
     console.log("seletcedDate", selectedDate);
     // console.log("event", event);
     const currentDate = selectedDate || date;
     setShow(Platform.OS === "ios");
     setDate(currentDate);
-  };
-
-  const onPressSport = () => {
-    setSportChosen();
   };
 
   const showMode = (currentMode) => {
@@ -79,16 +74,20 @@ function session() {
     showMode("time");
   };
 
-  // attention = longitude et latitude  &long${long}&lat=${lat}
+  // MARKER RDV
+
+  const selectRDV = (evt) => {
+    console.log("evt de selectRDV marker MAP", evt.nativeEvent.coordinate);
+    setAddRDV(evt.nativeEvent.coordinate);
+  };
 
   const handleSubmitSession = async () => {
     console.log("create A Session from Session", value);
-    setSportChosen(value);
     console.log("datea la creation", date);
     const data = await fetch("http://10.3.11.5:3000/sessions", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `date=${date}&sport=${sportChosen} &level=${myLevel}`,
+      body: `token=${props.token}&date=${date}&sport=${value}&level=${myLevel}&long=${addRDV.longitude}&lat=${addRDV.latitude}`,
     });
   };
 
@@ -178,7 +177,6 @@ function session() {
           setValue={setValue}
           setItems={setItems}
           placeholder="Select Your Sport"
-          onPress={onPressSport}
         />
         <View
           style={{
@@ -195,22 +193,31 @@ function session() {
           <Text>{tabLevel}</Text>
         </View>
         <Text> </Text>
-        {/* map a mettre ici */}
-
+        <Text style={styles.textPlusClic}>
+          Clic on map to select the place of RDV
+        </Text>
+        <Text> </Text>
         <MapView
-          // onPressMap={(e) => {
-          //   selectPOI(e);
-          // }}
+          onPress={(evt) => {
+            selectRDV(evt);
+          }}
           style={{ flex: 1 }}
           initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: 43.73108,
+            longitude: 7.421164,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
         >
-          {/* {markerPOI} */}
+          <Marker
+            key={i}
+            pinColor="blue"
+            coordinate={addRDV}
+            // title={POI.titre}
+            // description={POI.description}
+          />
         </MapView>
+
         <Button
           style={styles.select}
           type="clear"
@@ -232,8 +239,11 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   textPlus: {
-    fontSize: 30,
+    fontSize: 20,
     marginRight: 165,
+  },
+  textPlusClic: {
+    fontSize: 20,
   },
   container: {
     borderWidth: 2,
@@ -256,4 +266,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default session;
+function mapStateToProps(state) {
+  return { token: state.token };
+}
+
+export default connect(mapStateToProps, null)(session);

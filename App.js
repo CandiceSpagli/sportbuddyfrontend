@@ -18,11 +18,12 @@ import session from "./screens/Session";
 import setting from "./screens/Settings";
 
 // reducers
-import userInfosModal from './reducers/userInfosModal.reducer'
+import userInfosModal from "./reducers/userInfosModal.reducer";
+import token from "./reducers/token";
 
 import { Provider } from "react-redux";
-import {createStore, combineReducers} from 'redux';
-const store = createStore(combineReducers({userInfosModal}))
+import { createStore, combineReducers } from "redux";
+const store = createStore(combineReducers({ userInfosModal, token }));
 
 function App() {
   const Stack = createStackNavigator();
