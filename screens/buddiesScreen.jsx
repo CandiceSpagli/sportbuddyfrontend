@@ -315,6 +315,7 @@ function BuddiesScreen(props) {
         <Text style={styles.title}>Buddies</Text>
       </View>
       {searchInput()}
+      <View style={{ alignItems: "center" }}>{plusBtn()}</View>
       {
         !isInputClicked &&
         <BuddiesListFilter/>
