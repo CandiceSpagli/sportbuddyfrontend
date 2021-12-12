@@ -15,6 +15,9 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 //DropDown Button
 import DropDownPicker from "react-native-dropdown-picker";
 
+// navbar
+import Navbar from "../components/buddiesScreen/navbar/NavBarPopUp";
+
 //Icon Medaille
 import { FontAwesome5 } from "@expo/vector-icons";
 
@@ -111,122 +114,125 @@ function session(props) {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        fontSize: 20,
-        fontFamily: "Cochin",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <View style={styles.container}>
-        <View
-          style={{
-            paddingHorizontal: 20,
-            borderBottomWidth: 2,
-            marginTop: 20,
-            paddingBottom: 5,
-            marginBottom: 20,
-            flexDirection: "row",
-          }}
-        >
-          <Text style={styles.textPlus}>Date</Text>
-          <DateTimePicker
+    <>
+      <View
+        style={{
+          flex: 1,
+          fontSize: 20,
+          fontFamily: "Cochin",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <View style={styles.container}>
+          <View
             style={{
-              width: 100,
-              justifyContent: "center",
+              paddingHorizontal: 20,
+              borderBottomWidth: 2,
+              marginTop: 20,
+              paddingBottom: 5,
+              marginBottom: 20,
+              flexDirection: "row",
             }}
-            testID="dateTimePicker"
-            value={date}
-            mode={"date"}
-            is24Hour={true}
-            display="default"
-            onChange={(event, date) => onChangeTime(event, date)}
-          />
-        </View>
-        <View
-          style={{
-            paddingHorizontal: 20,
-            borderBottomWidth: 2,
-            marginTop: 10,
-            paddingBottom: 5,
-            marginBottom: 20,
-            flexDirection: "row",
-          }}
-        >
-          <Text style={styles.textPlus}>Time</Text>
-          <DateTimePicker
+          >
+            <Text style={styles.textPlus}>Date</Text>
+            <DateTimePicker
+              style={{
+                width: 100,
+                justifyContent: "center",
+              }}
+              testID="dateTimePicker"
+              value={date}
+              mode={"date"}
+              is24Hour={true}
+              display="default"
+              onChange={(event, date) => onChangeTime(event, date)}
+            />
+          </View>
+          <View
             style={{
-              width: 100,
-              justifyContent: "center",
+              paddingHorizontal: 20,
+              borderBottomWidth: 2,
+              marginTop: 10,
+              paddingBottom: 5,
+              marginBottom: 20,
+              flexDirection: "row",
             }}
-            testID="dateTimePicker"
-            value={date}
-            mode={"time"}
-            is24Hour={true}
-            display="default"
-            onChange={(event, date) => onChangeTime(event, date)}
+          >
+            <Text style={styles.textPlus}>Time</Text>
+            <DateTimePicker
+              style={{
+                width: 100,
+                justifyContent: "center",
+              }}
+              testID="dateTimePicker"
+              value={date}
+              mode={"time"}
+              is24Hour={true}
+              display="default"
+              onChange={(event, date) => onChangeTime(event, date)}
+            />
+          </View>
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            placeholder="Select Your Sport"
           />
-        </View>
-        <DropDownPicker
-          open={open}
-          value={value}
-          items={items}
-          setOpen={setOpen}
-          setValue={setValue}
-          setItems={setItems}
-          placeholder="Select Your Sport"
-        />
-        <View
-          style={{
-            paddingHorizontal: 20,
-            borderBottomWidth: 2,
-            marginTop: 10,
-            paddingBottom: 5,
-            marginBottom: 20,
-            flexDirection: "row",
-          }}
-        >
-          <Text></Text>
-          <Text style={styles.textPlus}>Level</Text>
-          <Text>{tabLevel}</Text>
-        </View>
-        <Text> </Text>
-        <Text style={styles.textPlusClic}>
-          Clic on map to select the place of RDV
-        </Text>
-        <Text> </Text>
-        <MapView
-          onPress={(evt) => {
-            selectRDV(evt);
-          }}
-          style={{ flex: 1 }}
-          initialRegion={{
-            latitude: 43.73108,
-            longitude: 7.421164,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-        >
-          <Marker
-            key={i}
-            pinColor="blue"
-            coordinate={addRDV}
-            // title={POI.titre}
-            // description={POI.description}
-          />
-        </MapView>
+          <View
+            style={{
+              paddingHorizontal: 20,
+              borderBottomWidth: 2,
+              marginTop: 10,
+              paddingBottom: 5,
+              marginBottom: 20,
+              flexDirection: "row",
+            }}
+          >
+            <Text></Text>
+            <Text style={styles.textPlus}>Level</Text>
+            <Text>{tabLevel}</Text>
+          </View>
+          <Text> </Text>
+          <Text style={styles.textPlusClic}>
+            Clic on map to select the place of RDV
+          </Text>
+          <Text> </Text>
+          <MapView
+            onPress={(evt) => {
+              selectRDV(evt);
+            }}
+            style={{ flex: 1 }}
+            initialRegion={{
+              latitude: 43.73108,
+              longitude: 7.421164,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          >
+            <Marker
+              key={i}
+              pinColor="blue"
+              coordinate={addRDV}
+              // title={POI.titre}
+              // description={POI.description}
+            />
+          </MapView>
 
-        <Button
-          style={styles.select}
-          type="clear"
-          title="Create !"
-          titleStyle={{ color: "black" }}
-          onPress={(value) => handleSubmitSession(value)}
-        ></Button>
+          <Button
+            style={styles.select}
+            type="clear"
+            title="Create !"
+            titleStyle={{ color: "black" }}
+            onPress={(value) => handleSubmitSession(value)}
+          ></Button>
+        </View>
       </View>
-    </View>
+      <Navbar navigation={props.navigation} />
+    </>
   );
 }
 

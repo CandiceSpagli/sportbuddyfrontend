@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  ScrollView,
   Keyboard,
   Image,
   TouchableOpacity,
@@ -26,12 +25,12 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
 // components
-import BuddieCard from "../components/buddiesScreen/BuddieCard";
-import SportsButtons from "../components/buddiesScreen/SportsButtons";
 import BuddiePopUp from '../components/buddiesScreen/BuddiePopUp'
 import SessionPopUp from '../components/buddiesScreen/SessionPopUp'
 import BuddiesListFilter from '../components/buddiesScreen/BuddiesListFilter'
 import UserSearch from '../components/buddiesScreen/UserSearch'
+// navbar
+import Navbar from '../components/buddiesScreen/navbar/NavBarPopUp'
 
 function BuddiesScreen(props) {
   const [isPlusClicked, setIsPlusClicked] = useState(false);
@@ -40,30 +39,6 @@ function BuddiesScreen(props) {
 
   // date picker
   const [date, setDate] = useState(new Date());
-
-  // const [sessionsCards, setSessionsCards] = useState([])
-  // console.log('sessionsCards', sessionsCards);
-  // useEffect(() => {
-  //   async function buddiesCardsInfos() {
-  //     // const rawResponse = await fetch('http://192.168.1.29:3000/buddiesScreen')
-  //     const rawResponse = await fetch('http://10.3.11.9:3000/buddiesScreen')
-  //     const response = await rawResponse.json()
-  //     setSessionsCards(response.sessions)
-  //   }
-  //   buddiesCardsInfos()
-  // }, [])
-
-  // const sessionsCardsMAP = sessionsCards.map((sessionInfos, index) => {
-  //   // console.log('sessionInfos', sessionInfos);
-  //   return <BuddieCard
-  //     key={index}
-  //     firstname={sessionInfos.creatorId.firstname}
-  //     lastname={sessionInfos.creatorId.lastname}
-  //     sport={sessionInfos.sport}
-  //     level={sessionInfos.level}
-  //     // pic={sessionInfos.pic}
-  //   />
-  // })
 
   const morePrecise = () => {
     setIsPlusClicked(isPlusClicked === false ? true : false);
@@ -308,6 +283,7 @@ function BuddiesScreen(props) {
   };
 
   return (
+    <>
     <View style={styles.container}>
       <SessionPopUp visible={isSessionBtnClicked} />
       <BuddiePopUp user={props.userInfosModal} />
@@ -325,6 +301,8 @@ function BuddiesScreen(props) {
         <UserSearch />
       }
     </View>
+    <Navbar navigation={props.navigation}/>
+    </>
   );
 }
 

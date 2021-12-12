@@ -16,7 +16,6 @@ function BuddieCard(props) {
     time: props.time,
     location: props.location
   }
-  console.log('loca', user.loca);
 
   const onCardPress = () => {
     // console.log('hey');
