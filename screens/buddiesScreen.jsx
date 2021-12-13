@@ -292,7 +292,7 @@ function BuddiesScreen(props) {
 
   if (!loaded) {
     return null;
-  }
+  } 
 
   return (
     <>
