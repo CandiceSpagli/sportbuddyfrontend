@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, TextInput, Text, Button, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { Input } from "react-native-elements";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 function signUp(props) {
   const [firstnameFromFront, setFirstnameFromFront] = useState("");
@@ -65,7 +67,6 @@ function signUp(props) {
         placeholder="lastname"
         value={lastnameFromFront}
       />
-
       <TextInput
         style={styles.input}
         onChangeText={(value) => setEmailFromFront(value)}
@@ -73,13 +74,13 @@ function signUp(props) {
         placeholder="email"
         value={emailFromFront}
       />
-
-      <TextInput
+      <Input
         style={styles.input}
         onChangeText={(value) => setPasswordFromFront(value)}
         className="Login-input"
         placeholder="password"
         value={passwordFromFront}
+        secureTextEntry={true}
       />
       {/* {tabErrorsSignup} */}
 
@@ -90,7 +91,6 @@ function signUp(props) {
         type="primary"
         title="SIGN-UP"
       ></Button>
-
       <Button
         style={styles.input}
         onPress={() => goToSignIn()}

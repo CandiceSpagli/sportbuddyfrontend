@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, TextInput, Link, Button, StyleSheet } from "react-native";
+import { Input } from "react-native-elements";
 import { connect } from "react-redux";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 function signIn(props) {
   const [signInEmail, setSignInEmail] = useState("");
@@ -57,12 +59,13 @@ function signIn(props) {
         value={signInEmail}
       />
 
-      <TextInput
+      <Input
         style={styles.input}
         onChangeText={(value) => OnChangePassword(value)}
         className="Login-input"
         placeholder="password"
         value={signInPassword}
+        secureTextEntry={true}
       />
 
       {/* {tabErrorsSignin} */}
