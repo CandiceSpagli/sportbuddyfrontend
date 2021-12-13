@@ -90,7 +90,7 @@ function session(props) {
     const data = await fetch("http://10.3.11.5:3000/sessions", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `token=${props.tokenToDisplay}&date=${date}&sport=${value}&level=${myLevel}&long=${addRDV.longitude}&lat=${addRDV.latitude}`,
+      body: `token=${props.token}&date=${date}&sport=${value}&level=${myLevel}&long=${addRDV.longitude}&lat=${addRDV.latitude}`,
     });
   };
 
@@ -215,7 +215,7 @@ function session(props) {
           >
             <Marker
               key={i}
-              pinColor="blue"
+              pinColor="red"
               coordinate={addRDV}
               // title={POI.titre}
               // description={POI.description}

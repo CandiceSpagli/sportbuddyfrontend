@@ -81,6 +81,7 @@ function signIn(props) {
           className="Login-input"
           placeholder="password"
           value={signInPassword}
+          secureTextEntry={true}
         />
         <Text
           style={{
@@ -151,5 +152,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(null, mapDispatchToProps)(signIn);
-
-// export default signIn;

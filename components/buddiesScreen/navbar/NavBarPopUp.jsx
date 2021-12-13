@@ -69,7 +69,6 @@ function navBar(props) {
                     marginRight: 12,
                     marginTop: 6,
                     marginBottom: 6,
-
                   }}
                   onPress={() => journalPressed()}
                 >
@@ -114,6 +113,21 @@ function navBar(props) {
                   />
                 </TouchableOpacity>
               </View>
+            </View>
+            <View style={styles.container}>
+              <TouchableOpacity
+                style={styles.navBtn}
+                type="clear"
+                onPress={() => buttonClicked()}
+              >
+                <Image
+                  style={{
+                    height: 50,
+                    width: 50,
+                  }}
+                  source={require("../../../img/staticImg/icons/squid.png")}
+                />
+              </TouchableOpacity>
             </View>
             <View style={styles.container}>
               <TouchableOpacity

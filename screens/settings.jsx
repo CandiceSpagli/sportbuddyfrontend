@@ -80,7 +80,7 @@ function Settings() {
     .catch((error) => console.warn(error));
 
   var handleSubmitContinue = async () => {
-    const data = await fetch("http://10.3.11.6:3000/settings", {
+    const data = await fetch("http://10.3.11.5:3000/settings", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `lastname=${lastName}&firstname=${firstName}&dateOfBirth=${dateOfBirth}&gender=${gender}`,
@@ -250,6 +250,7 @@ function Settings() {
                 />
               );
             }
+
             return (
               <View>
                 <View>

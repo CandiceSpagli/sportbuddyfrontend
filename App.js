@@ -20,6 +20,8 @@ import signIn from "./screens/SignIn";
 import signUp from "./screens/SignUp";
 import session from "./screens/Session";
 import setting from "./screens/Settings";
+import journal from "./screens/Journal";
+
 // navbar
 import NavBarPopUp from "./components/buddiesScreen/navbar/NavBarPopUp";
 
@@ -43,10 +45,10 @@ function App() {
             headerShown: false,
             tabBarStyle: {
               // backgroundColor: 'red',
-              position: 'absolute',
+              position: "absolute",
               // bottom: -100,
               // opacity: 0
-            }
+            },
           }}
         >
           <Tab.Screen name="SignIn" component={signIn} />
@@ -55,6 +57,7 @@ function App() {
           <Tab.Screen name="SignUp" component={signUp} />
           <Tab.Screen name="Session" component={session} />
           <Tab.Screen name="Settings" component={setting} />
+          <Tab.Screen name="Journal" component={journal} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>
