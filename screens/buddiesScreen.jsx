@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  ScrollView,
   Keyboard,
   Image,
   TouchableOpacity,
@@ -16,6 +15,9 @@ import { Button } from "react-native-elements";
 import { connect } from "react-redux";
 // DateTimePicker
 import DateTimePicker from "@react-native-community/datetimepicker";
+// useFonts
+import { useFonts } from "expo-font";
+
 
 // f42c04
 
@@ -26,44 +28,21 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
 // components
-import BuddieCard from "../components/buddiesScreen/BuddieCard";
-import SportsButtons from "../components/buddiesScreen/SportsButtons";
 import BuddiePopUp from '../components/buddiesScreen/BuddiePopUp'
 import SessionPopUp from '../components/buddiesScreen/SessionPopUp'
 import BuddiesListFilter from '../components/buddiesScreen/BuddiesListFilter'
 import UserSearch from '../components/buddiesScreen/UserSearch'
+// navbar
+import Navbar from '../components/buddiesScreen/navbar/NavBarPopUp'
 
 function BuddiesScreen(props) {
+
   const [isPlusClicked, setIsPlusClicked] = useState(false);
   const [myLevel, setMyLevel] = useState(0);
   const [isInputClicked, setIsInputClicked] = useState(false);
 
   // date picker
   const [date, setDate] = useState(new Date());
-
-  // const [sessionsCards, setSessionsCards] = useState([])
-  // console.log('sessionsCards', sessionsCards);
-  // useEffect(() => {
-  //   async function buddiesCardsInfos() {
-  //     // const rawResponse = await fetch('http://192.168.1.29:3000/buddiesScreen')
-  //     const rawResponse = await fetch('http://10.3.11.9:3000/buddiesScreen')
-  //     const response = await rawResponse.json()
-  //     setSessionsCards(response.sessions)
-  //   }
-  //   buddiesCardsInfos()
-  // }, [])
-
-  // const sessionsCardsMAP = sessionsCards.map((sessionInfos, index) => {
-  //   // console.log('sessionInfos', sessionInfos);
-  //   return <BuddieCard
-  //     key={index}
-  //     firstname={sessionInfos.creatorId.firstname}
-  //     lastname={sessionInfos.creatorId.lastname}
-  //     sport={sessionInfos.sport}
-  //     level={sessionInfos.level}
-  //     // pic={sessionInfos.pic}
-  //   />
-  // })
 
   const morePrecise = () => {
     setIsPlusClicked(isPlusClicked === false ? true : false);
@@ -307,7 +286,16 @@ function BuddiesScreen(props) {
     }
   };
 
+  const [loaded] = useFonts({
+    bohemianSoul: require("../assets/fonts/bohemianSoul.otf"),
+  });
+
+  if (!loaded) {
+    return null;
+  } 
+
   return (
+    <>
     <View style={styles.container}>
       <SessionPopUp visible={isSessionBtnClicked} />
       <BuddiePopUp user={props.userInfosModal} />
@@ -316,15 +304,11 @@ function BuddiesScreen(props) {
       </View>
       {searchInput()}
       <View style={{ alignItems: "center" }}>{plusBtn()}</View>
-      {
-        !isInputClicked &&
-        <BuddiesListFilter/>
-      }
-      {
-        isInputClicked &&
-        <UserSearch />
-      }
+      {!isInputClicked && <BuddiesListFilter />}
+      {isInputClicked && <UserSearch />}
     </View>
+    <Navbar navigation={props.navigation}/>
+    </>
   );
 }
 
@@ -333,7 +317,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 135,
+    fontSize: 115,
+    fontFamily: "bohemianSoul",
   },
   boxInteraction: {
     flexDirection: "row",

@@ -11,9 +11,11 @@ import { ScrollView } from "react-native-gesture-handler";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import Geocoder from "react-native-geocoding";
+import DropDownPicker from "react-native-dropdown-picker";
 import SportsSettingsModal from "../components/buddiesScreen/SportsSettingsModal";
 Geocoder.init("AIzaSyAScpUl6RLneX5V5LB9dNvCxE6j334fR-c");
 import { BlurView } from "expo-blur";
+
 // // const onSettingsPress = () => {
 // //   // console.log('hey');
 // //   props.cardPressed(sports)
@@ -121,9 +123,20 @@ function Settings() {
       <Modal animationType="fade" transparent={true} visible={isModalOpen}>
         <BlurView style={styles.blur} tint="light" intensity={80}>
           <View style={styles.box}>
-            <Text> HELLO WORLD</Text>
-            <Text>{currentSport.name}</Text>
-            <Text>{currentSport.level}</Text>
+            <View>
+              {/* <DropDownPicker
+                open={open}
+                value={value}
+                items={items}
+                setOpen={setOpen}
+                setValue={setValue}
+                setItems={setItems}
+                placeholder="Select Your Sport"
+              /> */}
+            </View>
+            <View style={styles.container}></View>
+            {/* <Text>{currentSport.name}</Text>
+            <Text>{currentSport.level}</Text> */}
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
@@ -311,7 +324,7 @@ const styles = StyleSheet.create({
   text: {
     padding: 10,
     color: "grey",
-    marginTop: 30,
+    marginTop: 50,
     marginLeft: 20,
   },
   container: {
@@ -402,7 +415,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
     borderRadius: 30,
     marginLeft: 4,
-    marginTop: 150,
+    marginTop: 180,
   },
   image: {
     height: 180,
