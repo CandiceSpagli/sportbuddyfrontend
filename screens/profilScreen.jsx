@@ -8,7 +8,7 @@ import Navbar from "../components/buddiesScreen/navbar/NavBarPopUp";
 import SportsSettingsModal from "../components/buddiesScreen/SportsSettingsModal";
 
 import Carousel from "react-native-snap-carousel";
-import { color } from "react-native-reanimated";
+import { useFonts } from "expo-font";
 
 // icons
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -38,27 +38,50 @@ function ProfilScreen(props) {
   //   );
   // }
 
+  const [loaded] = useFonts({
+    bohemianSoul: require("../assets/fonts/bohemianSoul.otf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   const sportsCards = ["one", "two", "three"];
   const renderItem = () => {
     return (
       <View style={styles.sportCard}>
-        <View style={{alignItems:'center'}}>
+        <View style={{ alignItems: "center" }}>
           <Image
             style={styles.sportSticker}
             source={require("../img/staticImg/stickers/course.png")}
           />
         </View>
         <Text style={styles.sportTitle}>Course</Text>
-        <View style={{marginLeft: 30, marginTop:-5}}>
-          <View style={{ flexDirection: "row", alignItems:'baseline' }}>
-            <Text style={{fontSize: 50}}>25 </Text>
+        <View style={{ marginLeft: 30, marginTop: -5 }}>
+          <View style={{ flexDirection: "row", alignItems: "baseline" }}>
+            <Text style={{ fontSize: 50, fontWeight:'bold' }}>25 </Text>
             <Text style={styles.sportCardText}>séances !</Text>
           </View>
           <Text style={styles.sportCardText}>Niveau : </Text>
-          <View style={{ flexDirection: "row", marginTop:10 }}>
-            <FontAwesome5 style={{marginRight:2}} name="medal" size={40} color={"#f42c04"} />
-            <FontAwesome5 style={{marginLeft:2,marginRight:2}} name="medal" size={40} color={"#f42c04"} />
-            <FontAwesome5 style={{marginLeft:2}} name="medal" size={40} color={"#f42c04"} />
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <FontAwesome5
+              style={{ marginRight: 2 }}
+              name="medal"
+              size={40}
+              color={"#f42c04"}
+            />
+            <FontAwesome5
+              style={{ marginLeft: 2, marginRight: 2 }}
+              name="medal"
+              size={40}
+              color={"#f42c04"}
+            />
+            <FontAwesome5
+              style={{ marginLeft: 2 }}
+              name="medal"
+              size={40}
+              color={"#f42c04"}
+            />
           </View>
         </View>
       </View>
@@ -129,7 +152,8 @@ function ProfilScreen(props) {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 135,
+    fontSize: 115,
+    fontFamily: "bohemianSoul",
   },
   profil: {
     height: 175,

@@ -1,23 +1,38 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-function UserSearchCard() {
+function UserSearchCard(props) {
+  const sportsArray = props.sports;
+  console.log("sportsArray", sportsArray);
+
+  const sportsMAP = sportsArray.map((sports, index) => {
+    return (
+      <Text style={styles.sportsText} key={index}>
+        {sports.type}
+      </Text>
+    );
+  });
+
   return (
     <View style={styles.cardsContainer}>
-      <View style={styles.profilCard}>
+      <TouchableOpacity style={styles.profilCard}>
         <Image
           style={styles.pic}
           source={require("../../img/staticImg/user.jpg")}
         />
         <View style={{ flexDirection: "column" }}>
-          <Text style={styles.nameText}>Candice Spagli</Text>
+          <Text style={styles.nameText}>
+            {props.firstname} {props.lastname}
+          </Text>
           <View style={styles.sportBox}>
-            <Text style={styles.sportsText}>Course</Text>
+            {/* <Text style={styles.sportsText}>Course</Text>
             <Text style={styles.sportsText}>Boxe</Text>
-            <Text style={styles.sportsText}>Fitness</Text>
+            <Text style={styles.sportsText}>Fitness</Text> */}
+            {sportsMAP}
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -48,7 +63,7 @@ const styles = StyleSheet.create({
   sportBox: {
     // backgroundColor: 'yellow',
     flexDirection: "row",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     marginTop: 5,
   },
   sportsText: {

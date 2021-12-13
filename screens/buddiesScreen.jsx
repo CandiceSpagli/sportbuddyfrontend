@@ -15,6 +15,9 @@ import { Button } from "react-native-elements";
 import { connect } from "react-redux";
 // DateTimePicker
 import DateTimePicker from "@react-native-community/datetimepicker";
+// useFonts
+import { useFonts } from "expo-font";
+
 
 // f42c04
 
@@ -33,6 +36,7 @@ import UserSearch from '../components/buddiesScreen/UserSearch'
 import Navbar from '../components/buddiesScreen/navbar/NavBarPopUp'
 
 function BuddiesScreen(props) {
+
   const [isPlusClicked, setIsPlusClicked] = useState(false);
   const [myLevel, setMyLevel] = useState(0);
   const [isInputClicked, setIsInputClicked] = useState(false);
@@ -282,6 +286,14 @@ function BuddiesScreen(props) {
     }
   };
 
+  const [loaded] = useFonts({
+    bohemianSoul: require("../assets/fonts/bohemianSoul.otf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <>
     <View style={styles.container}>
@@ -311,7 +323,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 135,
+    fontSize: 115,
+    fontFamily: "bohemianSoul",
   },
   boxInteraction: {
     flexDirection: "row",

@@ -1,18 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import UserSearchCard from "./UserSearchCard";
 
 function UserSearch() {
+
+  const [usersList, setUsersList] = useState([])
+  // console.log('usersList', usersList);
+  useEffect(() => {
+    async function usersListInfos() {
+      // const rawResponse = await fetch('http://192.168.1.29:3000/searchScreen')
+      const rawResponse = await fetch("http://10.3.11.9:3000/searchScreen")
+      const response = await rawResponse.json()
+      setUsersList(response.users)
+    }
+    usersListInfos()
+  }, [])
+
+  const usersListMAP = usersList.map((users, index) => {
+    return (
+      <UserSearchCard
+        key={index}
+        firstname={users.firstname}
+        lastname={users.lastname}
+        sports={users.sports}
+      />
+    )
+  })
+
   return (
     <ScrollView style={styles.container}>
-      <UserSearchCard />
-      <UserSearchCard />
-      <UserSearchCard />
-      <UserSearchCard />
-      <UserSearchCard />
-      <UserSearchCard />
-      <UserSearchCard />
+      <View style={{marginBottom:30}}>
+        {usersListMAP}
+      </View>
     </ScrollView>
   );
 }
