@@ -28,10 +28,10 @@ import { Entypo } from "@expo/vector-icons";
 // components
 import BuddieCard from "../components/buddiesScreen/BuddieCard";
 import SportsButtons from "../components/buddiesScreen/SportsButtons";
-import BuddiePopUp from '../components/buddiesScreen/BuddiePopUp'
-import SessionPopUp from '../components/buddiesScreen/SessionPopUp'
-import BuddiesListFilter from '../components/buddiesScreen/BuddiesListFilter'
-import UserSearch from '../components/buddiesScreen/UserSearch'
+import BuddiePopUp from "../components/buddiesScreen/BuddiePopUp";
+import SessionPopUp from "../components/buddiesScreen/SessionPopUp";
+import BuddiesListFilter from "../components/buddiesScreen/BuddiesListFilter";
+import UserSearch from "../components/buddiesScreen/UserSearch";
 
 function BuddiesScreen(props) {
   const [isPlusClicked, setIsPlusClicked] = useState(false);
@@ -316,14 +316,8 @@ function BuddiesScreen(props) {
       </View>
       {searchInput()}
       <View style={{ alignItems: "center" }}>{plusBtn()}</View>
-      {
-        !isInputClicked &&
-        <BuddiesListFilter/>
-      }
-      {
-        isInputClicked &&
-        <UserSearch />
-      }
+      {!isInputClicked && <BuddiesListFilter />}
+      {isInputClicked && <UserSearch />}
     </View>
   );
 }
@@ -333,7 +327,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 135,
+    fontSize: 100,
   },
   boxInteraction: {
     flexDirection: "row",

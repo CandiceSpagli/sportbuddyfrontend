@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TextInput, Link, Button, StyleSheet } from "react-native";
+import { View, TextInput, Link, Button, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
 
 function signIn(props) {
@@ -50,50 +50,88 @@ function signIn(props) {
   return (
     <View>
       <TextInput
-        style={styles.input}
+        style={styles.inputone}
         onChangeText={(value) => onChangeEmail(value)}
         className="Login-input"
         placeholder="email"
         value={signInEmail}
       />
+      <View>
+        <Text
+          style={{
+            marginTop: -100,
+            marginLeft: 10,
+            color: "grey",
+            marginLeft: 50,
+          }}
+        >
+          {" "}
+          Adresse email{" "}
+        </Text>
+      </View>
 
       <TextInput
-        style={styles.input}
+        style={styles.inputtwo}
         onChangeText={(value) => OnChangePassword(value)}
         className="Login-input"
         placeholder="password"
         value={signInPassword}
       />
+      <Text
+        style={{
+          marginLeft: 10,
+          color: "grey",
+          marginTop: -90,
+          marginLeft: 50,
+        }}
+      >
+        {" "}
+        Mot de passe{" "}
+      </Text>
 
       {/* {tabErrorsSignin} */}
+      <View style={{ marginTop: 150 }}>
+        <Button
+          style={{ marginTop: 50 }}
+          onPress={() => handleSubmitSignin()}
+          style={{ width: 80 }}
+          type="primary"
+          title="SIGN-IN"
+        ></Button>
 
-      <Button
-        style={styles.input}
-        onPress={() => handleSubmitSignin()}
-        style={{ width: "80px" }}
-        type="primary"
-        title="SIGN-IN"
-      ></Button>
-
-      <Button
-        style={styles.input}
-        onPress={() => goToSignUp()}
-        style={{ width: "80px" }}
-        type="primary"
-        title="PRESS TO CREATE AN ACCOUNT?"
-      ></Button>
+        <Button
+          style={styles.input}
+          onPress={() => goToSignUp()}
+          style={{ width: 80 }}
+          type="primary"
+          title="PRESS TO CREATE AN ACCOUNT?"
+        ></Button>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  input: {
+  inputone: {
     marginTop: 40,
-    height: 40,
+    height: 50,
+    width: 280,
     margin: 12,
     borderWidth: 2,
     padding: 10,
     borderRadius: 60,
+    marginTop: 260,
+    marginLeft: 50,
+  },
+  inputtwo: {
+    marginTop: 40,
+    height: 50,
+    width: 280,
+    margin: 12,
+    borderWidth: 2,
+    padding: 10,
+    borderRadius: 60,
+    marginLeft: 50,
   },
 });
 
