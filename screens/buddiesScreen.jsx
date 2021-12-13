@@ -305,12 +305,6 @@ function BuddiesScreen(props) {
         {!isInputClicked && <BuddiesListFilter />}
         {isInputClicked && <UserSearch />}
       </View>
-      {searchInput()}
-      <View style={{ alignItems: "center" }}>{plusBtn()}</View>
-      <View>
-        {!isInputClicked && <BuddiesListFilter />}
-        {isInputClicked && <UserSearch navigation={props.navigation} />}
-      </View>
       <Navbar navigation={props.navigation} />
     </>
   );
