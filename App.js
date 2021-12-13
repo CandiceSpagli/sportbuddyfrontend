@@ -20,16 +20,16 @@ import signIn from "./screens/SignIn";
 import signUp from "./screens/SignUp";
 import session from "./screens/Session";
 import setting from "./screens/Settings";
-// navbar
-import NavBarPopUp from "./components/buddiesScreen/navbar/NavBarPopUp";
+import UserProfilScreen from './screens/UserProfilScreen'
 
 // reducers
 import userInfosModal from "./reducers/userInfosModal.reducer";
+import sportsFilterButtons from "./reducers/sportsFilterButtons.reducer";
 import token from "./reducers/token";
 
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
-const store = createStore(combineReducers({ userInfosModal, token }));
+const store = createStore(combineReducers({ userInfosModal, sportsFilterButtons , token }));
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,10 +43,10 @@ function App() {
             headerShown: false,
             tabBarStyle: {
               // backgroundColor: 'red',
-              // position: 'absolute',
-              // bottom: -100,
-              // opacity: 0
-            },
+              position: 'absolute',
+              bottom: -100,
+              opacity: 0
+            }
           }}
         >
           <Tab.Screen name="SignIn" component={signIn} />
@@ -55,6 +55,7 @@ function App() {
           <Tab.Screen name="SignUp" component={signUp} />
           <Tab.Screen name="Session" component={session} />
           <Tab.Screen name="Settings" component={setting} />
+          <Tab.Screen name="UserProfilScreen" component={UserProfilScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>

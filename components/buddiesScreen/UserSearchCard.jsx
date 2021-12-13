@@ -14,9 +14,16 @@ function UserSearchCard(props) {
     );
   });
 
+  const cardPressed = () => {
+    props.navigation.navigate('UserProfilScreen')
+  }
+
   return (
     <View style={styles.cardsContainer}>
-      <TouchableOpacity style={styles.profilCard}>
+      <TouchableOpacity
+        style={styles.profilCard}
+        onPress={() => cardPressed()}
+      >
         <Image
           style={styles.pic}
           source={require("../../img/staticImg/user.jpg")}
@@ -26,9 +33,6 @@ function UserSearchCard(props) {
             {props.firstname} {props.lastname}
           </Text>
           <View style={styles.sportBox}>
-            {/* <Text style={styles.sportsText}>Course</Text>
-            <Text style={styles.sportsText}>Boxe</Text>
-            <Text style={styles.sportsText}>Fitness</Text> */}
             {sportsMAP}
           </View>
         </View>

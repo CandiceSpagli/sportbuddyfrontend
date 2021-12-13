@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import UserSearchCard from "./UserSearchCard";
 
-function UserSearch() {
+function UserSearch(props) {
   const [usersList, setUsersList] = useState([]);
   // console.log('usersList', usersList);
   useEffect(() => {
     async function usersListInfos() {
       // const rawResponse = await fetch('http://192.168.1.29:3000/searchScreen')
-      const rawResponse = await fetch("http://10.3.11.6:3000/searchScreen");
+      const rawResponse = await fetch("http://10.3.11.9:3000/searchScreen");
       const response = await rawResponse.json();
       setUsersList(response.users);
     }
@@ -18,12 +25,14 @@ function UserSearch() {
 
   const usersListMAP = usersList.map((users, index) => {
     return (
-      <UserSearchCard
-        key={index}
-        firstname={users.firstname}
-        lastname={users.lastname}
-        sports={users.sports}
-      />
+      <TouchableOpacity key={index}>
+        <UserSearchCard
+          firstname={users.firstname}
+          lastname={users.lastname}
+          sports={users.sports}
+          navigation={props.navigation}
+        />
+      </TouchableOpacity>
     );
   });
 

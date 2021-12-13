@@ -23,34 +23,6 @@ function BuddieCard(props) {
     // console.log('users Array !!', user);
   }
 
-  // const sessionLevel = () => {
-  //   if (props.level === 1) {
-  //     return (
-  //       <View style={{ flexDirection: "row" }}>
-  //         <FontAwesome5 name="medal" size={24} color="#f42c04" />
-  //         <FontAwesome5 name="medal" size={24} color="#f42c04" />
-  //         <FontAwesome5 name="medal" size={24} color="#f42c04" />
-  //       </View>
-  //     )
-  //   } else if (props.level === 2) {
-  //     return (
-  //     <View style={{ flexDirection: "row" }}>
-  //       <FontAwesome5 name="medal" size={24} color="#f42c04" />
-  //       <FontAwesome5 name="medal" size={24} color="#f42c04" />
-  //       <FontAwesome5 name="medal" size={24} color="#f42c04" />
-  //     </View>
-  //     )
-  //   } else {
-  //     return (
-  //       <View style={{ flexDirection: "row" }}>
-  //         <FontAwesome5 name="medal" size={24} color="#f42c04" />
-  //         <FontAwesome5 name="medal" size={24} color="#f42c04" />
-  //         <FontAwesome5 name="medal" size={24} color="#f42c04" />
-  //       </View>
-  //     )
-  //   }
-  // }
-
   const tabLevel = [];
   for (var i = 0; i < 3; i++) {
     let color = "#DCDCDC";
