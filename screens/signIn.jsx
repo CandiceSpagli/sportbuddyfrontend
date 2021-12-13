@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { View, TextInput, Link, Button, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
 
+// navbar
+import Navbar from "../components/buddiesScreen/navbar/NavBarPopUp";
+
 function signIn(props) {
   const [signInEmail, setSignInEmail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
@@ -48,66 +51,69 @@ function signIn(props) {
   };
 
   return (
-    <View>
-      <TextInput
-        style={styles.inputone}
-        onChangeText={(value) => onChangeEmail(value)}
-        className="Login-input"
-        placeholder="email"
-        value={signInEmail}
-      />
+    <>
       <View>
+        <TextInput
+          style={styles.inputone}
+          onChangeText={(value) => onChangeEmail(value)}
+          className="Login-input"
+          placeholder="email"
+          value={signInEmail}
+        />
+        <View>
+          <Text
+            style={{
+              marginTop: -100,
+              marginLeft: 10,
+              color: "grey",
+              marginLeft: 50,
+            }}
+          >
+            {" "}
+            Adresse email{" "}
+          </Text>
+        </View>
+
+        <TextInput
+          style={styles.inputtwo}
+          onChangeText={(value) => OnChangePassword(value)}
+          className="Login-input"
+          placeholder="password"
+          value={signInPassword}
+        />
         <Text
           style={{
-            marginTop: -100,
             marginLeft: 10,
             color: "grey",
+            marginTop: -90,
             marginLeft: 50,
           }}
         >
           {" "}
-          Adresse email{" "}
+          Mot de passe{" "}
         </Text>
+
+        {/* {tabErrorsSignin} */}
+        <View style={{ marginTop: 150 }}>
+          <Button
+            style={{ marginTop: 50 }}
+            onPress={() => handleSubmitSignin()}
+            style={{ width: 80 }}
+            type="primary"
+            title="SIGN-IN"
+          ></Button>
+
+          <Button
+            style={styles.input}
+            onPress={() => goToSignUp()}
+            style={{ width: 80 }}
+            type="primary"
+            title="PRESS TO CREATE AN ACCOUNT?"
+          ></Button>
+        </View>
       </View>
-
-      <TextInput
-        style={styles.inputtwo}
-        onChangeText={(value) => OnChangePassword(value)}
-        className="Login-input"
-        placeholder="password"
-        value={signInPassword}
-      />
-      <Text
-        style={{
-          marginLeft: 10,
-          color: "grey",
-          marginTop: -90,
-          marginLeft: 50,
-        }}
-      >
-        {" "}
-        Mot de passe{" "}
-      </Text>
-
-      {/* {tabErrorsSignin} */}
-      <View style={{ marginTop: 150 }}>
-        <Button
-          style={{ marginTop: 50 }}
-          onPress={() => handleSubmitSignin()}
-          style={{ width: 80 }}
-          type="primary"
-          title="SIGN-IN"
-        ></Button>
-
-        <Button
-          style={styles.input}
-          onPress={() => goToSignUp()}
-          style={{ width: 80 }}
-          type="primary"
-          title="PRESS TO CREATE AN ACCOUNT?"
-        ></Button>
-      </View>
-    </View>
+      <Navbar navigation={props.navigation} />
+    </>
   );
 }
 

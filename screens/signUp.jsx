@@ -50,55 +50,55 @@ function signUp(props) {
   };
 
   return (
-    <View className="sign-Up">
-      <TextInput
-        style={styles.input}
-        onChangeText={(value) => setFirstnameFromFront(value)}
-        className="Login-input"
-        placeholder="firstname"
-        value={firstnameFromFront}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={(value) => setLastnameFromFront(value)}
-        className="Login-input"
-        placeholder="lastname"
-        value={lastnameFromFront}
-      />
+      <View className="sign-Up">
+        <TextInput
+          style={styles.input}
+          onChangeText={(value) => setFirstnameFromFront(value)}
+          className="Login-input"
+          placeholder="firstname"
+          value={firstnameFromFront}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={(value) => setLastnameFromFront(value)}
+          className="Login-input"
+          placeholder="lastname"
+          value={lastnameFromFront}
+        />
 
-      <TextInput
-        style={styles.input}
-        onChangeText={(value) => setEmailFromFront(value)}
-        className="Login-input"
-        placeholder="email"
-        value={emailFromFront}
-      />
+        <TextInput
+          style={styles.input}
+          onChangeText={(value) => setEmailFromFront(value)}
+          className="Login-input"
+          placeholder="email"
+          value={emailFromFront}
+        />
 
-      <TextInput
-        style={styles.input}
-        onChangeText={(value) => setPasswordFromFront(value)}
-        className="Login-input"
-        placeholder="password"
-        value={passwordFromFront}
-      />
-      {/* {tabErrorsSignup} */}
+        <TextInput
+          style={styles.input}
+          onChangeText={(value) => setPasswordFromFront(value)}
+          className="Login-input"
+          placeholder="password"
+          value={passwordFromFront}
+        />
+        {/* {tabErrorsSignup} */}
 
-      <Button
-        style={styles.input}
-        onPress={() => handleSubmitSignup()}
-        style={{ width: "80px" }}
-        type="primary"
-        title="SIGN-UP"
-      ></Button>
+        <Button
+          style={styles.input}
+          onPress={() => handleSubmitSignup()}
+          style={{ width: "80px" }}
+          type="primary"
+          title="SIGN-UP"
+        ></Button>
 
-      <Button
-        style={styles.input}
-        onPress={() => goToSignIn()}
-        style={{ width: "80px" }}
-        type="primary"
-        title="ALREADY HAVE UN ACCOUNT? LOGIN"
-      ></Button>
-    </View>
+        <Button
+          style={styles.input}
+          onPress={() => goToSignIn()}
+          style={{ width: "80px" }}
+          type="primary"
+          title="ALREADY HAVE UN ACCOUNT? LOGIN"
+        ></Button>
+      </View>
   );
 }
 
