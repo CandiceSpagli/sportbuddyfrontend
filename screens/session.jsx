@@ -215,7 +215,7 @@ function session(props) {
           >
             <Marker
               key={i}
-              pinColor="blue"
+              pinColor="red"
               coordinate={addRDV}
               // title={POI.titre}
               // description={POI.description}

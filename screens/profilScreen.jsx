@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import { Button, Overlay, Card, Icon } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
+import { connect } from "react-redux";
 
 // navbar
 import Navbar from "../components/buddiesScreen/navbar/NavBarPopUp";
@@ -37,14 +38,32 @@ function ProfilScreen(props) {
   //     />
   //   );
   // }
+  const [firstname, setFirstname] = useState("");
+  console.log("FIRSTNAME PROFILSCREEN", firstname);
+  const [lastname, setLastname] = useState("");
+  console.log("LASTNAME PROFILSCREEN", lastname);
+  // const [loaded] = useFonts({
+  //   bohemianSoul: require("../assets/fonts/bohemianSoul.otf"),
+  // });
 
-  const [loaded] = useFonts({
-    bohemianSoul: require("../assets/fonts/bohemianSoul.otf"),
-  });
+  // if (!loaded) {
+  //   return null;
+  // }
 
-  if (!loaded) {
-    return null;
-  }
+  useEffect(() => {
+    // console.log("firstnameuser", user);
+    async function firstnameProfil() {
+      console.log("props.token from profilScreen", props.token);
+      const rawResponse = await fetch(
+        `http://10.3.11.5:3000/profilScreen?token=${props.token}`
+      );
+      const response = await rawResponse.json();
+      console.log("response", response);
+      setFirstname(response.firstname);
+      setLastname(response.lastname);
+    }
+    firstnameProfil();
+  }, []);
 
   const sportsCards = ["one", "two", "three"];
   const renderItem = () => {
@@ -105,8 +124,8 @@ function ProfilScreen(props) {
               source={require("../img/staticImg/user.jpg")}
             />
           </View>
-          <Text style={styles.firstname}>Christelle</Text>
-          <Text style={styles.lastname}>Degiovanni</Text>
+          <Text style={styles.firstname}>{firstname}</Text>
+          <Text style={styles.lastname}>{lastname}</Text>
           <View style={styles.paragraph}>
             <Text style={{ fontSize: 50, margin: 10 }}>"</Text>
             <Text style={styles.description}>
@@ -153,7 +172,7 @@ function ProfilScreen(props) {
 const styles = StyleSheet.create({
   title: {
     fontSize: 115,
-    fontFamily: "bohemianSoul",
+    // fontFamily: "bohemianSoul",
   },
   profil: {
     height: 175,
@@ -241,5 +260,8 @@ const styles = StyleSheet.create({
     fontSize: 40,
   },
 });
+function mapStateToProps(state) {
+  return { token: state.token };
+}
 
-export default ProfilScreen;
+export default connect(mapStateToProps, null)(ProfilScreen);

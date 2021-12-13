@@ -84,8 +84,7 @@ function Settings(props) {
     .catch((error) => console.warn(error));
 
   var handleSubmitContinue = async () => {
-    console.log("TOKEN", props.token);
-    const data = await fetch("http://10.3.11.6:3000/settings", {
+    const data = await fetch("http://10.3.11.5:3000/settings", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `token=${props.token}&lastname=${lastName}&firstname=${firstName}&gender=${gender}`,
@@ -372,6 +371,7 @@ function Settings(props) {
                 />
               );
             }
+
             return (
               <View>
                 <View>
