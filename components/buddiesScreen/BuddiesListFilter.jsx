@@ -4,21 +4,38 @@ import { Text, View, ScrollView } from "react-native";
 // components
 import SportsButtons from "./SportsButtons";
 import BuddieCard from "./BuddieCard";
+import { connect } from "react-redux";
 
-function BuddiesListFilter() {
+function BuddiesListFilter(props) {
   const [sessionsCards, setSessionsCards] = useState([]);
   // console.log("sessionsCards", sessionsCards);
+
+  // const [isSportSelected, setIsSportSelected] = useState(false);
+  // const [sport, setSport] = useState("");
+  // console.log("sportSelected", props.sportsFilterButtons);
+  // setSportSelected(props.sportsFilterButtons);
+
   useEffect(() => {
     async function buddiesCardsInfos() {
       // const rawResponse = await fetch('http://192.168.1.29:3000/buddiesScreen')
       const rawResponse = await fetch("http://10.3.11.9:3000/buddiesScreen");
       const response = await rawResponse.json();
+
       setSessionsCards(response.sessions);
     }
     buddiesCardsInfos();
   }, []);
 
-  const sessionsCardsMAP = sessionsCards.map((sessionInfos, index) => {
+  const filterSessionsCards = sessionsCards.filter((sessionCard) => {
+    if (props.sportsFilterButtons === null) {
+      return true
+    }
+    if (props.sportsFilterButtons === sessionCard.sport) {
+      return true
+    }
+  })
+
+  const sessionsCardsMAP = filterSessionsCards.map((sessionInfos, index) => {
     // console.log('sessionInfos', sessionInfos);
     return (
       <BuddieCard
@@ -56,4 +73,8 @@ function BuddiesListFilter() {
   );
 }
 
-export default BuddiesListFilter;
+function mapStateToProps(state) {
+  return { sportsFilterButtons: state.sportsFilterButtons };
+}
+
+export default connect(mapStateToProps, null)(BuddiesListFilter);
