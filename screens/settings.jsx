@@ -15,13 +15,15 @@ import DropDownPicker from "react-native-dropdown-picker";
 import SportsSettingsModal from "../components/buddiesScreen/SportsSettingsModal";
 Geocoder.init("AIzaSyAScpUl6RLneX5V5LB9dNvCxE6j334fR-c");
 import { BlurView } from "expo-blur";
+import { useFonts } from "expo-font";
+import token from "../reducers/token";
 
 // // const onSettingsPress = () => {
 // //   // console.log('hey');
 // //   props.cardPressed(sports)
 // //   // console.log('users Array !!', user);
 // }
-function Settings() {
+function Settings(props) {
   const [dateOfBirth, setDateOfBirth] = useState(new Date());
   const [selectedSport, setSelectedSport] = useState();
   const [currentLatitude, setCurrentLatitude] = useState(0);
@@ -32,23 +34,24 @@ function Settings() {
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [gender, setGender] = useState("Man");
-  const [sports, setSports] = useState([
-    { name: "Run", level: 1 },
-    { name: "Fitness", level: 2 },
-    { name: "Yoga", level: 1 },
-  ]);
+  const [sports, setSports] = useState([]);
 
   const [currentSport, setCurrentSport] = useState({
-    name: "Course",
+    name: "Yoga",
     level: 2,
   });
+
+  console.log("SPORT", sports);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log("SPORTS", sports);
-  console.log("SPORTS.NAME", sports[0].name);
-  console.log("SPORT LEVEL", sports[0].level);
+  console.log("CURRENT SPORT", currentSport);
+
+  const defaultSports = ["Course", "Fitness", "Yoga"];
+  // console.log("SPORTS", sports);
+
   // console.log("FIRSTNAME", firstName);
   // console.log("LASTNAME", lastName);
-  console.log("GENDER", gender);
+  // console.log("GENDER", gender);
 
   // console.log("CURRENTLATITUDE", currentLatitude);
   // console.log("CURRENTLONGITUDE", currentLongitude);
@@ -56,6 +59,7 @@ function Settings() {
 
   // USEEFFECT
   useEffect(() => {
+    props.navigation.navigate("Buddies");
     async function askPermissions() {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status === "granted") {
@@ -80,10 +84,11 @@ function Settings() {
     .catch((error) => console.warn(error));
 
   var handleSubmitContinue = async () => {
+    console.log("TOKEN", props.token);
     const data = await fetch("http://10.3.11.6:3000/settings", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `lastname=${lastName}&firstname=${firstName}&dateOfBirth=${dateOfBirth}&gender=${gender}`,
+      body: `token=${props.token}&lastname=${lastName}&firstname=${firstName}&gender=${gender}`,
     });
 
     const body = await data.json();
@@ -116,27 +121,68 @@ function Settings() {
     setGender("Man");
   };
 
-  const onPressModal = () => {};
+  const onPressModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const onValuePicker = (itemValue, itemIndex) => {
+    // console.log("ITEM VALUE", itemValue);
+    // console.log("ITEM INDEX", itemIndex);
+    setCurrentSport({
+      name: itemValue,
+      level: currentSport.level,
+    });
+  };
+
+  const onSelectCard = (level) => {
+    // console.log("CLICK");
+    // console.log("LEVEL", level);
+    setIsModalOpen(false);
+    setCurrentSport({
+      name: currentSport.name,
+      level: currentSport.level,
+    });
+    setSports([
+      ...sports,
+      {
+        name: currentSport.name,
+        level: level,
+      },
+    ]);
+  };
+  const [loaded] = useFonts({
+    bohemianSoul: require("../assets/fonts/bohemianSoul.otf"),
+    belledeMai: require("../assets/fonts/BelledeMai4.0-Heavy.otf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
 
   return (
-    <View>
+    <View style={{ backgroundColor: "white" }}>
       <Modal animationType="fade" transparent={true} visible={isModalOpen}>
         <BlurView style={styles.blur} tint="light" intensity={80}>
           <View style={styles.box}>
             <View>
-              {/* <DropDownPicker
-                open={open}
-                value={value}
-                items={items}
-                setOpen={setOpen}
-                setValue={setValue}
-                setItems={setItems}
-                placeholder="Select Your Sport"
-              /> */}
+              <Picker
+                style={styles.picker}
+                selectedValue={currentSport.name}
+                // style={{ height: 50, width: 150 }}
+                onValueChange={(itemValue, itemIndex) =>
+                  onValuePicker(itemValue, itemIndex)
+                }
+              >
+                {defaultSports.map((sport, index) => {
+                  // console.log("SPORTS INFO BIS", sportsinfo);
+
+                  return (
+                    <Picker.Item key={index} label={sport} value={sport} />
+                  );
+                })}
+              </Picker>
             </View>
-            <View style={styles.container}></View>
-            {/* <Text>{currentSport.name}</Text>
-            <Text>{currentSport.level}</Text> */}
+
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
@@ -172,6 +218,75 @@ function Settings() {
                   type="clear"
                   title="Selectionner"
                   titleStyle={{ color: "black" }}
+                  onPress={() => onSelectCard(1)}
+                ></Button>
+              </View>
+              <View style={styles.card}>
+                <Image
+                  source={require("../img/staticImg/entrainementfit.png")}
+                  resizeMode="cover"
+                  style={styles.image}
+                ></Image>
+                <Text
+                  style={{
+                    fontSize: 30,
+                    fontFamily: "Cochin",
+                    marginLeft: 85,
+                    marginTop: 15,
+                  }}
+                >
+                  Intermédiaire
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: "Cochin",
+                    fontSize: 15,
+                    textAlign: "center",
+                    marginLeft: 3,
+                  }}
+                >
+                  Vous vous entrainez rarement ou jamais
+                </Text>
+                <Button
+                  style={styles.select}
+                  type="clear"
+                  title="Selectionner"
+                  titleStyle={{ color: "black" }}
+                  onPress={() => onSelectCard(2)}
+                ></Button>
+              </View>
+              <View style={styles.card}>
+                <Image
+                  source={require("../img/staticImg/entrainementfit.png")}
+                  resizeMode="cover"
+                  style={styles.image}
+                ></Image>
+                <Text
+                  style={{
+                    fontSize: 30,
+                    fontFamily: "Cochin",
+                    marginLeft: 85,
+                    marginTop: 15,
+                  }}
+                >
+                  Expert
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: "Cochin",
+                    fontSize: 15,
+                    textAlign: "center",
+                    marginLeft: 3,
+                  }}
+                >
+                  Vous vous entrainez rarement ou jamais
+                </Text>
+                <Button
+                  style={styles.select}
+                  type="clear"
+                  title="Selectionner"
+                  titleStyle={{ color: "black" }}
+                  onPress={() => onSelectCard(3)}
                 ></Button>
               </View>
             </ScrollView>
@@ -180,6 +295,11 @@ function Settings() {
       </Modal>
       <ScrollView>
         <Text style={styles.step}> STEP 2/3</Text>
+        <Text style={{ fontFamily: "bohemianSoul", fontSize: 40 }}>
+          {" "}
+          Paramètre
+        </Text>
+
         <Text style={styles.text}> Nom</Text>
         <TextInput
           style={styles.input}
@@ -229,10 +349,12 @@ function Settings() {
             onPress={() => onValidateMan()}
           />
         </View>
-        <Text style={styles.level}>Votre niveau en : </Text>
+        {sports.length > 0 && (
+          <Text style={styles.level}>Votre niveau en : </Text>
+        )}
         <View style={{ marginLeft: 40, marginVertical: 10 }}>
           {sports.map((sportsinfo, index) => {
-            console.log("SPORTSINFO", sportsinfo);
+            // console.log("SPORTSINFO", sportsinfo);
             const tabLevel = [];
             for (var i = 0; i < 3; i++) {
               let color = "#DCDCDC";
@@ -271,12 +393,9 @@ function Settings() {
             }}
             type="clear"
             titleStyle={{ color: "white" }}
-            title="Changer"
+            title="Ajouter un sport"
             onPress={() => onPressModal()}
-          >
-            {" "}
-            Changer
-          </Button>
+          />
         </View>
 
         <View>
@@ -374,6 +493,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     height: 45,
     width: 100,
+    marginLeft: 15,
     borderColor: "rgba(244, 44, 4, 0.4)",
   },
   buttonNonSelected: {
@@ -384,7 +504,7 @@ const styles = StyleSheet.create({
     height: 45,
     width: 100,
     marginLeft: 15,
-    borderColor: "rgba(244, 44, 4, 0.4)",
+    borderColor: "#f42c04",
   },
 
   level: {
@@ -396,26 +516,23 @@ const styles = StyleSheet.create({
   },
   fitness: {
     color: "white",
-    borderColor: "rgba(244, 44, 4, 0.4)",
+    borderColor: "#f42c04",
     borderWidth: 0.5,
     borderRadius: 30,
   },
   picker: {
-    height: 100,
     width: 100,
     marginBottom: 100,
-    marginTop: -120,
-    marginLeft: 250,
   },
 
   card: {
-    height: 370,
+    // height: 300,
     width: 300,
     backgroundColor: "rgba(244, 44, 4, 0.4)",
     alignContent: "center",
     borderRadius: 30,
     marginLeft: 4,
-    marginTop: 180,
+    marginTop: 0,
   },
   image: {
     height: 180,
@@ -457,14 +574,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   box: {
+    justifyContent: "center",
+    flex: 1,
     backgroundColor: "white",
     borderRadius: 60,
-    height: 720,
+    // height: 720,
     width: 350,
     shadowColor: "black",
     shadowRadius: 12,
     shadowOpacity: 0.1,
     alignItems: "center",
+    paddingBottom: 50,
+    paddingRight: 30,
+    paddingLeft: 30,
   },
   blur: {
     flex: 1,
@@ -474,4 +596,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Settings;
+function mapStateToProps(state) {
+  return { token: state.token };
+}
+
+export default connect(mapStateToProps, null)(Settings);

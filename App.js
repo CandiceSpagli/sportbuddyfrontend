@@ -43,10 +43,10 @@ function App() {
             headerShown: false,
             tabBarStyle: {
               // backgroundColor: 'red',
-              position: 'absolute',
+              // position: 'absolute',
               // bottom: -100,
               // opacity: 0
-            }
+            },
           }}
         >
           <Tab.Screen name="SignIn" component={signIn} />

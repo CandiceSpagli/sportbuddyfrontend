@@ -18,7 +18,6 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 // useFonts
 import { useFonts } from "expo-font";
 
-
 // f42c04
 
 // icons
@@ -28,15 +27,14 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
 // components
-import BuddiePopUp from '../components/buddiesScreen/BuddiePopUp'
-import SessionPopUp from '../components/buddiesScreen/SessionPopUp'
-import BuddiesListFilter from '../components/buddiesScreen/BuddiesListFilter'
-import UserSearch from '../components/buddiesScreen/UserSearch'
+import BuddiePopUp from "../components/buddiesScreen/BuddiePopUp";
+import SessionPopUp from "../components/buddiesScreen/SessionPopUp";
+import BuddiesListFilter from "../components/buddiesScreen/BuddiesListFilter";
+import UserSearch from "../components/buddiesScreen/UserSearch";
 // navbar
-import Navbar from '../components/buddiesScreen/navbar/NavBarPopUp'
+import Navbar from "../components/buddiesScreen/navbar/NavBarPopUp";
 
 function BuddiesScreen(props) {
-
   const [isPlusClicked, setIsPlusClicked] = useState(false);
   const [myLevel, setMyLevel] = useState(0);
   const [isInputClicked, setIsInputClicked] = useState(false);
@@ -292,22 +290,22 @@ function BuddiesScreen(props) {
 
   if (!loaded) {
     return null;
-  } 
+  }
 
   return (
     <>
-    <View style={styles.container}>
-      <SessionPopUp visible={isSessionBtnClicked} />
-      <BuddiePopUp user={props.userInfosModal} />
-      <View style={{ alignItems: "center", paddingTop: 35 }}>
-        <Text style={styles.title}>Buddies</Text>
+      <View style={styles.container}>
+        <SessionPopUp visible={isSessionBtnClicked} />
+        <BuddiePopUp user={props.userInfosModal} />
+        <View style={{ alignItems: "center", paddingTop: 35 }}>
+          <Text style={styles.title}>Buddies</Text>
+        </View>
+        {searchInput()}
+        <View style={{ alignItems: "center" }}>{plusBtn()}</View>
+        {!isInputClicked && <BuddiesListFilter />}
+        {isInputClicked && <UserSearch />}
       </View>
-      {searchInput()}
-      <View style={{ alignItems: "center" }}>{plusBtn()}</View>
-      {!isInputClicked && <BuddiesListFilter />}
-      {isInputClicked && <UserSearch />}
-    </View>
-    <Navbar navigation={props.navigation}/>
+      <Navbar navigation={props.navigation} />
     </>
   );
 }

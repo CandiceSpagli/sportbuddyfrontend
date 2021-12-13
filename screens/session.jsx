@@ -87,10 +87,10 @@ function session(props) {
   const handleSubmitSession = async () => {
     console.log("create A Session from Session", value);
     console.log("datea la creation", date);
-    const data = await fetch("http://10.3.11.5:3000/sessions", {
+    const data = await fetch("http://10.3.11.6:3000/sessions", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `token=${props.tokenToDisplay}&date=${date}&sport=${value}&level=${myLevel}&long=${addRDV.longitude}&lat=${addRDV.latitude}`,
+      body: `token=${props.token}&date=${date}&sport=${value}&level=${myLevel}&long=${addRDV.longitude}&lat=${addRDV.latitude}`,
     });
   };
 

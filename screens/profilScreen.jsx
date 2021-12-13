@@ -59,7 +59,7 @@ function ProfilScreen(props) {
         <Text style={styles.sportTitle}>Course</Text>
         <View style={{ marginLeft: 30, marginTop: -5 }}>
           <View style={{ flexDirection: "row", alignItems: "baseline" }}>
-            <Text style={{ fontSize: 50, fontWeight:'bold' }}>25 </Text>
+            <Text style={{ fontSize: 50, fontWeight: "bold" }}>25 </Text>
             <Text style={styles.sportCardText}>séances !</Text>
           </View>
           <Text style={styles.sportCardText}>Niveau : </Text>
