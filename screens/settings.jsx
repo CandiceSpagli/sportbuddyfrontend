@@ -42,7 +42,7 @@ function Settings() {
     name: "Course",
     level: 2,
   });
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   console.log("SPORTS", sports);
   console.log("SPORTS.NAME", sports[0].name);
   console.log("SPORT LEVEL", sports[0].level);
@@ -123,12 +123,8 @@ function Settings() {
       <Modal animationType="fade" transparent={true} visible={isModalOpen}>
         <BlurView style={styles.blur} tint="light" intensity={80}>
           <View style={styles.box}>
-            <Text style={{ fontFamily: "BelledeMai4.0-Heavy" }}>
-              {" "}
-              HELLO WORLD
-            </Text>
             <View>
-              <DropDownPicker
+              {/* <DropDownPicker
                 open={open}
                 value={value}
                 items={items}
@@ -136,7 +132,7 @@ function Settings() {
                 setValue={setValue}
                 setItems={setItems}
                 placeholder="Select Your Sport"
-              />
+              /> */}
             </View>
             <View style={styles.container}></View>
             {/* <Text>{currentSport.name}</Text>
