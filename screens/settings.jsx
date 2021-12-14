@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Slider from "@react-native-community/slider";
 
-import { View, Text, TextInput, StyleSheet, Picker, Modal } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Picker,
+  Modal,
+  TouchableOpacity,
+} from "react-native";
 import { Button, Image, Card, ListItem, Divider } from "react-native-elements";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { connect } from "react-redux";
+import * as ImagePicker from "expo-image-picker";
 
 import DatePicker from "react-native-datepicker";
 import { ScrollView } from "react-native-gesture-handler";
@@ -18,11 +27,6 @@ import { BlurView } from "expo-blur";
 import { useFonts } from "expo-font";
 import token from "../reducers/token";
 
-// // const onSettingsPress = () => {
-// //   // console.log('hey');
-// //   props.cardPressed(sports)
-// //   // console.log('users Array !!', user);
-// }
 function Settings(props) {
   const [dateOfBirth, setDateOfBirth] = useState(new Date());
   const [selectedSport, setSelectedSport] = useState();
@@ -33,18 +37,19 @@ function Settings(props) {
   const [slider, setSlider] = useState();
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [gender, setGender] = useState("Man");
+  const [gender, setGender] = useState("");
   const [sports, setSports] = useState([]);
+  const [image, setImage] = useState(null);
 
-  const [currentSport, setCurrentSport] = useState({
-    name: "Yoga",
-    level: 2,
-  });
+  // console.log("LASTNAMELOADED", lastNameLoaded);
+  // console.log("FIRSTNAMELOADED", firstNameLoaded);
 
-  console.log("SPORT", sports);
+  const [currentSport, setCurrentSport] = useState({});
+
+  // console.log("SPORT", sports);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log("CURRENT SPORT", currentSport);
+  // console.log("CURRENT SPORT", currentSport);
 
   const defaultSports = ["Course", "Fitness", "Yoga"];
   // console.log("SPORTS", sports);
@@ -58,8 +63,8 @@ function Settings(props) {
   // console.log("CURRENT ADDRESS", currentAdress);
 
   // USEEFFECT
+
   useEffect(() => {
-    props.navigation.navigate("Buddies");
     async function askPermissions() {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status === "granted") {
@@ -71,6 +76,47 @@ function Settings(props) {
     }
     askPermissions();
   }, []);
+  useEffect(() => {
+    async function loadedData() {
+      const rawResponse = await fetch(
+        `http://10.3.11.6:3000/settings?token=${props.token}`
+      );
+      const response = await rawResponse.json();
+      console.log("RESPONSEEEEEEEEEEEEEEEEEEEEEE", response);
+      setFirstName(response.firstNameLoaded || "");
+      setLastName(response.lastNameLoaded || "");
+      setGender(response.genderLoaded || "Man");
+      setSports(response.sportsLoaded || []);
+    }
+    loadedData();
+  }, []);
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        // if (status !== "granted") {
+        //   alert("Sorry, we need camera roll permissions to make this work!");
+        // }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log("RESULT IMAGE", result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
   // GEOCODER
 
   Geocoder.from(currentLatitude, currentLongitude)
@@ -84,10 +130,21 @@ function Settings(props) {
     .catch((error) => console.warn(error));
 
   var handleSubmitContinue = async () => {
-    const data = await fetch("http://10.3.11.5:3000/settings", {
+    var result = sports.map((sports, index) => {
+      console.log("sports", sports);
+      return `sportName${index + 1}=${sports.name}&sportLevel${index + 1}=${
+        sports.level
+      }`;
+    });
+    const resultjoin = result.join("&");
+
+    console.log("resultjoin", resultjoin);
+    const bodysend = `token=${props.token}&lastname=${lastName}&firstname=${firstName}&gender=${gender}&${resultjoin}`;
+    console.log("bODYSEND", bodysend);
+    const data = await fetch("http://10.3.11.6:3000/settings", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `token=${props.token}&lastname=${lastName}&firstname=${firstName}&gender=${gender}`,
+      body: bodysend,
     });
 
     const body = await data.json();
@@ -157,6 +214,16 @@ function Settings(props) {
   if (!loaded) {
     return null;
   }
+
+  // const onPressPhoto = () => {
+  //   return (
+  //     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+  //       {image && (
+  //         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+  //       )}
+  //     </View>
+  //   );
+  // };
 
   return (
     <View style={{ backgroundColor: "white" }}>
@@ -294,42 +361,65 @@ function Settings(props) {
       </Modal>
       <ScrollView>
         <Text style={styles.step}> STEP 2/3</Text>
-        <Text style={{ fontFamily: "bohemianSoul", fontSize: 40 }}>
+        <Text style={{ fontFamily: "bohemianSoul", fontSize: 55 }}>
           {" "}
-          Paramètre
+          Paramètres
         </Text>
+        <View
+          style={{
+            shadowColor: "black",
+            shadowRadius: 12,
+            shadowOpacity: 0.2,
+          }}
+        >
+          <View
+            onPress={pickImage}
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <Button
+              title=""
+              onPress={pickImage}
+              style={{
+                height: 200,
+                width: 200,
+                borderRadius: 100,
+                backgroundColor: "black",
+                // position: "absolute",
+                // left: 0,
+                // top: 0,
+              }}
+              type="clear"
+            />
+            {image && (
+              <Image
+                source={{ uri: image }}
+                style={{
+                  width: 200,
+                  height: 200,
+                  borderRadius: 100,
+                  borderWidth: 1,
+                }}
+              />
+            )}
+          </View>
+        </View>
 
         <Text style={styles.text}> Nom</Text>
         <TextInput
           style={styles.input}
           value={lastName}
-          placeholder="Langoustine"
-          onChangeText={(value) => setLastName(value)}
+          placeholder={lastName}
+          onChangeText={(lastName) => setLastName(lastName)}
         />
+
         <Text style={styles.text}> Prénom</Text>
         <TextInput
           style={styles.input}
           value={firstName}
-          placeholder="de Jordanie"
-          onChangeText={(value) => setFirstName(value)}
+          placeholder={firstName}
+          onChangeText={(firstName) => setFirstName(firstName)}
         />
-        <Text style={styles.text}> Date de naissance</Text>
-        <DatePicker
-          customStyles={{ dateInput: { borderWidth: 0 } }}
-          showIcon={false}
-          style={styles.date}
-          date={dateOfBirth}
-          mode="date"
-          placeholder="select date"
-          format="DD/MM/YYYY"
-          minDate="01-01-1930"
-          maxDate="01-01-2030"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          onDateChange={(date) => {
-            setDateOfBirth(date);
-          }}
-        />
+
         <Text style={styles.text}>Gender</Text>
         <View style={styles.button}>
           <Button
@@ -593,6 +683,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
+  },
+  profil: {
+    height: 120,
+    width: 120,
+    borderRadius: 100,
   },
 });
 

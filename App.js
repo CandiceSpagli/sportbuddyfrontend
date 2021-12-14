@@ -30,6 +30,7 @@ import token from "./reducers/token";
 
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
+
 const store = createStore(
   combineReducers({ userInfosModal, sportsFilterButtons, token })
 );
@@ -46,7 +47,7 @@ function App() {
             headerShown: false,
             tabBarStyle: {
               // backgroundColor: 'red',
-              position: "absolute",
+              // position: "absolute",
               // bottom: -100,
               // opacity: 0
             },
