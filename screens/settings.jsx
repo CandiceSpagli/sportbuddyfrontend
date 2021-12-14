@@ -353,7 +353,7 @@ function Settings(props) {
         )}
         <View style={{ marginLeft: 40, marginVertical: 10 }}>
           {sports.map((sportsinfo, index) => {
-            // console.log("SPORTSINFO", sportsinfo);
+            console.log("SPORTSINFO", sportsinfo);
             const tabLevel = [];
             for (var i = 0; i < 3; i++) {
               let color = "#DCDCDC";

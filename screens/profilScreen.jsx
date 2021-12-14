@@ -42,6 +42,15 @@ function ProfilScreen(props) {
   console.log("FIRSTNAME PROFILSCREEN", firstname);
   const [lastname, setLastname] = useState("");
   console.log("LASTNAME PROFILSCREEN", lastname);
+  const [level, setLevel] = useState("");
+  console.log("LEVEL PROFILSCREEN", level);
+  const [picture, setPicture] = useState("");
+  console.log("PICTURE PROFILSCREEN", picture);
+  const [desc, setDesc] = useState("");
+  console.log("DESC PROFILSCREEN", desc);
+  const [sports, setSports] = useState([]);
+  console.log("SPORTSSS PROFILSCREEN", sports);
+
   // const [loaded] = useFonts({
   //   bohemianSoul: require("../assets/fonts/bohemianSoul.otf"),
   // });
@@ -61,12 +70,23 @@ function ProfilScreen(props) {
       console.log("response", response);
       setFirstname(response.firstname);
       setLastname(response.lastname);
+      setSports(response.sport);
+      setPicture(response.picture);
+      setDesc(response.desc);
     }
     firstnameProfil();
   }, []);
 
-  const sportsCards = ["one", "two", "three"];
-  const renderItem = () => {
+  // var sportObject = sports.map((sportsinfo, index) => {
+  //   console.log("sports du map", sportsinfo);
+  // });
+  // var sportName = sportObject.name;
+
+  const sportsCards = sports;
+  console.log("sportsCards", sportsCards);
+  const renderItem = ({ item, index }) => {
+    console.log("ITEM from renderitem", item);
+    console.log("INDEX from renderitem", index);
     return (
       <View style={styles.sportCard}>
         <View style={{ alignItems: "center" }}>
@@ -75,13 +95,13 @@ function ProfilScreen(props) {
             source={require("../img/staticImg/stickers/course.png")}
           />
         </View>
-        <Text style={styles.sportTitle}>Course</Text>
+        <Text style={styles.sportTitle}>{item.name}</Text>
         <View style={{ marginLeft: 30, marginTop: -5 }}>
           <View style={{ flexDirection: "row", alignItems: "baseline" }}>
             <Text style={{ fontSize: 50, fontWeight: "bold" }}>25 </Text>
             <Text style={styles.sportCardText}>séances !</Text>
           </View>
-          <Text style={styles.sportCardText}>Niveau : </Text>
+          <Text style={styles.sportCardText}>Niveau :{item.level} </Text>
           <View style={{ flexDirection: "row", marginTop: 10 }}>
             <FontAwesome5
               style={{ marginRight: 2 }}
@@ -119,19 +139,13 @@ function ProfilScreen(props) {
               shadowOpacity: 0.2,
             }}
           >
-            <Image
-              style={styles.profil}
-              source={require("../img/staticImg/user.jpg")}
-            />
+            <Image style={styles.profil} source={picture} />
           </View>
           <Text style={styles.firstname}>{firstname}</Text>
           <Text style={styles.lastname}>{lastname}</Text>
           <View style={styles.paragraph}>
             <Text style={{ fontSize: 50, margin: 10 }}>"</Text>
-            <Text style={styles.description}>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur
-              dolores, officiis provident aspernatur sapiente dolorum culpa
-            </Text>
+            <Text style={styles.description}>{desc}</Text>
             <Text style={{ fontSize: 50, margin: 10 }}>"</Text>
           </View>
         </View>
