@@ -207,7 +207,8 @@ function BuddiesScreen(props) {
   const [isSessionBtnClicked, setisSessionBtnClicked] = useState(false);
   const onBuddiesBtn = () => {
     console.log(">>> onBuddiesBtn");
-    setisSessionBtnClicked(isSessionBtnClicked === false ? true : false);
+    // setisSessionBtnClicked(isSessionBtnClicked === false ? true : false);
+    props.navigation.navigate('Session')
   };
 
   const searchInput = () => {

@@ -64,11 +64,15 @@ function UserProfilScreen(props) {
     );
   };
 
+  const returnBtnClicked = () => {
+    props.navigation.navigate('Buddies')
+  }
+
   return (
     <>
       <View style={{ backgroundColor: "white" }}>
         <View style={{ alignItems: "center", paddingTop: 35 }}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => returnBtnClicked()}>
             <Text style={styles.title}>Profil</Text>
             <AntDesign
               style={{ position: "absolute", top: 47, left: -40 }}

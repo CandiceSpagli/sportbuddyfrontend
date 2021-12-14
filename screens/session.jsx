@@ -1,13 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  Button,
-  Platform,
-  StyleSheet,
-} from "react-native";
+import { View, Text, Image, Platform, StyleSheet, Modal } from "react-native";
 
 //Date & Time Picker
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -17,18 +9,24 @@ import DropDownPicker from "react-native-dropdown-picker";
 
 // navbar
 import Navbar from "../components/buddiesScreen/navbar/NavBarPopUp";
+// sessionPopUp
+import SessionPopUp from "../components/buddiesScreen/SessionPopUp";
 
-//Icon Medaille
+//icons
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 //MAP
 import { connect } from "react-redux";
 import MapView, { Marker } from "react-native-maps";
+import { Button } from "react-native-elements";
 
 function session(props) {
   // const [date, setDate] = useState(new Date());
   // console.log("datefromSESSION", date);
+
   const [time, setTime] = useState();
+
   console.log("timefromSESSION", time);
 
   const [date, setDate] = useState(new Date());
@@ -85,6 +83,9 @@ function session(props) {
   };
 
   const handleSubmitSession = async () => {
+    props.sessionBtnPressed(items)
+    // props.navigation.navigate("Buddies");
+
     console.log("create A Session from Session", value);
     console.log("datea la creation", date);
     const data = await fetch("http://10.3.11.6:3000/sessions", {
@@ -92,6 +93,7 @@ function session(props) {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `token=${props.token}&date=${date}&sport=${value}&level=${myLevel}&long=${addRDV.longitude}&lat=${addRDV.latitude}`,
     });
+
   };
 
   const tabLevel = [];
@@ -104,9 +106,9 @@ function session(props) {
     tabLevel.push(
       <FontAwesome5
         key={count}
-        style={{ marginRight: 40 }}
+        style={{ marginRight: 7 }}
         name="medal"
-        size={40}
+        size={50}
         color={color}
         onPress={() => setMyLevel(count)}
       />
@@ -118,29 +120,19 @@ function session(props) {
       <View
         style={{
           flex: 1,
-          fontSize: 20,
-          fontFamily: "Cochin",
-          justifyContent: "center",
           alignItems: "center",
+          justifyContent: "center",
         }}
       >
+        <Image
+          style={styles.abBG}
+          source={require("../img/staticImg/profil_ab_bg.jpg")}
+        />
         <View style={styles.container}>
-          <View
-            style={{
-              paddingHorizontal: 20,
-              borderBottomWidth: 2,
-              marginTop: 20,
-              paddingBottom: 5,
-              marginBottom: 20,
-              flexDirection: "row",
-            }}
-          >
-            <Text style={styles.textPlus}>Date</Text>
+          <View style={styles.contentPart}>
+            <Text style={styles.contentTitle}>Date</Text>
             <DateTimePicker
-              style={{
-                width: 100,
-                justifyContent: "center",
-              }}
+              style={{ width: 90 }}
               testID="dateTimePicker"
               value={date}
               mode={"date"}
@@ -149,22 +141,10 @@ function session(props) {
               onChange={(event, date) => onChangeTime(event, date)}
             />
           </View>
-          <View
-            style={{
-              paddingHorizontal: 20,
-              borderBottomWidth: 2,
-              marginTop: 10,
-              paddingBottom: 5,
-              marginBottom: 20,
-              flexDirection: "row",
-            }}
-          >
-            <Text style={styles.textPlus}>Time</Text>
+          <View style={styles.contentPart}>
+            <Text style={styles.contentTitle}>Heure</Text>
             <DateTimePicker
-              style={{
-                width: 100,
-                justifyContent: "center",
-              }}
+              style={{ width: 60 }}
               testID="dateTimePicker"
               value={date}
               mode={"time"}
@@ -174,61 +154,98 @@ function session(props) {
             />
           </View>
           <DropDownPicker
+            style={styles.dropdownPicker}
+            textStyle={{ fontSize: 20 }}
             open={open}
             value={value}
             items={items}
             setOpen={setOpen}
             setValue={setValue}
             setItems={setItems}
-            placeholder="Select Your Sport"
+            placeholder="Choisir un sport..."
+            placeholderStyle={{
+              color: "grey",
+            }}
+            listParentLabelStyle={{
+              fontSize: 30,
+              marginLeft: 40,
+            }}
+            dropDownContainerStyle={{
+              backgroundColor: "rgba(255,255,255, 0.7)",
+              width: 200,
+              marginTop: 20,
+              borderRadius: 60,
+              borderTopWidth: 1,
+              borderWidth: 2,
+              padding: 10,
+            }}
           />
+          <View style={{ flexDirection: "row", marginTop: 20 }}>
+            {tabLevel}
+          </View>
           <View
             style={{
-              paddingHorizontal: 20,
-              borderBottomWidth: 2,
-              marginTop: 10,
-              paddingBottom: 5,
-              marginBottom: 20,
-              flexDirection: "row",
+              alignItems: "center",
+              shadowColor: "black",
+              shadowRadius: 12,
+              shadowOpacity: 0.1,
+              shadowOffset: { height: 10, width: 0 },
             }}
           >
-            <Text></Text>
-            <Text style={styles.textPlus}>Level</Text>
-            <Text>{tabLevel}</Text>
+            <MapView
+              onPress={(evt) => {
+                selectRDV(evt);
+              }}
+              style={{
+                borderRadius: 60,
+                height: 300,
+                width: 300,
+                marginTop: 10,
+                backgroundColor: "black",
+              }}
+              mapType="mutedStandard"
+              initialRegion={{
+                latitude: 43.73108,
+                longitude: 7.421164,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            >
+              <Marker
+                key={i}
+                pinColor="red"
+                coordinate={addRDV}
+                // title={POI.titre}
+                // description={POI.description}
+              />
+            </MapView>
           </View>
-          <Text> </Text>
-          <Text style={styles.textPlusClic}>
-            Clic on map to select the place of RDV
-          </Text>
-          <Text> </Text>
-          <MapView
-            onPress={(evt) => {
-              selectRDV(evt);
-            }}
-            style={{ flex: 1 }}
-            initialRegion={{
-              latitude: 43.73108,
-              longitude: 7.421164,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          >
-            <Marker
-              key={i}
-              pinColor="red"
-              coordinate={addRDV}
-              // title={POI.titre}
-              // description={POI.description}
-            />
-          </MapView>
-
+          <View style={{ alignItems: "center" }}>
+            <Text
+              style={{
+                fontSize: 12,
+                marginTop: 10,
+                marginBottom: 10,
+                opacity: 0.5,
+              }}
+            >
+              Placez un marqueur sur le lieu de départ de votre séance !
+            </Text>
+          </View>
+          <View style={styles.locaPart}>
+            <Entypo name="location-pin" size={50} color="#f42c04" />
+            <Text style={styles.locaText}>Av. des Guelfes, 98000 Monaco</Text>
+          </View>
           <Button
-            style={styles.select}
+            style={styles.createBtn}
             type="clear"
-            title="Create !"
-            titleStyle={{ color: "black" }}
+            title="Créer !"
+            titleStyle={{
+              fontSize: 40,
+              color: "white",
+            }}
             onPress={(value) => handleSubmitSession(value)}
-          ></Button>
+          />
         </View>
       </View>
       <Navbar navigation={props.navigation} />
@@ -252,23 +269,57 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   container: {
-    borderWidth: 2,
-    borderRadius: 50,
-    marginTop: 20,
-    marginBottom: 20,
-    height: 600,
-    width: 370,
-  },
-  select: {
     backgroundColor: "white",
-    borderRadius: 30,
-    width: 120,
+    borderRadius: 60,
+    height: 800,
+    width: 370,
+    shadowColor: "black",
+    shadowRadius: 12,
+    shadowOpacity: 0.1,
+    padding: 40,
     justifyContent: "center",
-    marginHorizontal: 90,
+  },
+  createBtn: {
+    backgroundColor: "#f42c04",
+    borderRadius: 50,
     marginTop: 15,
-    marginBottom: 5,
-    borderWidth: 1,
-    borderColor: "black",
+    marginLeft: 30,
+    marginRight: 30,
+  },
+  abBG: {
+    position: "absolute",
+    width: 900,
+    height: 1000,
+    transform: [{ rotate: "270deg" }],
+  },
+  contentPart: {
+    flexDirection: "row",
+    borderBottomWidth: 2,
+    alignItems: "center",
+  },
+  contentTitle: {
+    fontSize: 40,
+    flex: 1,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  dropdownPicker: {
+    borderRadius: 60,
+    width: 200,
+    marginTop: 20,
+    backgroundColor: "transparent",
+    borderWidth: 2,
+  },
+  locaPart: {
+    flexDirection: "row",
+    marginLeft: 40,
+    marginRight: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 5,
+  },
+  locaText: {
+    fontSize: 30,
   },
 });
 
@@ -276,4 +327,13 @@ function mapStateToProps(state) {
   return { token: state.token };
 }
 
-export default connect(mapStateToProps, null)(session);
+function mapDispatchToProps(dispatch) {
+  return{
+    sessionBtnPressed: function(sessionInfos) {
+      console.log('sessionBtnPressed!');
+      dispatch({type: 'sessionBtnPressed', sessionInfos})
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(session);
