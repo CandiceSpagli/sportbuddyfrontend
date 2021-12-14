@@ -30,6 +30,7 @@ import token from "./reducers/token";
 
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
+
 const store = createStore(
   combineReducers({ userInfosModal, sportsFilterButtons, token })
 );
