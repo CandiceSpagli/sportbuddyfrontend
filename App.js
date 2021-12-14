@@ -47,8 +47,8 @@ function App() {
             tabBarStyle: {
               // backgroundColor: 'red',
               position: "absolute",
-              // bottom: -100,
-              // opacity: 0
+              bottom: -100,
+              opacity: 0
             },
           }}
         >

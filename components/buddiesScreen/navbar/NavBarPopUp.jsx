@@ -34,7 +34,7 @@ function navBar(props) {
     setIsButtonClicked(false);
   };
   const journalPressed = () => {
-    // props.navigation.navigate("Journal");
+    props.navigation.navigate("Journal");
     setIsButtonClicked(false);
   };
   const profilPressed = () => {
