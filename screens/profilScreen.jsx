@@ -64,7 +64,7 @@ function ProfilScreen(props) {
     async function firstnameProfil() {
       console.log("props.token from profilScreen", props.token);
       const rawResponse = await fetch(
-        `http://10.3.11.5:3000/profilScreen?token=${props.token}`
+        `http://10.3.11.9:3000/profilScreen?token=${props.token}`
       );
       const response = await rawResponse.json();
       console.log("response", response);
