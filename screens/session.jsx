@@ -83,7 +83,7 @@ function session(props) {
   };
 
   const handleSubmitSession = async () => {
-    props.sessionBtnPressed(items)
+    props.sessionBtnPressed(items);
     // props.navigation.navigate("Buddies");
 
     console.log("create A Session from Session", value);
@@ -93,7 +93,6 @@ function session(props) {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `token=${props.token}&date=${date}&sport=${value}&level=${myLevel}&long=${addRDV.longitude}&lat=${addRDV.latitude}`,
     });
-
   };
 
   const tabLevel = [];
@@ -328,12 +327,12 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return{
-    sessionBtnPressed: function(sessionInfos) {
-      console.log('sessionBtnPressed!');
-      dispatch({type: 'sessionBtnPressed', sessionInfos})
-    }
-  }
+  return {
+    sessionBtnPressed: function (sessionInfos) {
+      console.log("sessionBtnPressed!");
+      dispatch({ type: "sessionBtnPressed", sessionInfos });
+    },
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(session);

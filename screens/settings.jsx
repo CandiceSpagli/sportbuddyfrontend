@@ -78,6 +78,7 @@ function Settings(props) {
   }, []);
   useEffect(() => {
     async function loadedData() {
+      console.log("useEffect#loadedData");
       const rawResponse = await fetch(
         `http://10.3.11.9:3000/settings?token=${props.token}`
       );
@@ -119,15 +120,15 @@ function Settings(props) {
 
   // GEOCODER
 
-  Geocoder.from(currentLatitude, currentLongitude)
-    .then((json) => {
-      // console.log("JSON GEOCODER", json);
-      var addressComponent = json.results[0].formatted_address;
-      setCurrentAdress(addressComponent);
+  // Geocoder.from(currentLatitude, currentLongitude)
+  //   .then((json) => {
+  //     // console.log("JSON GEOCODER", json);
+  //     var addressComponent = json.results[0].formatted_address;
+  //     setCurrentAdress(addressComponent);
 
-      // console.log("ADRESSE", addressComponent);
-    })
-    .catch((error) => console.warn(error));
+  //     // console.log("ADRESSE", addressComponent);
+  //   })
+  //   .catch((error) => console.warn(error));
 
   var handleSubmitContinue = async () => {
     var result = sports.map((sports, index) => {
@@ -376,20 +377,22 @@ function Settings(props) {
             onPress={pickImage}
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
-            <Button
-              title=""
-              onPress={pickImage}
-              style={{
-                height: 200,
-                width: 200,
-                borderRadius: 100,
-                backgroundColor: "black",
-                // position: "absolute",
-                // left: 0,
-                // top: 0,
-              }}
-              type="clear"
-            />
+            {image === null && (
+              <Button
+                title=""
+                onPress={pickImage}
+                style={{
+                  height: 160,
+                  width: 160,
+                  borderRadius: 100,
+                  backgroundColor: "grey",
+                  // position: "absolute",
+                  // left: 0,
+                  // top: 0,
+                }}
+                type="clear"
+              />
+            )}
             {image && (
               <Image
                 source={{ uri: image }}
@@ -397,7 +400,6 @@ function Settings(props) {
                   width: 200,
                   height: 200,
                   borderRadius: 100,
-                  borderWidth: 1,
                 }}
               />
             )}

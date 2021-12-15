@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 // navbar
 import Navbar from "../components/buddiesScreen/navbar/NavBarPopUp";
+import { useFonts } from "expo-font";
 
 function signIn(props) {
   const [signInEmail, setSignInEmail] = useState("");
@@ -50,10 +51,18 @@ function signIn(props) {
   const goToSignUp = () => {
     props.navigation.navigate("SignUp");
   };
+  const [loaded] = useFonts({
+    bohemianSoul: require("../assets/fonts/bohemianSoul.otf"),
+    belledeMai: require("../assets/fonts/BelledeMai4.0-Heavy.otf"),
+  });
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <>
       <View>
+        <Text style={{ fontFamily: "bohemianSoul" }}> Sign-Up </Text>
         <TextInput
           style={styles.inputone}
           onChangeText={(value) => onChangeEmail(value)}

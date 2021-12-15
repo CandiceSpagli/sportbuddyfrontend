@@ -47,9 +47,9 @@ function App() {
             headerShown: false,
             tabBarStyle: {
               // backgroundColor: 'red',
-              position: "absolute",
-              bottom: -100,
-              opacity: 0
+              // position: "absolute",
+              // bottom: -100,
+              // opacity: 0
             },
           }}
         >
