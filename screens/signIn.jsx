@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { View, TextInput, Link, Button, StyleSheet, Text } from "react-native";
+import {
+  View,
+  TextInput,
+  Link,
+  Button,
+  StyleSheet,
+  Text,
+  Image,
+  ImageBackground,
+} from "react-native";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -62,8 +71,21 @@ function signIn(props) {
 
   return (
     <>
+      <Image
+        style={{ position: "absolute", weight: "100%", height: "100%" }}
+        source={require("../img/staticImg/degrade.jpg")}
+        resizeMode="cover"
+      ></Image>
       <View>
-        <Text style={{ fontFamily: "bohemianSoul" }}> Sign-Up </Text>
+        <View>
+          <Text
+            style={{ fontFamily: "bohemianSoul", fontSize: 70, marginTop: 80 }}
+          >
+            {" "}
+            Sign-In{" "}
+          </Text>
+        </View>
+
         <TextInput
           style={styles.inputone}
           onChangeText={(value) => onChangeEmail(value)}
