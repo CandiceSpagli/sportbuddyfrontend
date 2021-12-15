@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Overlay, Card, Icon } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
@@ -13,6 +13,7 @@ import { useFonts } from "expo-font";
 
 // icons
 import { FontAwesome5 } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 function ProfilScreen(props) {
   // const [myLevel, setMyLevel] = useState(0);
@@ -64,8 +65,7 @@ function ProfilScreen(props) {
     async function firstnameProfil() {
       console.log("props.token from profilScreen", props.token);
       const rawResponse = await fetch(
-        // `http://192.168.1.13:3000/profilScreen?token=${props.token}`
-        `http://10.3.11.6:3000/profilScreen?token=${props.token}`
+        `http://10.3.11.9:3000/profilScreen?token=${props.token}`
       );
       const response = await rawResponse.json();
       console.log("response", response);
@@ -82,6 +82,10 @@ function ProfilScreen(props) {
   //   console.log("sports du map", sportsinfo);
   // });
   // var sportName = sportObject.name;
+
+  const userSettingsPressed = () => {
+    props.navigation.navigate('Settings')
+  }
 
   const sportsCards = sports;
   console.log("sportsCards", sportsCards);
@@ -140,7 +144,16 @@ function ProfilScreen(props) {
               shadowOpacity: 0.2,
             }}
           >
-            <Image style={styles.profil} source={picture} />
+            <Image
+              style={styles.profil}
+              source={require("../img/staticImg/user.jpg")}
+            />
+            <TouchableOpacity
+              style={{ position: "absolute", right: -20, top: 0 }}
+              onPress={() => userSettingsPressed()}
+            >
+              <AntDesign name="setting" size={35} color="black" />
+            </TouchableOpacity>
           </View>
           <Text style={styles.firstname}>{firstname}</Text>
           <Text style={styles.lastname}>{lastname}</Text>
@@ -263,6 +276,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     right: 0,
+    // left:250,
     marginBottom: 110,
     marginRight: -30,
   },

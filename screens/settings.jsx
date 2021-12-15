@@ -83,10 +83,7 @@ function Settings(props) {
     async function loadedData() {
       console.log("useEffect#loadedData");
       const rawResponse = await fetch(
-        `http://10.3.11.6:3000/settings?token=${props.token}`
-        // `http://http://10.3.11.5:3000/settings?token=${props.token}`
-        // `http://http://10.3.11.9:3000/settings?token=${props.token}`
-        // `http://192.168.1.13:3000/settings?token=${props.token}`
+        `http://10.3.11.9:3000/settings?token=${props.token}`
       );
       const response = await rawResponse.json();
       // console.log("RESPONSEEEEEEEEEEEEEEEEEEEEEE", response);
@@ -149,10 +146,7 @@ function Settings(props) {
     const bodysend = `token=${props.token}&lastname=${lastName}&firstname=${firstName}&gender=${gender}&desc=${desc}${resultjoin}`;
     // &picture=${image}
     console.log("bODYSEND", bodysend);
-    // const data = await fetch("http://192.168.1.13:3000/settings", {
-    const data = await fetch("http://10.3.11.6:3000/settings", {
-      // const data = await fetch("http://10.3.11.5:3000/settings", {
-      // const data = await fetch("http://10.3.11.9:3000/settings", {
+    const data = await fetch("http://10.3.11.9:3000/settings", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: bodysend,

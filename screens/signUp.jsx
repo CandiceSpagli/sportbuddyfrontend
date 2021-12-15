@@ -22,10 +22,7 @@ function signUp(props) {
     console.log("emailFromFront", emailFromFront);
     console.log("passwordFromFront", passwordFromFront);
 
-    // const data = await fetch("http://192.168.1.13:3000/sign-up", {
-    const data = await fetch("http://10.3.11.6:3000/sign-up", {
-      // const data = await fetch("http://10.3.11.5:3000/sign-up", {
-      // const data = await fetch("http://10.3.11.9:3000/sign-up", {
+    const data = await fetch("http://10.3.11.9:3000/sign-up", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `firstname=${firstnameFromFront}&lastname=${lastnameFromFront}&email=${emailFromFront}&password=${passwordFromFront}`,

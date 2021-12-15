@@ -40,9 +40,9 @@ function session(props) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    { label: "Course", value: "course" },
-    { label: "Fitness", value: "fitness" },
-    { label: "Yoga", value: "yoga" },
+    { label: "Course", value: "Course" },
+    { label: "Fitness", value: "Fitness" },
+    { label: "Yoga", value: "Yoga" },
   ]);
 
   // MARKER POUR LIEU DE RDV
@@ -85,11 +85,11 @@ function session(props) {
   const handleSubmitSession = async () => {
     props.sessionBtnPressed(items);
     // props.navigation.navigate("Buddies");
+    props.navigation.goBack(null);
 
     console.log("create A Session from Session", value);
     console.log("datea la creation", date);
-    // const data = await fetch("http://192.168.1.13:3000/sessions", {
-    const data = await fetch("http://10.3.11.6:3000/sessions", {
+    const data = await fetch("http://10.3.11.9:3000/sessions", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `token=${props.token}&date=${date}&sport=${value}&level=${myLevel}&long=${addRDV.longitude}&lat=${addRDV.latitude}`,

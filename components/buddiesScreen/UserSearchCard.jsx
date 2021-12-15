@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { connect } from "react-redux";
 
 function UserSearchCard(props) {
   const sportsArray = props.sports;
@@ -14,8 +15,17 @@ function UserSearchCard(props) {
     );
   });
 
+  const userInfos = {
+    firstname: props.firstname,
+    lastname: props.lastname,
+    sports: props.sports,
+    desc: props.desc,
+    picture: 'https://cdn-icons-png.flaticon.com/512/4383/4383887.png'
+  }
+
   const cardPressed = () => {
     props.navigation.navigate('UserProfilScreen')
+    props.cardPressed(userInfos)
   }
 
   return (
@@ -77,4 +87,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserSearchCard;
+function mapDispatchToProps(dispatch) {
+  return{
+    cardPressed: function(userInfos) {
+      console.log('cardPressed!');
+      dispatch({type: 'userCardClicked', userInfos})
+    }
+  }
+}
+
+export default connect (
+  null,
+  mapDispatchToProps
+) (UserSearchCard);
