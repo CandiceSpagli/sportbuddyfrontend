@@ -78,8 +78,9 @@ function Settings(props) {
   }, []);
   useEffect(() => {
     async function loadedData() {
+      console.log("useEffect#loadedData");
       const rawResponse = await fetch(
-        `http://10.3.11.6:3000/settings?token=${props.token}`
+        `http://10.3.11.5:3000/settings?token=${props.token}`
       );
       const response = await rawResponse.json();
       console.log("RESPONSEEEEEEEEEEEEEEEEEEEEEE", response);
@@ -119,15 +120,15 @@ function Settings(props) {
 
   // GEOCODER
 
-  Geocoder.from(currentLatitude, currentLongitude)
-    .then((json) => {
-      // console.log("JSON GEOCODER", json);
-      var addressComponent = json.results[0].formatted_address;
-      setCurrentAdress(addressComponent);
+  // Geocoder.from(currentLatitude, currentLongitude)
+  //   .then((json) => {
+  //     // console.log("JSON GEOCODER", json);
+  //     var addressComponent = json.results[0].formatted_address;
+  //     setCurrentAdress(addressComponent);
 
-      // console.log("ADRESSE", addressComponent);
-    })
-    .catch((error) => console.warn(error));
+  //     // console.log("ADRESSE", addressComponent);
+  //   })
+  //   .catch((error) => console.warn(error));
 
   var handleSubmitContinue = async () => {
     var result = sports.map((sports, index) => {
@@ -141,7 +142,7 @@ function Settings(props) {
     console.log("resultjoin", resultjoin);
     const bodysend = `token=${props.token}&lastname=${lastName}&firstname=${firstName}&gender=${gender}&${resultjoin}`;
     console.log("bODYSEND", bodysend);
-    const data = await fetch("http://10.3.11.6:3000/settings", {
+    const data = await fetch("http://10.3.11.5:3000/settings", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: bodysend,
