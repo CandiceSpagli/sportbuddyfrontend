@@ -18,7 +18,8 @@ function BuddiesListFilter(props) {
   useEffect(() => {
     async function buddiesCardsInfos() {
       // const rawResponse = await fetch('http://192.168.1.29:3000/buddiesScreen')
-      const rawResponse = await fetch("http://10.3.5:3000/buddiesScreen");
+      // const rawResponse = await fetch("http://192.168.1.13:3000/buddiesScreen");
+      const rawResponse = await fetch("http://10.3.11.6:3000/buddiesScreen");
       const response = await rawResponse.json();
 
       setSessionsCards(response.sessions);

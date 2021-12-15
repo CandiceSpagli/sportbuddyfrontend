@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 // navbar
 import Navbar from "../components/buddiesScreen/navbar/NavBarPopUp";
+import { useFonts } from "expo-font";
 
 function signIn(props) {
   const [signInEmail, setSignInEmail] = useState("");
@@ -17,6 +18,7 @@ function signIn(props) {
   var handleSubmitSignin = async () => {
     console.log("handleSubmitSignin", handleSubmitSignin);
     console.log("signInEmail", signInEmail);
+    // const data = await fetch("http://192.168.1.13:3000/sign-in", {
     const data = await fetch("http://10.3.11.6:3000/sign-in", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -50,10 +52,18 @@ function signIn(props) {
   const goToSignUp = () => {
     props.navigation.navigate("SignUp");
   };
+  const [loaded] = useFonts({
+    bohemianSoul: require("../assets/fonts/bohemianSoul.otf"),
+    belledeMai: require("../assets/fonts/BelledeMai4.0-Heavy.otf"),
+  });
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <>
       <View>
+        <Text style={{ fontFamily: "bohemianSoul" }}> Sign-Up </Text>
         <TextInput
           style={styles.inputone}
           onChangeText={(value) => onChangeEmail(value)}

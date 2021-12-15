@@ -79,7 +79,10 @@ function Settings(props) {
   useEffect(() => {
     async function loadedData() {
       const rawResponse = await fetch(
-        `http://10.3.11.6:3000/settings?token=${props.token}`
+        `http://http://10.3.11.6:3000/settings?token=${props.token}`
+        // `http://http://10.3.11.5:3000/settings?token=${props.token}`
+        // `http://http://10.3.11.9:3000/settings?token=${props.token}`
+        // `http://192.168.1.13:3000/settings?token=${props.token}`
       );
       const response = await rawResponse.json();
       console.log("RESPONSEEEEEEEEEEEEEEEEEEEEEE", response);
@@ -141,7 +144,10 @@ function Settings(props) {
     console.log("resultjoin", resultjoin);
     const bodysend = `token=${props.token}&lastname=${lastName}&firstname=${firstName}&gender=${gender}&${resultjoin}`;
     console.log("bODYSEND", bodysend);
+    // const data = await fetch("http://192.168.1.13:3000/settings", {
     const data = await fetch("http://10.3.11.6:3000/settings", {
+      // const data = await fetch("http://10.3.11.5:3000/settings", {
+      // const data = await fetch("http://10.3.11.9:3000/settings", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: bodysend,
@@ -376,20 +382,22 @@ function Settings(props) {
             onPress={pickImage}
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
-            <Button
-              title=""
-              onPress={pickImage}
-              style={{
-                height: 200,
-                width: 200,
-                borderRadius: 100,
-                backgroundColor: "black",
-                // position: "absolute",
-                // left: 0,
-                // top: 0,
-              }}
-              type="clear"
-            />
+            {image === null && (
+              <Button
+                title=""
+                onPress={pickImage}
+                style={{
+                  height: 160,
+                  width: 160,
+                  borderRadius: 100,
+                  backgroundColor: "grey",
+                  // position: "absolute",
+                  // left: 0,
+                  // top: 0,
+                }}
+                type="clear"
+              />
+            )}
             {image && (
               <Image
                 source={{ uri: image }}
@@ -397,7 +405,6 @@ function Settings(props) {
                   width: 200,
                   height: 200,
                   borderRadius: 100,
-                  borderWidth: 1,
                 }}
               />
             )}
