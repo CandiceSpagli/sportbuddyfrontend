@@ -12,6 +12,7 @@ import { useFonts } from "expo-font";
 // icons
 import { FontAwesome5 } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { connect } from "react-redux";
 
 function UserProfilScreen(props) {
   const [loaded] = useFonts({
@@ -90,16 +91,15 @@ function UserProfilScreen(props) {
           >
             <Image
               style={styles.profil}
-              source={require("../img/staticImg/user.jpg")}
+              source={{uri : props.userInfos.picture}}
             />
           </View>
-          <Text style={styles.firstname}>Other</Text>
-          <Text style={styles.lastname}>User !</Text>
+          <Text style={styles.firstname}>{props.userInfos.firstname}</Text>
+          <Text style={styles.lastname}>{props.userInfos.lastname}</Text>
           <View style={styles.paragraph}>
             <Text style={{ fontSize: 50, margin: 10 }}>"</Text>
             <Text style={styles.description}>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur
-              dolores, officiis provident aspernatur sapiente dolorum culpa
+              {props.userInfos.desc}
             </Text>
             <Text style={{ fontSize: 50, margin: 10 }}>"</Text>
           </View>
@@ -210,4 +210,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserProfilScreen;
+function mapStateToProps(state) {
+  return { userInfos: state.userInfos };
+}
+
+export default connect(mapStateToProps, null)(UserProfilScreen);

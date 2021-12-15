@@ -31,6 +31,8 @@ function UserSearch(props) {
           lastname={users.lastname}
           sports={users.sports}
           navigation={props.navigation}
+          desc={users.desc}
+          picture={users.picture}
         />
       </TouchableOpacity>
     );
