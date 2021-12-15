@@ -17,7 +17,7 @@ function historyComp(props) {
         <View style={{ opacity: 0.5 }}>
           {props.users.map((user, index) => {
             console.log("journal/HistoryComp user", user);
-            return <UserHistoryCard user={user} />;
+            return <UserHistoryCard key={index} user={user} />;
           })}
           <UserHistoryCard />
           <UserHistoryCard />
