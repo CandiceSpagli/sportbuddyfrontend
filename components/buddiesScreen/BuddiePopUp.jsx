@@ -117,7 +117,7 @@ function BuddiePopUp(props) {
               titleStyle={{
                 fontSize: 30,
                 color: "white",
-                onPr,
+                // onPress=()
               }}
             />
           </View>
