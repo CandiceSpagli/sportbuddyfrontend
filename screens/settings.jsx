@@ -40,6 +40,9 @@ function Settings(props) {
   const [gender, setGender] = useState("");
   const [sports, setSports] = useState([]);
   const [image, setImage] = useState(null);
+  const [desc, setDesc] = useState("");
+  console.log("DESC", desc);
+  // console.log("IMAGE", image);
 
   // console.log("LASTNAMELOADED", lastNameLoaded);
   // console.log("FIRSTNAMELOADED", firstNameLoaded);
@@ -83,7 +86,7 @@ function Settings(props) {
         `http://10.3.11.9:3000/settings?token=${props.token}`
       );
       const response = await rawResponse.json();
-      console.log("RESPONSEEEEEEEEEEEEEEEEEEEEEE", response);
+      // console.log("RESPONSEEEEEEEEEEEEEEEEEEEEEE", response);
       setFirstName(response.firstNameLoaded || "");
       setLastName(response.lastNameLoaded || "");
       setGender(response.genderLoaded || "Man");
@@ -103,20 +106,20 @@ function Settings(props) {
     })();
   }, []);
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+  // const pickImage = async () => {
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [4, 3],
+  //     quality: 1,
+  //   });
 
-    console.log("RESULT IMAGE", result);
+  //   console.log("RESULT IMAGE", result);
 
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
+  //   if (!result.cancelled) {
+  //     setImage(result.uri);
+  //   }
+  // };
 
   // GEOCODER
 
@@ -140,7 +143,8 @@ function Settings(props) {
     const resultjoin = result.join("&");
 
     console.log("resultjoin", resultjoin);
-    const bodysend = `token=${props.token}&lastname=${lastName}&firstname=${firstName}&gender=${gender}&${resultjoin}`;
+    const bodysend = `token=${props.token}&lastname=${lastName}&firstname=${firstName}&gender=${gender}&desc=${desc}${resultjoin}`;
+    // &picture=${image}
     console.log("bODYSEND", bodysend);
     const data = await fetch("http://10.3.11.9:3000/settings", {
       method: "POST",
@@ -151,6 +155,38 @@ function Settings(props) {
     const body = await data.json();
 
     console.log("body", body);
+  };
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    // console.log("RESULT IMAGE", result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+    var data = new FormData();
+    console.log("DATA", data);
+
+    data.append("avatar", {
+      uri: result.uri,
+      type: "image/jpeg",
+      name: "user_avatar.jpg",
+    });
+    data.append("token", props.token);
+
+    var photoResponse = await fetch(`http://10.3.11.6:3000/picupload`, {
+      method: "POST",
+      body: data,
+    });
+    var response = await photoResponse.json();
+    // setImage(response);
+    console.log("PHOTORESPONSEEEEEE", response);
   };
 
   var buttonWTitleStyle = { color: "#F53A15" };
@@ -362,10 +398,12 @@ function Settings(props) {
       </Modal>
       <ScrollView>
         <Text style={styles.step}> STEP 2/3</Text>
+
         <Text style={{ fontFamily: "bohemianSoul", fontSize: 55 }}>
           {" "}
           Paramètres
         </Text>
+
         <View
           style={{
             shadowColor: "black",
@@ -374,7 +412,6 @@ function Settings(props) {
           }}
         >
           <View
-            onPress={pickImage}
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
             {image === null && (
@@ -385,7 +422,7 @@ function Settings(props) {
                   height: 160,
                   width: 160,
                   borderRadius: 100,
-                  backgroundColor: "grey",
+                  backgroundColor: "#F2DED7",
                   // position: "absolute",
                   // left: 0,
                   // top: 0,
@@ -393,6 +430,7 @@ function Settings(props) {
                 type="clear"
               />
             )}
+
             {image && (
               <Image
                 source={{ uri: image }}
@@ -403,6 +441,31 @@ function Settings(props) {
                 }}
               />
             )}
+
+            <View style={{ position: "absolute" }}>
+              <TouchableOpacity
+                onPress={pickImage}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 100,
+                  marginTop: 140,
+                  marginLeft: 150,
+                  backgroundColor: "#F53A15",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                type="clear"
+              >
+                <Image
+                  style={{
+                    height: 20,
+                    width: 20,
+                  }}
+                  source={require("../img/staticImg/pencilTwo.png")}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
 
@@ -420,6 +483,13 @@ function Settings(props) {
           value={firstName}
           placeholder={firstName}
           onChangeText={(firstName) => setFirstName(firstName)}
+        />
+
+        <Text style={styles.text}> Description</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Description"
+          onChangeText={(des) => setDesc(des)}
         />
 
         <Text style={styles.text}>Gender</Text>
@@ -445,7 +515,7 @@ function Settings(props) {
         )}
         <View style={{ marginLeft: 40, marginVertical: 10 }}>
           {sports.map((sportsinfo, index) => {
-            console.log("SPORTSINFO", sportsinfo);
+            // console.log("SPORTSINFO", sportsinfo);
             const tabLevel = [];
             for (var i = 0; i < 3; i++) {
               let color = "#DCDCDC";
@@ -657,7 +727,7 @@ const styles = StyleSheet.create({
     height: 45,
     width: 100,
     marginLeft: 130,
-    borderColor: "rgba(244, 44, 4, 0.4)",
+    borderColor: "black",
     marginTop: 20,
   },
   sportsetting: {
