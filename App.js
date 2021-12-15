@@ -26,13 +26,14 @@ import journal from "./screens/Journal";
 // reducers
 import userInfosModal from "./reducers/userInfosModal.reducer";
 import sportsFilterButtons from "./reducers/sportsFilterButtons.reducer";
+import userInfos from "./reducers/userProfil.reducer";
 import token from "./reducers/token";
 
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
 
 const store = createStore(
-  combineReducers({ userInfosModal, sportsFilterButtons, token })
+  combineReducers({ userInfosModal, sportsFilterButtons, userInfos, token })
 );
 
 const Stack = createStackNavigator();
@@ -47,9 +48,9 @@ function App() {
             headerShown: false,
             tabBarStyle: {
               // backgroundColor: 'red',
-              // position: "absolute",
-              // bottom: -100,
-              // opacity: 0
+              position: "absolute",
+              bottom: -100,
+              opacity: 0,
             },
           }}
         >
