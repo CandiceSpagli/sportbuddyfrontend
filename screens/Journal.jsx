@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { connect } from "react-redux";
 
 // useFonts
 import { useFonts } from "expo-font";
@@ -13,6 +14,10 @@ import HistoryComp from "../components/journalHistorique/HistoryComp";
 import InvitationsComp from "../components/journalInvitations/InvitationsComp";
 
 function journal(props) {
+  const [userHistorique, setUserHistorique] = useState([]);
+  // console.log("userHistorique FROM JOURNAL", userHistorique);
+  console.log("userHistorique FROM JOURNAL", userHistorique.length);
+
   const [isHistoriqueBtnPressed, setIsHistoriqueBtnPressed] = useState(
     styles.mainBtnPressed
   );
@@ -24,6 +29,19 @@ function journal(props) {
   const [loaded] = useFonts({
     bohemianSoul: require("../assets/fonts/bohemianSoul.otf"),
   });
+
+  useEffect(() => {
+    async function historiqueSessions() {
+      console.log("props.token from Jounal", props.token);
+      const rawResponse = await fetch(
+        `http://10.3.11.5:3000/journal?token=${props.token}`
+      );
+      const response = await rawResponse.json();
+      console.log("response", response);
+      setUserHistorique(response.userHistorique);
+    }
+    historiqueSessions();
+  }, []);
 
   if (!loaded) {
     return null;
@@ -73,8 +91,10 @@ function journal(props) {
             onPress={() => invitationBtnPressed()}
           />
         </View>
-        {historiquePressed && <HistoryComp />}
-        {!historiquePressed && <InvitationsComp navigation={props.navigation} />}
+        {historiquePressed && <HistoryComp users={userHistorique} />}
+        {!historiquePressed && (
+          <InvitationsComp navigation={props.navigation} />
+        )}
         <Navbar navigation={props.navigation} />
       </View>
     </>
@@ -102,4 +122,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default journal;
+function mapStateToProps(state) {
+  return { token: state.token };
+}
+
+export default connect(mapStateToProps, null)(journal);

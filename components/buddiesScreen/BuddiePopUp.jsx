@@ -24,14 +24,14 @@ import { Entypo } from "@expo/vector-icons";
 
 function BuddiePopUp(props) {
   const exitPopUp = () => {
-    props.removeUser()
+    props.removeUser();
   };
-  
+
   if (props.user === null) {
     return null;
   }
 
-  console.log('props.user.level', props);
+  console.log("props.user.level", props);
   const tabLevel = [];
   for (var i = 0; i < 3; i++) {
     let color = "#DCDCDC";
@@ -39,22 +39,21 @@ function BuddiePopUp(props) {
       color = "black";
     }
     tabLevel.push(
-      <FontAwesome5
-        key={i}
-        name="medal"
-        size={40}
-        color={color}
-      />
+      <FontAwesome5 key={i} name="medal" size={40} color={color} />
     );
   }
-  const date = new Date(props.user.date)
-  const sessionDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()
+  const date = new Date(props.user.date);
+  const sessionDate =
+    date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
-  const time = new Date(props.user.time)
-  const sessionTime = JSON.stringify(time).substring(12).substring(5,0)
-  console.log('date', date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
-  console.log('time', time.getHours() + ':' + time.getSeconds());
-  console.log('time test', JSON.stringify(time).substring(12).substring(5,0));
+  const time = new Date(props.user.time);
+  const sessionTime = JSON.stringify(time).substring(12).substring(5, 0);
+  console.log(
+    "date",
+    date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+  );
+  console.log("time", time.getHours() + ":" + time.getSeconds());
+  console.log("time test", JSON.stringify(time).substring(12).substring(5, 0));
 
   return (
     <View>
@@ -80,9 +79,7 @@ function BuddiePopUp(props) {
                 <Text style={styles.contentTitle}>Sport</Text>
                 <Text style={styles.userContent}>{props.user.sport}</Text>
               </View>
-              <View style={styles.levelPart}>
-                {tabLevel}
-              </View>
+              <View style={styles.levelPart}>{tabLevel}</View>
             </View>
             <View style={styles.map}>
               <MapView
@@ -103,9 +100,9 @@ function BuddiePopUp(props) {
                 <Marker
                   coordinate={{
                     latitude: props.user.location.lat,
-                    longitude: props.user.location.long
+                    longitude: props.user.location.long,
                   }}
-                  title='Av. des Guelfes, 98000 Monaco'
+                  title="Av. des Guelfes, 98000 Monaco"
                 />
               </MapView>
             </View>
@@ -120,6 +117,7 @@ function BuddiePopUp(props) {
               titleStyle={{
                 fontSize: 30,
                 color: "white",
+                onPr,
               }}
             />
           </View>
@@ -172,8 +170,8 @@ const styles = StyleSheet.create({
   },
   lastname: {
     fontSize: 30,
-    backgroundColor: 'black',
-    color: 'white',
+    backgroundColor: "black",
+    color: "white",
     paddingBottom: 3,
     paddingLeft: 15,
     paddingRight: 15,

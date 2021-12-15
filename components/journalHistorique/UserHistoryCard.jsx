@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Badge } from "react-native-elements";
 
 // icons
 import { FontAwesome5 } from "@expo/vector-icons";
+import userInfosModalReducer from "../../reducers/userInfosModal.reducer";
 
-function UserHistoryCard() {
+function UserHistoryCard(props) {
   const tabLevel = [];
   for (var i = 0; i < 3; i++) {
     let color = "#DCDCDC";
@@ -13,7 +14,13 @@ function UserHistoryCard() {
       color = "#f42c04";
     }
     tabLevel.push(
-      <FontAwesome5 style={{marginLeft:1, marginRight:1}} key={i} name="medal" size={15} color={color} />
+      <FontAwesome5
+        style={{ marginLeft: 1, marginRight: 1 }}
+        key={i}
+        name="medal"
+        size={15}
+        color={color}
+      />
     );
   }
 
@@ -25,7 +32,7 @@ function UserHistoryCard() {
           source={require("../../img/staticImg/user.jpg")}
         />
         <View style={{ flexDirection: "column" }}>
-          <Text style={styles.nameText}>Christelle Degiovanni</Text>
+          <Text style={styles.nameText}></Text>
           <Text style={styles.loca}>9 Av. des Papalins, 98000 Monaco</Text>
           <View style={styles.infos}>
             <View style={{ marginRight: 5, flexDirection: "row" }}>

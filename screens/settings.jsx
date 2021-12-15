@@ -80,7 +80,7 @@ function Settings(props) {
     async function loadedData() {
       console.log("useEffect#loadedData");
       const rawResponse = await fetch(
-        `http://10.3.11.6:3000/settings?token=${props.token}`
+        `http://10.3.11.5:3000/settings?token=${props.token}`
         // `http://http://10.3.11.5:3000/settings?token=${props.token}`
         // `http://http://10.3.11.9:3000/settings?token=${props.token}`
         // `http://192.168.1.13:3000/settings?token=${props.token}`
