@@ -73,7 +73,7 @@ function signIn(props) {
     <>
       <Image
         style={{ position: "absolute", weight: "100%", height: "100%" }}
-        source={require("../img/staticImg/degrade.jpg")}
+        source={require("../img/staticImg/degradetwo.jpg")}
         resizeMode="cover"
       ></Image>
       <View>
@@ -98,7 +98,7 @@ function signIn(props) {
             style={{
               marginTop: -100,
               marginLeft: 10,
-              color: "grey",
+              color: "black",
               marginLeft: 50,
             }}
           >
@@ -118,7 +118,7 @@ function signIn(props) {
         <Text
           style={{
             marginLeft: 10,
-            color: "grey",
+            color: "black",
             marginTop: -90,
             marginLeft: 50,
           }}
