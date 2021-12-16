@@ -19,15 +19,6 @@ function historyComp(props) {
             console.log("journal/HistoryComp user", user);
             return <UserHistoryCard key={index} user={user} />;
           })}
-          <UserHistoryCard />
-          <UserHistoryCard />
-          <UserHistoryCard />
-          <UserHistoryCard />
-          <UserHistoryCard />
-          <UserHistoryCard />
-          <UserHistoryCard />
-          <UserHistoryCard />
-          <UserHistoryCard />
         </View>
         <View style={{ marginBottom: 70 }}></View>
       </ScrollView>

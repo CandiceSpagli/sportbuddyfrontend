@@ -23,6 +23,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
 function BuddiePopUp(props) {
+  console.log("BUDDIEPOPUP Props", props);
   const exitPopUp = () => {
     props.removeUser();
   };
@@ -54,6 +55,16 @@ function BuddiePopUp(props) {
   );
   console.log("time", time.getHours() + ":" + time.getSeconds());
   console.log("time test", JSON.stringify(time).substring(12).substring(5, 0));
+
+  const onPressCheck = async () => {
+    console.log("onpressCheck props.token", props.token);
+    console.log("onpressChecksessionId", props.user.sessionId);
+    const data = await fetch("http://10.3.11.5:3000/buddiesScreen", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `token=${props.token}&sessionId=${props.user.sessionId}`,
+    });
+  };
 
   return (
     <View>
@@ -106,10 +117,10 @@ function BuddiePopUp(props) {
                 />
               </MapView>
             </View>
-            <View style={styles.locaPart}>
+            {/* <View style={styles.locaPart}>
               <Entypo name="location-pin" size={50} color="#f42c04" />
               <Text style={styles.locaText}>Av. des Guelfes, 98000 Monaco</Text>
-            </View>
+            </View> */}
             <Button
               style={styles.buddiesBtn}
               type="clear"
@@ -117,8 +128,8 @@ function BuddiePopUp(props) {
               titleStyle={{
                 fontSize: 30,
                 color: "white",
-                // onPress=()
               }}
+              onPress={() => onPressCheck()}
             />
           </View>
           <TouchableOpacity onPress={() => exitPopUp()}>
@@ -230,6 +241,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
+function mapStateToProps(state) {
+  return { token: state.token };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -240,4 +254,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(BuddiePopUp);
+export default connect(mapStateToProps, mapDispatchToProps)(BuddiePopUp);

@@ -150,7 +150,7 @@ function Settings(props) {
     // &picture=${image}
     console.log("bODYSEND", bodysend);
     // const data = await fetch("http://192.168.1.13:3000/settings", {
-    const data = await fetch("http://10.3.11.6:3000/settings", {
+    const data = await fetch("http://10.3.11.5:3000/settings", {
       // const data = await fetch("http://10.3.11.5:3000/settings", {
       // const data = await fetch("http://10.3.11.9:3000/settings", {
       method: "POST",

@@ -72,7 +72,7 @@ function signIn(props) {
   return (
     <>
       <Image
-        style={{ position: "absolute", weight: "100%", height: "100%" }}
+        style={{ position: "absolute", height: "100%" }}
         source={require("../img/staticImg/degrade.jpg")}
         resizeMode="cover"
       ></Image>

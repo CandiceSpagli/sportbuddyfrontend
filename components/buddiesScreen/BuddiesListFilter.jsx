@@ -19,8 +19,9 @@ function BuddiesListFilter(props) {
     async function buddiesCardsInfos() {
       // const rawResponse = await fetch('http://192.168.1.29:3000/buddiesScreen')
       // const rawResponse = await fetch("http://192.168.1.13:3000/buddiesScreen");
-      const rawResponse = await fetch("http://10.3.11.6:3000/buddiesScreen");
+      const rawResponse = await fetch("http://10.3.11.5:3000/buddiesScreen");
       const response = await rawResponse.json();
+      console.log("buddyListFilter Response", response);
 
       setSessionsCards(response.sessions);
     }
@@ -37,7 +38,7 @@ function BuddiesListFilter(props) {
   });
 
   const sessionsCardsMAP = filterSessionsCards.map((sessionInfos, index) => {
-    // console.log('sessionInfos', sessionInfos);
+    console.log("&&&&&&&&&sessionInfos", sessionInfos);
     return (
       <BuddieCard
         key={index}
@@ -48,7 +49,7 @@ function BuddiesListFilter(props) {
         date={sessionInfos.date}
         time={sessionInfos.date}
         location={sessionInfos.location}
-        // pic={sessionInfos.pic}
+        sessionId={sessionInfos._id}
       />
     );
   });

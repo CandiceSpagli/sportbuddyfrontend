@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableHighlight } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableHighlight,
+} from "react-native";
 import { connect } from "react-redux";
 
 // icons
 import { FontAwesome5 } from "@expo/vector-icons";
 
 function BuddieCard(props) {
-
+  console.log("buddieCard", props);
   const user = {
     firstname: props.firstname,
     lastname: props.lastname,
@@ -14,14 +20,15 @@ function BuddieCard(props) {
     level: props.level,
     date: props.date,
     time: props.time,
-    location: props.location
-  }
+    location: props.location,
+    sessionId: props.sessionId,
+  };
 
   const onCardPress = () => {
     // console.log('hey');
-    props.cardPressed(user)
+    props.cardPressed(user);
     // console.log('users Array !!', user);
-  }
+  };
 
   const tabLevel = [];
   for (var i = 0; i < 3; i++) {
@@ -30,12 +37,7 @@ function BuddieCard(props) {
       color = "#f42c04";
     }
     tabLevel.push(
-      <FontAwesome5
-        key={i}
-        name="medal"
-        size={24}
-        color={color}
-      />
+      <FontAwesome5 key={i} name="medal" size={24} color={color} />
     );
   }
 
@@ -44,41 +46,41 @@ function BuddieCard(props) {
       style={{
         borderRadius: 50,
       }}
-      underlayColor='white'
+      underlayColor="white"
       onPress={() => onCardPress()}
     >
-    <View style={{marginBottom: 15}}>
+      <View style={{ marginBottom: 15 }}>
         <View>
           <Image
             style={styles.profilBox}
-            source={require('../../img/staticImg/user.jpg')}
+            source={require("../../img/staticImg/user.jpg")}
           />
         </View>
-      <View style={{marginLeft:20,marginRight:20}}>
-        <Text style={styles.kmContent}>à 0.2km</Text>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: 'space-between',
-          }}
-        >
-          <View>
-            <Text style={styles.textContent}>{props.firstname}</Text>
-            <Text style={styles.textContent}>{props.lastname}</Text>
-          </View>
-          <View style={{ alignItems: "center" }}>
-            <View style={{ flexDirection: "row" }}>
-              {/* <FontAwesome5 name="medal" size={24} color="#f42c04" />
+        <View style={{ marginLeft: 20, marginRight: 20 }}>
+          <Text style={styles.kmContent}>à 0.2km</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <View>
+              <Text style={styles.textContent}>{props.firstname}</Text>
+              <Text style={styles.textContent}>{props.lastname}</Text>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <View style={{ flexDirection: "row" }}>
+                {/* <FontAwesome5 name="medal" size={24} color="#f42c04" />
               <FontAwesome5 name="medal" size={24} color="#f42c04" />
               <FontAwesome5 name="medal" size={24} color="#f42c04" /> */}
-            {tabLevel}
+                {tabLevel}
+              </View>
+              <Text style={styles.textContentwColor}>{props.sport}</Text>
             </View>
-            <Text style={styles.textContentwColor}>{props.sport}</Text>
           </View>
         </View>
       </View>
-    </View>
     </TouchableHighlight>
   );
 }
@@ -93,7 +95,7 @@ const styles = StyleSheet.create({
   },
   textContentwColor: {
     fontSize: 20,
-    color: '#f42c04'
+    color: "#f42c04",
   },
   profilBox: {
     flexDirection: "row",
@@ -101,21 +103,18 @@ const styles = StyleSheet.create({
     width: 175,
     margin: 10,
     borderRadius: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
 function mapDispatchToProps(dispatch) {
-  return{
-    cardPressed: function(user) {
-      console.log('cardPressed!');
-      dispatch({type: 'cardClicked', user})
-    }
-  }
+  return {
+    cardPressed: function (user) {
+      console.log("cardPressed!");
+      dispatch({ type: "cardClicked", user });
+    },
+  };
 }
 
-export default connect (
-  null,
-  mapDispatchToProps
-) (BuddieCard);
+export default connect(null, mapDispatchToProps)(BuddieCard);
