@@ -7,6 +7,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import userInfosModalReducer from "../../reducers/userInfosModal.reducer";
 
 function UserHistoryCard(props) {
+  console.log("propshistorycard", props.user);
   const tabLevel = [];
   for (var i = 0; i < 3; i++) {
     let color = "#DCDCDC";
@@ -32,11 +33,15 @@ function UserHistoryCard(props) {
           source={require("../../img/staticImg/user.jpg")}
         />
         <View style={{ flexDirection: "column" }}>
-          <Text style={styles.nameText}></Text>
-          <Text style={styles.loca}>9 Av. des Papalins, 98000 Monaco</Text>
+          {props.user.buddyId && (
+            <Text style={styles.nameText}>{props.user.buddyId.firstname}</Text>
+          )}
+          {props.user.buddyId && (
+            <Text style={styles.loca}>{props.user.buddyId.lastname}</Text>
+          )}
           <View style={styles.infos}>
             <View style={{ marginRight: 5, flexDirection: "row" }}>
-              <Text style={styles.sportBadge}>Boxe</Text>
+              <Text style={styles.sportBadge}></Text>
               {tabLevel}
             </View>
             <View style={{ flexDirection: "row" }}>

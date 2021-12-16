@@ -27,9 +27,7 @@ function FuturBuddyCard() {
               />
             </View>
           </View>
-          <TouchableOpacity
-            style={{ padding: 10, marginLeft: 10 }}
-          >
+          <TouchableOpacity style={{ padding: 10, marginLeft: 10 }}>
             <Entypo name="cross" size={24} color="black" />
           </TouchableOpacity>
         </View>
@@ -42,7 +40,7 @@ const styles = StyleSheet.create({
   cardsContainer: {
     marginLeft: 20,
     marginRight: 20,
-    marginTop:20,
+    marginTop: 20,
     marginBottom: 10,
   },
   profilCard: {

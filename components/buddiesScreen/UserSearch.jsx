@@ -12,11 +12,13 @@ import UserSearchCard from "./UserSearchCard";
 
 function UserSearch(props) {
   const [usersList, setUsersList] = useState([]);
-  console.log('usersList', usersList);
+  console.log("usersList", usersList);
   useEffect(() => {
     async function usersListInfos() {
       // const rawResponse = await fetch('http://192.168.1.29:3000/searchScreen')
       const rawResponse = await fetch("http://10.3.11.6:3000/searchScreen");
+      // const rawResponse = await fetch("http://10.3.11.5:3000/searchScreen");
+      // const rawResponse = await fetch("http://192.168.1.13:3000/searchScreen");
       const response = await rawResponse.json();
       setUsersList(response.users);
     }

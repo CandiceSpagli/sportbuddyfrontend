@@ -20,31 +20,23 @@ function UserSearchCard(props) {
     lastname: props.lastname,
     sports: props.sports,
     desc: props.desc,
-    picture: props.picture
-  }
+    picture: props.picture,
+  };
 
   const cardPressed = () => {
-    props.navigation.navigate('UserProfilScreen')
-    props.cardPressed(userInfos)
-  }
+    props.navigation.navigate("UserProfilScreen");
+    props.cardPressed(userInfos);
+  };
 
   return (
     <View style={styles.cardsContainer}>
-      <TouchableOpacity
-        style={styles.profilCard}
-        onPress={() => cardPressed()}
-      >
-        <Image
-          style={styles.pic}
-          source={{uri: props.picture}}
-        />
+      <TouchableOpacity style={styles.profilCard} onPress={() => cardPressed()}>
+        <Image style={styles.pic} source={{ uri: props.picture }} />
         <View style={{ flexDirection: "column" }}>
           <Text style={styles.nameText}>
             {props.firstname} {props.lastname}
           </Text>
-          <View style={styles.sportBox}>
-            {sportsMAP}
-          </View>
+          <View style={styles.sportBox}>{sportsMAP}</View>
         </View>
       </TouchableOpacity>
     </View>
@@ -88,15 +80,12 @@ const styles = StyleSheet.create({
 });
 
 function mapDispatchToProps(dispatch) {
-  return{
-    cardPressed: function(userInfos) {
-      console.log('cardPressed!');
-      dispatch({type: 'userCardClicked', userInfos})
-    }
-  }
+  return {
+    cardPressed: function (userInfos) {
+      console.log("cardPressed!");
+      dispatch({ type: "userCardClicked", userInfos });
+    },
+  };
 }
 
-export default connect (
-  null,
-  mapDispatchToProps
-) (UserSearchCard);
+export default connect(null, mapDispatchToProps)(UserSearchCard);

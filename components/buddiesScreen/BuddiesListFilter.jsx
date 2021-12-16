@@ -10,11 +10,11 @@ import { useIsFocused } from "@react-navigation/native";
 function BuddiesListFilter(props) {
   const [sessionsCards, setSessionsCards] = useState([]);
 
-  const isFocused = useIsFocused()
+  const isFocused = useIsFocused();
   // console.log("sessionsCards", sessionsCards);
-  
-  console.log('props.filterParams', props.filterParams);
-  console.log('isFocused', isFocused);
+
+  console.log("props.filterParams", props.filterParams);
+  console.log("isFocused", isFocused);
 
   // const [isSportSelected, setIsSportSelected] = useState(false);
   // const [sport, setSport] = useState("");
@@ -23,24 +23,24 @@ function BuddiesListFilter(props) {
 
   useEffect(() => {
     async function buddiesCardsInfos() {
-      console.log('Buddies List filter useEffect')
+      console.log("Buddies List filter useEffect");
       // const rawResponse = await fetch('http://192.168.1.29:3000/buddiesScreen')
-      const rawResponse = await fetch("http://10.3.11.6:3000/buddiesScreen");
+      // const rawResponse = await fetch("http://10.3.11.6:3000/buddiesScreen");
+      // const rawResponse = await fetch("http://192.168.1.13:3000/buddiesScreen");
+      const rawResponse = await fetch("http://10.3.11.5:3000/buddiesScreen");
       const response = await rawResponse.json();
+      console.log("buddyListFilter Response", response);
 
-      console.log('sessionsLength', response.sessions.length)
+      console.log("sessionsLength", response.sessions.length);
 
       setSessionsCards(response.sessions);
     }
     buddiesCardsInfos();
   }, [isFocused]);
 
-  
   const getFormattedDate = (date) => {
-    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
-  }
-
-
+    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  };
 
   const filterCardsBySport = sessionsCards.filter((sessionCard) => {
     // if (sessionCard._id === "61bb10310352b97c8cf78911") {
@@ -49,7 +49,10 @@ function BuddiesListFilter(props) {
     if (props.sportsFilterButtons === null) {
       return true;
     }
-    if (props.sportsFilterButtons.toLowerCase() === sessionCard.sport.toLowerCase()) {
+    if (
+      props.sportsFilterButtons.toLowerCase() ===
+      sessionCard.sport.toLowerCase()
+    ) {
       return true;
     }
   });
@@ -64,11 +67,9 @@ function BuddiesListFilter(props) {
       return true;
     }
     if (sessionCard.level >= props.filterParams.level) {
-      return true
+      return true;
     }
   });
-
-
 
   const filterCardsByDate = filterCardsByLevel.filter((sessionCard) => {
     // if (sessionCard._id === "61bb10310352b97c8cf78911") {
@@ -86,14 +87,12 @@ function BuddiesListFilter(props) {
     const fmtDateCard = getFormattedDate(date);
 
     // console.log(' sessionCard.date', sessionCard.date)
-    // console.log('fmtDateFilter', fmtDateFilter) 
-    // console.log('fmtDateCard', fmtDateCard) 
+    // console.log('fmtDateFilter', fmtDateFilter)
+    // console.log('fmtDateCard', fmtDateCard)
     if (fmtDateFilter === fmtDateCard) {
-      return true
+      return true;
     }
-  })
-
-
+  });
 
   // console.log('filterCardsBySport.length', filterCardsBySport.length)
   // console.log('filterCardsByLevel.length', filterCardsByLevel.length)
@@ -104,7 +103,7 @@ function BuddiesListFilter(props) {
   const filterSessionsCards = filterCardsByLevel;
 
   const sessionsCardsMAP = filterSessionsCards.map((sessionInfos, index) => {
-    console.log("sessionInfos", sessionInfos);
+    console.log("&&&&&&&&&sessionInfos", sessionInfos);
     return (
       <BuddieCard
         key={index}
@@ -116,7 +115,7 @@ function BuddiesListFilter(props) {
         time={sessionInfos.date}
         location={sessionInfos.location}
         picture={sessionInfos.creatorId.picture}
-        // pic={sessionInfos.pic}
+        sessionId={sessionInfos._id}
       />
     );
   });

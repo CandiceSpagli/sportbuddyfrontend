@@ -12,6 +12,8 @@ import { connect } from "react-redux";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 function BuddieCard(props) {
+  console.log("buddieCard", props);
+  console.log("user", user);
   const user = {
     firstname: props.firstname,
     lastname: props.lastname,
@@ -21,8 +23,8 @@ function BuddieCard(props) {
     time: props.time,
     location: props.location,
     picture: props.picture,
+    sessionId: props.sessionId,
   };
-  console.log("user", user);
 
   const onCardPress = () => {
     // console.log('hey');
