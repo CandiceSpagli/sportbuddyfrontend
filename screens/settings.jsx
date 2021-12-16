@@ -41,15 +41,19 @@ function Settings(props) {
   const [sports, setSports] = useState([]);
   const [image, setImage] = useState(null);
   const [desc, setDesc] = useState("");
-  console.log("DESC", desc);
+
+  console.log("IMAGE", image);
   // console.log("IMAGE", image);
 
   // console.log("LASTNAMELOADED", lastNameLoaded);
   // console.log("FIRSTNAMELOADED", firstNameLoaded);
 
-  const [currentSport, setCurrentSport] = useState({});
+  const [currentSport, setCurrentSport] = useState({
+    name: "Course",
+    level: 1,
+  });
 
-  // console.log("SPORT", sports);
+  console.log("SPORT", sports);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   // console.log("CURRENT SPORT", currentSport);
@@ -83,14 +87,16 @@ function Settings(props) {
     async function loadedData() {
       console.log("useEffect#loadedData");
       const rawResponse = await fetch(
-        `http://10.3.11.9:3000/settings?token=${props.token}`
+        `http://10.3.11.6:3000/settings?token=${props.token}`
       );
       const response = await rawResponse.json();
-      // console.log("RESPONSEEEEEEEEEEEEEEEEEEEEEE", response);
+      console.log("RESPONSEEEEEEEEEEEEEEEEEEEEEE", response);
       setFirstName(response.firstNameLoaded || "");
       setLastName(response.lastNameLoaded || "");
       setGender(response.genderLoaded || "Man");
       setSports(response.sportsLoaded || []);
+      setDesc(response.desc);
+      setImage(response.picture);
     }
     loadedData();
   }, []);
@@ -99,27 +105,9 @@ function Settings(props) {
       if (Platform.OS !== "web") {
         const { status } =
           await ImagePicker.requestMediaLibraryPermissionsAsync();
-        // if (status !== "granted") {
-        //   alert("Sorry, we need camera roll permissions to make this work!");
-        // }
       }
     })();
   }, []);
-
-  // const pickImage = async () => {
-  //   let result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //     allowsEditing: true,
-  //     aspect: [4, 3],
-  //     quality: 1,
-  //   });
-
-  //   console.log("RESULT IMAGE", result);
-
-  //   if (!result.cancelled) {
-  //     setImage(result.uri);
-  //   }
-  // };
 
   // GEOCODER
 
@@ -134,6 +122,7 @@ function Settings(props) {
   //   .catch((error) => console.warn(error));
 
   var handleSubmitContinue = async () => {
+    props.navigation.navigate("Buddies");
     var result = sports.map((sports, index) => {
       console.log("sports", sports);
       return `sportName${index + 1}=${sports.name}&sportLevel${index + 1}=${
@@ -143,10 +132,12 @@ function Settings(props) {
     const resultjoin = result.join("&");
 
     console.log("resultjoin", resultjoin);
-    const bodysend = `token=${props.token}&lastname=${lastName}&firstname=${firstName}&gender=${gender}&desc=${desc}${resultjoin}`;
+    const bodysend = `token=${props.token}&lastname=${lastName}&firstname=${firstName}&gender=${gender}&${resultjoin}&desc=${desc}`;
+    // bODYSEND token=U-ZSotDHNBuw0CCxXK3CF42VlBW-Ptyd&lastname=B&firstname=B&gender=Woman&=sportName1=Course&sportLevel1=3&desc=Heloiiio
+
     // &picture=${image}
     console.log("bODYSEND", bodysend);
-    const data = await fetch("http://10.3.11.9:3000/settings", {
+    const data = await fetch("http://10.3.11.6:3000/settings", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: bodysend,
@@ -187,6 +178,7 @@ function Settings(props) {
     var response = await photoResponse.json();
     // setImage(response);
     console.log("PHOTORESPONSEEEEEE", response);
+    setImage(cloudinary.url);
   };
 
   var buttonWTitleStyle = { color: "#F53A15" };
@@ -228,6 +220,7 @@ function Settings(props) {
   };
 
   const onSelectCard = (level) => {
+    console.log("current sport selectedCard", currentSport);
     // console.log("CLICK");
     // console.log("LEVEL", level);
     setIsModalOpen(false);
@@ -488,7 +481,7 @@ function Settings(props) {
         <Text style={styles.text}> Description</Text>
         <TextInput
           style={styles.input}
-          placeholder="Description"
+          placeholder={desc}
           onChangeText={(des) => setDesc(des)}
         />
 
@@ -547,7 +540,7 @@ function Settings(props) {
         <View style={{ alignItems: "center" }}>
           <Button
             style={{
-              backgroundColor: "#f42c04",
+              backgroundColor: "rgba(244, 44, 4, 0.5)",
               width: 200,
               borderRadius: 30,
               marginBottom: 30,
@@ -560,7 +553,7 @@ function Settings(props) {
           />
         </View>
 
-        <View>
+        {/* <View>
           <Text style={{ marginTop: 30, marginLeft: 20 }}>
             {" "}
             Distance max :{" "}
@@ -577,20 +570,20 @@ function Settings(props) {
             {slider}
           </Text>
           <Divider style={{ marginTop: 30 }} orientation="vertical" width={5} />
-        </View>
-        <View>
+        </View> */}
+        {/* <View>
           <Divider style={{ marginTop: 30 }} orientation="vertical" width={5} />
           <Text style={{ marginTop: 30, marginLeft: 20 }}>
             Localisation : {currentAdress}
           </Text>
           {/* <Text style={styles.text}>Localisation</Text>
           <Text style={styles.localisation}>{currentLatitude}</Text> */}
-          <Divider style={{ marginTop: 30 }} orientation="vertical" width={5} />
-        </View>
+        {/* <Divider style={{ marginTop: 30 }} orientation="vertical" width={5} />
+        </View> */}
 
-        <View>
+        <View style={{ marginLeft: 40 }}>
           <Button
-            titleStyle={{ color: "black" }}
+            titleStyle={{ fontSize: 20, color: "black" }}
             onPress={() => handleSubmitContinue()}
             style={styles.continue}
             type="clear"
@@ -722,13 +715,12 @@ const styles = StyleSheet.create({
   },
   continue: {
     // backgroundColor: "white",
-    borderWidth: 0.5,
-    borderRadius: 30,
-    height: 45,
-    width: 100,
-    marginLeft: 130,
-    borderColor: "black",
-    marginTop: 20,
+    borderRadius: 44,
+    margin: 15,
+    width: 280,
+    borderWidth: 1,
+
+    backgroundColor: "rgba(255,255,255,0.3)",
   },
   sportsetting: {
     fontSize: 15,

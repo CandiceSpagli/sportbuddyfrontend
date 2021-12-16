@@ -16,7 +16,7 @@ function UserSearch(props) {
   useEffect(() => {
     async function usersListInfos() {
       // const rawResponse = await fetch('http://192.168.1.29:3000/searchScreen')
-      const rawResponse = await fetch("http://10.3.11.9:3000/searchScreen");
+      const rawResponse = await fetch("http://10.3.11.6:3000/searchScreen");
       const response = await rawResponse.json();
       setUsersList(response.users);
     }
@@ -32,7 +32,6 @@ function UserSearch(props) {
           sports={users.sports}
           navigation={props.navigation}
           desc={users.desc}
-          picture={users.picture}
         />
       </TouchableOpacity>
     );

@@ -65,7 +65,7 @@ function ProfilScreen(props) {
     async function firstnameProfil() {
       console.log("props.token from profilScreen", props.token);
       const rawResponse = await fetch(
-        `http://10.3.11.9:3000/profilScreen?token=${props.token}`
+        `http://10.3.11.6:3000/profilScreen?token=${props.token}`
       );
       const response = await rawResponse.json();
       console.log("response", response);
@@ -74,6 +74,7 @@ function ProfilScreen(props) {
       setSports(response.sport);
       setPicture(response.picture);
       setDesc(response.desc);
+      setPicture(response.picture);
     }
     firstnameProfil();
   }, []);
@@ -84,8 +85,8 @@ function ProfilScreen(props) {
   // var sportName = sportObject.name;
 
   const userSettingsPressed = () => {
-    props.navigation.navigate('Settings')
-  }
+    props.navigation.navigate("Settings");
+  };
 
   const sportsCards = sports;
   console.log("sportsCards", sportsCards);
@@ -144,10 +145,8 @@ function ProfilScreen(props) {
               shadowOpacity: 0.2,
             }}
           >
-            <Image
-              style={styles.profil}
-              source={require("../img/staticImg/user.jpg")}
-            />
+            <Image style={styles.profil} source={{ uri: picture }} />
+
             <TouchableOpacity
               style={{ position: "absolute", right: -20, top: 0 }}
               onPress={() => userSettingsPressed()}
