@@ -163,10 +163,11 @@ function BuddiesScreen(props) {
                 marginTop: 5,
                 flexDirection: "row",
                 alignItems: "center",
-                justifyContent: "space-between",
+                // justifyContent: "space-between",
+                justifyContent: "center",
               }}
             >
-              <Button
+              {/* <Button
                 style={{
                   backgroundColor: "black",
                   borderRadius: 60,
@@ -178,7 +179,7 @@ function BuddiesScreen(props) {
                 }}
                 type="clear"
                 title="Spot"
-              />
+              /> */}
               <View
                 style={{
                   flexDirection: "row",

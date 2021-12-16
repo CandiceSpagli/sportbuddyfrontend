@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { connect } from "react-redux";
 
 // FuturBuddyCard
 import FuturBuddyCard from "../journalHistorique/FuturBuddyCard";
@@ -7,7 +8,8 @@ import FuturBuddyCard from "../journalHistorique/FuturBuddyCard";
 // UserHistoryCard
 import UserHistoryCard from "../journalHistorique/UserHistoryCard";
 
-function historyComp() {
+function HistoryComp(props) {
+  console.log('sessionsHistorique', props.sessionsHistorique);
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -35,4 +37,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default historyComp;
+// export default HistoryComp;
+function mapStateToProps(state) {
+  return { sessionsHistorique: state.userInfosModal };
+}
+
+export default connect(mapStateToProps, null)(HistoryComp);

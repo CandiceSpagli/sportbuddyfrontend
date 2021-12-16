@@ -10,7 +10,7 @@ function UserSearchCard(props) {
   const sportsMAP = sportsArray.map((sports, index) => {
     return (
       <Text style={styles.sportsText} key={index}>
-        {sports.type}
+        {sports.name}
       </Text>
     );
   });
@@ -20,7 +20,7 @@ function UserSearchCard(props) {
     lastname: props.lastname,
     sports: props.sports,
     desc: props.desc,
-    picture: 'https://cdn-icons-png.flaticon.com/512/4383/4383887.png'
+    picture: props.picture
   }
 
   const cardPressed = () => {
@@ -36,7 +36,7 @@ function UserSearchCard(props) {
       >
         <Image
           style={styles.pic}
-          source={require("../../img/staticImg/user.jpg")}
+          source={{uri: props.picture}}
         />
         <View style={{ flexDirection: "column" }}>
           <Text style={styles.nameText}>
