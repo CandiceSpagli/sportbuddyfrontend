@@ -22,35 +22,18 @@ function ProfilScreen(props) {
   //   props.navigation.navigate("Session");
   // };
 
-  // const tabLevel = [];
-  // for (var i = 0; i < 3; i++) {
-  //   let color = "#DCDCDC";
-  //   if (i < myLevel) {
-  //     color = "black";
-  //   }
-  //   let count = i + 1;
-  //   tabLevel.push(
-  //     <FontAwesome5
-  //       key={count}
-  //       name="medal"
-  //       size={15}
-  //       color={color}
-  //       onPress={() => setMyLevel(count)}
-  //     />
-  //   );
-  // }
   const [firstname, setFirstname] = useState("");
-  console.log("FIRSTNAME PROFILSCREEN", firstname);
+  // console.log("FIRSTNAME PROFILSCREEN", firstname);
   const [lastname, setLastname] = useState("");
-  console.log("LASTNAME PROFILSCREEN", lastname);
+  // console.log("LASTNAME PROFILSCREEN", lastname);
   const [level, setLevel] = useState("");
-  console.log("LEVEL PROFILSCREEN", level);
+  // console.log("LEVEL PROFILSCREEN", level);
   const [picture, setPicture] = useState("");
-  console.log("PICTURE PROFILSCREEN", picture);
+  // console.log("PICTURE PROFILSCREEN", picture);
   const [desc, setDesc] = useState("");
-  console.log("DESC PROFILSCREEN", desc);
+  // console.log("DESC PROFILSCREEN", desc);
   const [sports, setSports] = useState([]);
-  console.log("SPORTSSS PROFILSCREEN", sports);
+  console.log("SPORTSSS PROFILSCREEN", sports.level);
 
   // const [loaded] = useFonts({
   //   bohemianSoul: require("../assets/fonts/bohemianSoul.otf"),
@@ -79,6 +62,25 @@ function ProfilScreen(props) {
     firstnameProfil();
   }, []);
 
+  const tabLevel = [];
+  for (var i = 0; i < 3; i++) {
+    let color = "#DCDCDC";
+    if (i < 2) {
+      color = "#f42c04";
+    }
+    let count = i + 1;
+    tabLevel.push(
+      <FontAwesome5
+        style={{ marginRight: 2 }}
+        key={count}
+        name="medal"
+        size={40}
+        color={color}
+        // onPress={() => setMyLevel(count)}
+      />
+    );
+  }
+
   // var sportObject = sports.map((sportsinfo, index) => {
   //   console.log("sports du map", sportsinfo);
   // });
@@ -89,10 +91,10 @@ function ProfilScreen(props) {
   };
 
   const sportsCards = sports;
-  console.log("sportsCards", sportsCards);
+  // console.log("sportsCards", sportsCards);
   const renderItem = ({ item, index }) => {
-    console.log("ITEM from renderitem", item);
-    console.log("INDEX from renderitem", index);
+    // console.log("ITEM from renderitem", item);
+    // console.log("INDEX from renderitem", index);
     return (
       <View style={styles.sportCard}>
         <View style={{ alignItems: "center" }}>
@@ -104,12 +106,12 @@ function ProfilScreen(props) {
         <Text style={styles.sportTitle}>{item.name}</Text>
         <View style={{ marginLeft: 30, marginTop: -5 }}>
           <View style={{ flexDirection: "row", alignItems: "baseline" }}>
-            <Text style={{ fontSize: 50, fontWeight: "bold" }}>25 </Text>
+            <Text style={{ fontSize: 50, fontWeight: "bold" }}>12 </Text>
             <Text style={styles.sportCardText}>séances !</Text>
           </View>
           <Text style={styles.sportCardText}>Niveau :{item.level} </Text>
           <View style={{ flexDirection: "row", marginTop: 10 }}>
-            <FontAwesome5
+            {/* <FontAwesome5
               style={{ marginRight: 2 }}
               name="medal"
               size={40}
@@ -126,12 +128,15 @@ function ProfilScreen(props) {
               name="medal"
               size={40}
               color={"#f42c04"}
-            />
+            /> */}
+            {tabLevel}
           </View>
         </View>
       </View>
     );
   };
+
+  // console.log('_______renderItem', renderItem.level);
 
   return (
     <>

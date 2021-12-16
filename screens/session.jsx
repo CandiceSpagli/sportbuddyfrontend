@@ -26,6 +26,8 @@ function session(props) {
   // console.log("datefromSESSION", date);
 
   const [time, setTime] = useState();
+  const [isMapPressed, setIsMapPressed] = useState(false);
+  console.log("isMapPressed", isMapPressed);
 
   console.log("timefromSESSION", time);
 
@@ -83,17 +85,21 @@ function session(props) {
   };
 
   const handleSubmitSession = async () => {
-    props.sessionBtnPressed(items);
-    // props.navigation.navigate("Buddies");
-    props.navigation.goBack(null);
+    if (isMapPressed) {
+      props.sessionBtnPressed(items);
 
-    console.log("create A Session from Session", value);
-    console.log("datea la creation", date);
-    const data = await fetch("http://10.3.11.6:3000/sessions", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `token=${props.token}&date=${date}&sport=${value}&level=${myLevel}&long=${addRDV.longitude}&lat=${addRDV.latitude}`,
-    });
+      // props.navigation.goBack(null);
+
+      console.log("create A Session from Session", value);
+      console.log("datea la creation", date);
+      const data = await fetch("http://10.3.11.9:3000/sessions", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `token=${props.token}&date=${date}&sport=${value}&level=${myLevel}&long=${addRDV.longitude}&lat=${addRDV.latitude}`,
+      });
+
+      props.navigation.navigate("Buddies");
+    }
   };
 
   const tabLevel = [];
@@ -195,6 +201,7 @@ function session(props) {
             <MapView
               onPress={(evt) => {
                 selectRDV(evt);
+                setIsMapPressed(true);
               }}
               style={{
                 borderRadius: 60,

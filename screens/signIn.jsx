@@ -76,7 +76,7 @@ function signIn(props) {
         source={require("../img/staticImg/degradetfour.jpg")}
         resizeMode="cover"
       ></Image>
-      <View>
+      <View style={{alignItems:'center'}}>
         <View>
           <Text
             style={{ fontFamily: "bohemianSoul", fontSize: 70, marginTop: 50 }}
@@ -135,7 +135,7 @@ function signIn(props) {
           <Button
             style={styles.sportBtn}
             titleStyle={{
-              fontSize: 20,
+              fontSize: 30,
               color: "black",
             }}
             type="clear"
@@ -159,7 +159,7 @@ function signIn(props) {
           ></Button>
         </View>
       </View>
-      <Navbar navigation={props.navigation} />
+      {/* <Navbar navigation={props.navigation} /> */}
     </>
   );
 }

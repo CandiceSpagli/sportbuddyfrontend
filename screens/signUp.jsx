@@ -58,16 +58,18 @@ function signUp(props) {
         source={require("../img/staticImg/degrade_reverse.jpg")}
         resizeMode="cover"
       ></Image>
-      <Text
-        style={{
-          fontFamily: "bohemianSoul",
-          fontSize: 70,
-          marginTop: 50,
-          marginLeft: 24,
-        }}
-      >
-        Sign-Up
-      </Text>
+      <View style={{alignItems:'center'}}>
+        <Text
+          style={{
+            fontFamily: "bohemianSoul",
+            fontSize: 70,
+            marginTop: 50,
+            marginLeft: 24,
+          }}
+        >
+          Sign-Up
+        </Text>
+      </View>
       <View style={{ alignItems: "center" }}>
         <TextInput
           style={styles.input}
@@ -99,7 +101,7 @@ function signUp(props) {
         <Button
           style={styles.sportBtn}
           titleStyle={{
-            fontSize: 20,
+            fontSize: 30,
             color: "black",
           }}
           onPress={() => handleSubmitSignup()}
@@ -113,7 +115,6 @@ function signUp(props) {
         <Button
           style={styles.sportBtn}
           titleStyle={{
-            fontSize: 20,
             color: "black",
             textDecorationLine: "underline",
             fontSize: 13,
