@@ -73,7 +73,7 @@ function navBar(props) {
                   onPress={() => journalPressed()}
                 >
                   <Text style={styles.navTexts}>Journal</Text>
-                  <FontAwesome
+                  {/* <FontAwesome
                     style={{
                       position: "absolute",
                       marginLeft: 97,
@@ -96,7 +96,7 @@ function navBar(props) {
                       color="black"
                     />
                     <Text>Candice Spagli</Text>
-                  </View>
+                  </View> */}
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={{
@@ -107,10 +107,10 @@ function navBar(props) {
                   onPress={() => profilPressed()}
                 >
                   <Text style={styles.navTexts}>Mon Profil</Text>
-                  <Image
+                  {/* <Image
                     style={styles.profil}
                     source={require("../../../img/staticImg/user.jpg")}
-                  />
+                  /> */}
                 </TouchableOpacity>
               </View>
             </View>
@@ -158,13 +158,13 @@ function navBar(props) {
         type="clear"
         onPress={() => buttonClicked()}
       >
-        <Image
+        {/* <Image
           style={{
             height: 50,
             width: 50,
           }}
           source={require("../../../img/staticImg/icons/squid.png")}
-        />
+        /> */}
       </TouchableOpacity>
     </View>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Overlay, Card, Icon } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
@@ -13,6 +13,7 @@ import { useFonts } from "expo-font";
 
 // icons
 import { FontAwesome5 } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 function ProfilScreen(props) {
   // const [myLevel, setMyLevel] = useState(0);
@@ -21,35 +22,18 @@ function ProfilScreen(props) {
   //   props.navigation.navigate("Session");
   // };
 
-  // const tabLevel = [];
-  // for (var i = 0; i < 3; i++) {
-  //   let color = "#DCDCDC";
-  //   if (i < myLevel) {
-  //     color = "black";
-  //   }
-  //   let count = i + 1;
-  //   tabLevel.push(
-  //     <FontAwesome5
-  //       key={count}
-  //       name="medal"
-  //       size={15}
-  //       color={color}
-  //       onPress={() => setMyLevel(count)}
-  //     />
-  //   );
-  // }
   const [firstname, setFirstname] = useState("");
-  console.log("FIRSTNAME PROFILSCREEN", firstname);
+  // console.log("FIRSTNAME PROFILSCREEN", firstname);
   const [lastname, setLastname] = useState("");
-  console.log("LASTNAME PROFILSCREEN", lastname);
+  // console.log("LASTNAME PROFILSCREEN", lastname);
   const [level, setLevel] = useState("");
-  console.log("LEVEL PROFILSCREEN", level);
+  // console.log("LEVEL PROFILSCREEN", level);
   const [picture, setPicture] = useState("");
-  console.log("PICTURE PROFILSCREEN", picture);
+  // console.log("PICTURE PROFILSCREEN", picture);
   const [desc, setDesc] = useState("");
-  console.log("DESC PROFILSCREEN", desc);
+  // console.log("DESC PROFILSCREEN", desc);
   const [sports, setSports] = useState([]);
-  console.log("SPORTSSS PROFILSCREEN", sports);
+  console.log("SPORTSSS PROFILSCREEN", sports.level);
 
   // const [loaded] = useFonts({
   //   bohemianSoul: require("../assets/fonts/bohemianSoul.otf"),
@@ -65,7 +49,8 @@ function ProfilScreen(props) {
       console.log("props.token from profilScreen", props.token);
       const rawResponse = await fetch(
         // `http://192.168.1.13:3000/profilScreen?token=${props.token}`
-        `http://10.3.11.5:3000/profilScreen?token=${props.token}`
+        // `http://10.3.11.5:3000/profilScreen?token=${props.token}`
+        `http://10.3.11.6:3000/profilScreen?token=${props.token}`
       );
       const response = await rawResponse.json();
       console.log("response", response);
@@ -74,20 +59,44 @@ function ProfilScreen(props) {
       setSports(response.sport);
       setPicture(response.picture);
       setDesc(response.desc);
+      setPicture(response.picture);
     }
     firstnameProfil();
   }, []);
+
+  const tabLevel = [];
+  for (var i = 0; i < 3; i++) {
+    let color = "#DCDCDC";
+    if (i < 2) {
+      color = "#f42c04";
+    }
+    let count = i + 1;
+    tabLevel.push(
+      <FontAwesome5
+        style={{ marginRight: 2 }}
+        key={count}
+        name="medal"
+        size={40}
+        color={color}
+        // onPress={() => setMyLevel(count)}
+      />
+    );
+  }
 
   // var sportObject = sports.map((sportsinfo, index) => {
   //   console.log("sports du map", sportsinfo);
   // });
   // var sportName = sportObject.name;
 
+  const userSettingsPressed = () => {
+    props.navigation.navigate("Settings");
+  };
+
   const sportsCards = sports;
-  console.log("sportsCards", sportsCards);
+  // console.log("sportsCards", sportsCards);
   const renderItem = ({ item, index }) => {
-    console.log("ITEM from renderitem", item);
-    console.log("INDEX from renderitem", index);
+    // console.log("ITEM from renderitem", item);
+    // console.log("INDEX from renderitem", index);
     return (
       <View style={styles.sportCard}>
         <View style={{ alignItems: "center" }}>
@@ -99,12 +108,12 @@ function ProfilScreen(props) {
         <Text style={styles.sportTitle}>{item.name}</Text>
         <View style={{ marginLeft: 30, marginTop: -5 }}>
           <View style={{ flexDirection: "row", alignItems: "baseline" }}>
-            <Text style={{ fontSize: 50, fontWeight: "bold" }}>25 </Text>
+            <Text style={{ fontSize: 50, fontWeight: "bold" }}>12 </Text>
             <Text style={styles.sportCardText}>séances !</Text>
           </View>
           <Text style={styles.sportCardText}>Niveau :{item.level} </Text>
           <View style={{ flexDirection: "row", marginTop: 10 }}>
-            <FontAwesome5
+            {/* <FontAwesome5
               style={{ marginRight: 2 }}
               name="medal"
               size={40}
@@ -121,12 +130,15 @@ function ProfilScreen(props) {
               name="medal"
               size={40}
               color={"#f42c04"}
-            />
+            /> */}
+            {tabLevel}
           </View>
         </View>
       </View>
     );
   };
+
+  // console.log('_______renderItem', renderItem.level);
 
   return (
     <>
@@ -140,7 +152,14 @@ function ProfilScreen(props) {
               shadowOpacity: 0.2,
             }}
           >
-            <Image style={styles.profil} source={picture} />
+            <Image style={styles.profil} source={{ uri: picture }} />
+
+            <TouchableOpacity
+              style={{ position: "absolute", right: -20, top: 0 }}
+              onPress={() => userSettingsPressed()}
+            >
+              <AntDesign name="setting" size={35} color="black" />
+            </TouchableOpacity>
           </View>
           <Text style={styles.firstname}>{firstname}</Text>
           <Text style={styles.lastname}>{lastname}</Text>
@@ -263,6 +282,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     right: 0,
+    // left:250,
     marginBottom: 110,
     marginRight: -30,
   },

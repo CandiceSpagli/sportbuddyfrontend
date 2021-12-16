@@ -3,7 +3,6 @@ import {
   View,
   TextInput,
   Link,
-  Button,
   StyleSheet,
   Text,
   Image,
@@ -11,6 +10,8 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
+
+import { Button } from "react-native-elements";
 
 // navbar
 import Navbar from "../components/buddiesScreen/navbar/NavBarPopUp";
@@ -28,7 +29,8 @@ function signIn(props) {
     console.log("handleSubmitSignin", handleSubmitSignin);
     console.log("signInEmail", signInEmail);
     // const data = await fetch("http://192.168.1.13:3000/sign-in", {
-    const data = await fetch("http://10.3.11.5:3000/sign-in", {
+    // const data = await fetch("http://10.3.11.5:3000/sign-in", {
+    const data = await fetch("http://10.3.11.6:3000/sign-in", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `email=${signInEmail}&password=${signInPassword}`,
@@ -73,105 +75,121 @@ function signIn(props) {
     <>
       <Image
         style={{ position: "absolute", weight: "100%", height: "100%" }}
-        source={require("../img/staticImg/degrade.jpg")}
+        source={require("../img/staticImg/degradetfour.jpg")}
         resizeMode="cover"
       ></Image>
-      <View>
+      <View style={{ alignItems: "center" }}>
         <View>
           <Text
-            style={{ fontFamily: "bohemianSoul", fontSize: 70, marginTop: 80 }}
+            style={{ fontFamily: "bohemianSoul", fontSize: 70, marginTop: 50 }}
           >
             {" "}
             Sign-In{" "}
           </Text>
         </View>
-
-        <TextInput
-          style={styles.inputone}
-          onChangeText={(value) => onChangeEmail(value)}
-          className="Login-input"
-          placeholder="email"
-          value={signInEmail}
-        />
-        <View>
+        <View style={{ padding: 40 }}>
           <Text
             style={{
-              marginTop: -100,
-              marginLeft: 10,
-              color: "grey",
-              marginLeft: 50,
+              color: "black",
+              padding: 10,
             }}
           >
-            {" "}
-            Adresse email{" "}
+            Adresse email
           </Text>
+
+          <TextInput
+            style={styles.inputone}
+            onChangeText={(value) => onChangeEmail(value)}
+            className="Login-input"
+            placeholder="email"
+            value={signInEmail}
+          />
+        </View>
+        <View style={{ padding: 40 }}>
+          <Text
+            style={{
+              padding: 10,
+              color: "black",
+            }}
+          >
+            Mot de passe
+          </Text>
+
+          <TextInput
+            style={styles.inputtwo}
+            onChangeText={(value) => OnChangePassword(value)}
+            className="Login-input"
+            placeholder="password"
+            value={signInPassword}
+            secureTextEntry={true}
+          />
         </View>
 
-        <TextInput
-          style={styles.inputtwo}
-          onChangeText={(value) => OnChangePassword(value)}
-          className="Login-input"
-          placeholder="password"
-          value={signInPassword}
-          secureTextEntry={true}
-        />
-        <Text
-          style={{
-            marginLeft: 10,
-            color: "grey",
-            marginTop: -90,
-            marginLeft: 50,
-          }}
-        >
-          {" "}
-          Mot de passe{" "}
-        </Text>
-
         {/* {tabErrorsSignin} */}
-        <View style={{ marginTop: 150 }}>
-          <Button
-            style={{ marginTop: 50 }}
+        <View style={{ marginTop: 40, alignItems: "center" }}>
+          {/* <Button
             onPress={() => handleSubmitSignin()}
             style={{ width: 80 }}
-            type="primary"
+            type="clear"
             title="SIGN-IN"
-          ></Button>
+          ></Button> */}
 
           <Button
-            style={styles.input}
+            style={styles.sportBtn}
+            titleStyle={{
+              fontSize: 30,
+              color: "black",
+            }}
+            type="clear"
+            title="Continuer"
+            onPress={() => handleSubmitSignin()}
+          />
+          <Text style={{ margin: 5, paddingTop: 35 }}>
+            {" "}
+            Vous n'avez pas de compte?
+          </Text>
+
+          <Button
             onPress={() => goToSignUp()}
-            style={{ width: 80 }}
-            type="primary"
-            title="PRESS TO CREATE AN ACCOUNT?"
+            titleStyle={{
+              color: "black",
+              textDecorationLine: "underline",
+              fontSize: 13,
+            }}
+            type="clear"
+            title="Inscrivez-vous"
           ></Button>
         </View>
       </View>
-      <Navbar navigation={props.navigation} />
+      {/* <Navbar navigation={props.navigation} /> */}
     </>
   );
 }
 
 const styles = StyleSheet.create({
   inputone: {
-    marginTop: 40,
     height: 50,
     width: 280,
-    margin: 12,
     borderWidth: 2,
-    padding: 10,
+    paddingLeft: 20,
     borderRadius: 60,
-    marginTop: 260,
-    marginLeft: 50,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+  },
+  sportBtn: {
+    width: 280,
+    borderRadius: 50,
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
   },
   inputtwo: {
-    marginTop: 40,
     height: 50,
     width: 280,
-    margin: 12,
+    paddingLeft: 20,
+    marginBottom: 60,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+
     borderWidth: 2,
-    padding: 10,
+
     borderRadius: 60,
-    marginLeft: 50,
   },
 });
 

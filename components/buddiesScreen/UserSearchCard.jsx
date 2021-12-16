@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { connect } from "react-redux";
 
 function UserSearchCard(props) {
   const sportsArray = props.sports;
@@ -9,13 +10,22 @@ function UserSearchCard(props) {
   const sportsMAP = sportsArray.map((sports, index) => {
     return (
       <Text style={styles.sportsText} key={index}>
-        {sports.type}
+        {sports.name}
       </Text>
     );
   });
 
+  const userInfos = {
+    firstname: props.firstname,
+    lastname: props.lastname,
+    sports: props.sports,
+    desc: props.desc,
+    picture: props.picture
+  }
+
   const cardPressed = () => {
     props.navigation.navigate('UserProfilScreen')
+    props.cardPressed(userInfos)
   }
 
   return (
@@ -26,7 +36,7 @@ function UserSearchCard(props) {
       >
         <Image
           style={styles.pic}
-          source={require("../../img/staticImg/user.jpg")}
+          source={{uri: props.picture}}
         />
         <View style={{ flexDirection: "column" }}>
           <Text style={styles.nameText}>
@@ -77,4 +87,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserSearchCard;
+function mapDispatchToProps(dispatch) {
+  return{
+    cardPressed: function(userInfos) {
+      console.log('cardPressed!');
+      dispatch({type: 'userCardClicked', userInfos})
+    }
+  }
+}
+
+export default connect (
+  null,
+  mapDispatchToProps
+) (UserSearchCard);

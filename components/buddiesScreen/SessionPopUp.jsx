@@ -15,26 +15,22 @@ import { connect } from "react-redux";
 // expo blur
 import { BlurView } from "expo-blur";
 // mapView
-import MapView from 'react-native-maps'
+import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
 
 // icons
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Entypo } from '@expo/vector-icons';
-
+import { Entypo } from "@expo/vector-icons";
 
 function SessionPopUp(props) {
-
-    const exitPopUp = () => {
-        console.log('exitPopUp');
-    }
+  const exitPopUp = () => {
+    console.log("exitPopUp");
+  };
 
   return (
     <View>
       <Modal animationType="fade" transparent={true} visible={props.visible}>
-  
         <BlurView style={styles.container} tint="light" intensity={80}>
-        
           <View style={styles.box}>
             {/* <View style={styles.userSessionContent}>
               <View style={styles.contentPart}>
@@ -90,10 +86,8 @@ function SessionPopUp(props) {
             /> */}
           </View>
           <TouchableOpacity onPress={() => exitPopUp()}>
-          <Text style={styles.closeBtn}>
-            Fermer
-          </Text>
-        </TouchableOpacity>
+            <Text style={styles.closeBtn}>Fermer</Text>
+          </TouchableOpacity>
         </BlurView>
       </Modal>
     </View>
@@ -106,7 +100,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     // marginTop: 20
-    
   },
   box: {
     backgroundColor: "white",
@@ -126,53 +119,53 @@ const styles = StyleSheet.create({
   },
   closeBtn: {
     fontSize: 20,
-    justifyContent: 'center',
-    marginTop: 20
+    justifyContent: "center",
+    marginTop: 20,
   },
   firstname: {
     fontSize: 30,
     marginTop: -50,
-    backgroundColor: 'black',
-    color: 'white',
+    backgroundColor: "black",
+    color: "white",
     paddingTop: 3,
     paddingLeft: 15,
     paddingRight: 15,
   },
   lastname: {
     fontSize: 30,
-    backgroundColor: 'black',
-    color: 'white',
+    backgroundColor: "black",
+    color: "white",
     paddingBottom: 6,
     paddingLeft: 15,
     paddingRight: 15,
   },
   userSessionContent: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
     margin: 20,
     marginTop: 5,
-    marginBottom: 10
+    marginBottom: 10,
   },
   contentPart: {
     // backgroundColor: 'red',
-    justifyContent: 'space-between',
-    margin: 10
+    justifyContent: "space-between",
+    margin: 10,
   },
   levelPart: {
-    flexDirection: 'row',
+    flexDirection: "row",
     // backgroundColor: 'red',
     margin: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   contentTitle: {
-    fontSize: 30
+    fontSize: 30,
   },
   userContent: {
-    fontSize: 40
+    fontSize: 40,
   },
-  map : {
-    justifyContent: 'center',
+  map: {
+    justifyContent: "center",
     backgroundColor: "white",
     borderRadius: 60,
     height: 200,
@@ -183,11 +176,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   locaPart: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginLeft: 60,
     marginRight: 60,
-    alignItems: 'center',
-    marginTop: 10
+    alignItems: "center",
+    marginTop: 10,
   },
   locaText: {
     fontSize: 30,
@@ -197,8 +190,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     paddingLeft: 20,
     paddingRight: 20,
-    marginTop: 20
+    marginTop: 20,
   },
 });
 
-export default SessionPopUp
+export default SessionPopUp;

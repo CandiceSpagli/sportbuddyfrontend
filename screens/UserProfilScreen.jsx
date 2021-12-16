@@ -12,6 +12,7 @@ import { useFonts } from "expo-font";
 // icons
 import { FontAwesome5 } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { connect } from "react-redux";
 
 function UserProfilScreen(props) {
   const [loaded] = useFonts({
@@ -22,7 +23,7 @@ function UserProfilScreen(props) {
     return null;
   }
 
-  const sportsCards = ["one", "two", "three"];
+  const sportsCards = ["one"];
   const renderItem = () => {
     return (
       <View style={styles.sportCard}>
@@ -35,7 +36,7 @@ function UserProfilScreen(props) {
         <Text style={styles.sportTitle}>Course</Text>
         <View style={{ marginLeft: 30, marginTop: -5 }}>
           <View style={{ flexDirection: "row", alignItems: "baseline" }}>
-            <Text style={{ fontSize: 50, fontWeight: "bold" }}>25 </Text>
+            <Text style={{ fontSize: 50, fontWeight: "bold" }}>3 </Text>
             <Text style={styles.sportCardText}>séances !</Text>
           </View>
           <Text style={styles.sportCardText}>Niveau : </Text>
@@ -47,16 +48,16 @@ function UserProfilScreen(props) {
               color={"#f42c04"}
             />
             <FontAwesome5
-              style={{ marginLeft: 2, marginRight: 2 }}
+              style={{ marginLeft: 2 }}
               name="medal"
               size={40}
-              color={"#f42c04"}
+              color={"#D1D1D1"}
             />
             <FontAwesome5
               style={{ marginLeft: 2 }}
               name="medal"
               size={40}
-              color={"#f42c04"}
+              color={"#D1D1D1"}
             />
           </View>
         </View>
@@ -90,16 +91,15 @@ function UserProfilScreen(props) {
           >
             <Image
               style={styles.profil}
-              source={require("../img/staticImg/user.jpg")}
+              source={{uri : props.userInfos.picture}}
             />
           </View>
-          <Text style={styles.firstname}>Other</Text>
-          <Text style={styles.lastname}>User !</Text>
+          <Text style={styles.firstname}>{props.userInfos.firstname}</Text>
+          <Text style={styles.lastname}>{props.userInfos.lastname}</Text>
           <View style={styles.paragraph}>
             <Text style={{ fontSize: 50, margin: 10 }}>"</Text>
             <Text style={styles.description}>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur
-              dolores, officiis provident aspernatur sapiente dolorum culpa
+              {props.userInfos.desc}
             </Text>
             <Text style={{ fontSize: 50, margin: 10 }}>"</Text>
           </View>
@@ -210,4 +210,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserProfilScreen;
+function mapStateToProps(state) {
+  return { userInfos: state.userInfos };
+}
+
+export default connect(mapStateToProps, null)(UserProfilScreen);

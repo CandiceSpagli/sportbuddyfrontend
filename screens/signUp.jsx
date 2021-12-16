@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { View, TextInput, Text, Button, StyleSheet } from "react-native";
+import { View, TextInput, Text, StyleSheet, Image } from "react-native";
 import { connect } from "react-redux";
-import { Input } from "react-native-elements";
+import { Input, Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 function signUp(props) {
@@ -23,9 +23,10 @@ function signUp(props) {
     console.log("passwordFromFront", passwordFromFront);
 
     // const data = await fetch("http://192.168.1.13:3000/sign-up", {
-    const data = await fetch("http://10.3.11.5:3000/sign-up", {
-      // const data = await fetch("http://10.3.11.5:3000/sign-up", {
-      // const data = await fetch("http://10.3.11.9:3000/sign-up", {
+    // const data = await fetch("http://10.3.11.5:3000/sign-up", {
+    // const data = await fetch("http://10.3.11.5:3000/sign-up", {
+    // const data = await fetch("http://10.3.11.9:3000/sign-up", {
+    const data = await fetch("http://10.3.11.6:3000/sign-up", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `firstname=${firstnameFromFront}&lastname=${lastnameFromFront}&email=${emailFromFront}&password=${passwordFromFront}`,
@@ -55,64 +56,142 @@ function signUp(props) {
   };
 
   return (
-    <View className="sign-Up">
-      <TextInput
-        style={styles.input}
-        onChangeText={(value) => setFirstnameFromFront(value)}
-        className="Login-input"
-        placeholder="firstname"
-        value={firstnameFromFront}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={(value) => setLastnameFromFront(value)}
-        className="Login-input"
-        placeholder="lastname"
-        value={lastnameFromFront}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={(value) => setEmailFromFront(value)}
-        className="Login-input"
-        placeholder="email"
-        value={emailFromFront}
-      />
-      <Input
-        style={styles.input}
-        onChangeText={(value) => setPasswordFromFront(value)}
-        className="Login-input"
-        placeholder="password"
-        value={passwordFromFront}
-        secureTextEntry={true}
-      />
-      {/* {tabErrorsSignup} */}
+    <>
+      <Image
+        style={{ position: "absolute", weight: "100%", height: "100%" }}
+        source={require("../img/staticImg/degrade_reverse.jpg")}
+        resizeMode="cover"
+      ></Image>
+      <View style={{ alignItems: "center" }}>
+        <Text
+          style={{
+            fontFamily: "bohemianSoul",
+            fontSize: 70,
+            marginTop: 50,
+            marginLeft: 24,
+          }}
+        >
+          Sign-Up
+        </Text>
+      </View>
+      <View style={{ alignItems: "center" }}>
+        <TextInput
+          style={styles.input}
+          onChangeText={(value) => setFirstnameFromFront(value)}
+          placeholder="firstname"
+          value={firstnameFromFront}
+        />
+        <TextInput
+          style={styles.inputone}
+          onChangeText={(value) => setLastnameFromFront(value)}
+          placeholder="lastname"
+          value={lastnameFromFront}
+        />
+        <TextInput
+          style={styles.inputTwo}
+          onChangeText={(value) => setEmailFromFront(value)}
+          placeholder="email"
+          value={emailFromFront}
+        />
+        <TextInput
+          style={styles.inputThree}
+          onChangeText={(value) => setPasswordFromFront(value)}
+          placeholder="password"
+          value={passwordFromFront}
+          secureTextEntry={true}
+        />
+        {/* {tabErrorsSignup} */}
 
-      <Button
-        style={styles.input}
-        onPress={() => handleSubmitSignup()}
-        style={{ width: "80px" }}
-        type="primary"
-        title="SIGN-UP"
-      ></Button>
-      <Button
-        style={styles.input}
-        onPress={() => goToSignIn()}
-        style={{ width: "80px" }}
-        type="primary"
-        title="ALREADY HAVE UN ACCOUNT? LOGIN"
-      ></Button>
-    </View>
+        <Button
+          style={styles.sportBtn}
+          titleStyle={{
+            fontSize: 30,
+            color: "black",
+          }}
+          onPress={() => handleSubmitSignup()}
+          type="clear"
+          title="Continuer"
+        ></Button>
+        <Text style={{ margin: 5, paddingTop: 35 }}>
+          Vous avez déjà un compte?
+        </Text>
+
+        <Button
+          style={styles.sportBtn}
+          titleStyle={{
+            color: "black",
+            textDecorationLine: "underline",
+            fontSize: 13,
+          }}
+          onPress={() => goToSignIn()}
+          style={{}}
+          type="clear"
+          title="Connectez-vous"
+        ></Button>
+      </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   input: {
-    marginTop: 40,
-    height: 40,
-    margin: 12,
+    height: 50,
+    width: 280,
     borderWidth: 2,
-    padding: 10,
+    paddingLeft: 20,
     borderRadius: 60,
+    marginBottom: 40,
+    marginTop: 90,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+  },
+
+  sportBtn: {
+    width: 280,
+    borderRadius: 50,
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+  },
+  inputone: {
+    height: 50,
+    width: 280,
+    borderWidth: 2,
+    paddingLeft: 20,
+    borderRadius: 60,
+    marginBottom: 40,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+  },
+  inputTwo: {
+    height: 50,
+    width: 280,
+    paddingLeft: 20,
+    marginBottom: 40,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+    borderWidth: 2,
+    borderRadius: 60,
+  },
+  inputThree: {
+    height: 50,
+    width: 280,
+    borderWidth: 2,
+    paddingLeft: 20,
+    borderRadius: 60,
+    marginBottom: 40,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+  },
+  inputFor: {
+    height: 50,
+    width: 280,
+    borderWidth: 2,
+    paddingLeft: 20,
+    borderRadius: 60,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+  },
+  inputFive: {
+    height: 50,
+    width: 280,
+    borderWidth: 2,
+    paddingLeft: 20,
+    borderRadius: 60,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
   },
 });
 

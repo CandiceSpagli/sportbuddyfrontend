@@ -55,15 +55,14 @@ function BuddiePopUp(props) {
   console.log("time", time.getHours() + ":" + time.getSeconds());
   console.log("time test", JSON.stringify(time).substring(12).substring(5, 0));
 
+  console.log("props.user.picture", props.user.picture);
+
   return (
     <View>
       <Modal animationType="fade" transparent={true} visible={true}>
         <BlurView style={styles.container} tint="light" intensity={80}>
           <View style={styles.box}>
-            <Image
-              style={styles.profil}
-              source={require("../../img/staticImg/user.jpg")}
-            />
+            <Image style={styles.profil} source={{ uri: props.user.picture }} />
             <Text style={styles.firstname}>{props.user.firstname}</Text>
             <Text style={styles.lastname}>{props.user.lastname}</Text>
             <View style={styles.userSessionContent}>

@@ -36,14 +36,23 @@ import Navbar from "../components/buddiesScreen/navbar/NavBarPopUp";
 
 function BuddiesScreen(props) {
   const [isPlusClicked, setIsPlusClicked] = useState(false);
+  const [isValidatePressed, setIsValidatePressed] = useState(false);
   const [myLevel, setMyLevel] = useState(0);
   const [isInputClicked, setIsInputClicked] = useState(false);
+  // const [isSessionBtnClicked, setisSessionBtnClicked] = useState(false);
 
   // date picker
   const [date, setDate] = useState(new Date());
 
+  // console.log('--date', date);
+  const onChangeTime = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setDate(currentDate);
+  };
+
   const morePrecise = () => {
     setIsPlusClicked(isPlusClicked === false ? true : false);
+    setIsValidatePressed(false);
   };
 
   const plusIcon = () => {
@@ -93,7 +102,13 @@ function BuddiesScreen(props) {
 
   const onValidate = () => {
     setIsPlusClicked(false);
+    setIsValidatePressed(true);
+  };
+
+  const onClear = () => {
     setMyLevel(0);
+    setDate(new Date());
+    setIsValidatePressed(false);
   };
 
   const plusBtn = () => {
@@ -119,7 +134,7 @@ function BuddiesScreen(props) {
                 mode={"date"}
                 is24Hour={true}
                 display="default"
-                // onChange={(event, date) => onChangeTime(event, date)}
+                onChange={(event, date) => onChangeTime(event, date)}
               />
             </View>
             <View
@@ -140,7 +155,7 @@ function BuddiesScreen(props) {
                 mode={"time"}
                 is24Hour={true}
                 display="default"
-                // onChange={(event, date) => onChangeTime(event, date)}
+                onChange={(event, date) => onChangeTime(event, date)}
               />
             </View>
             <View
@@ -148,10 +163,11 @@ function BuddiesScreen(props) {
                 marginTop: 5,
                 flexDirection: "row",
                 alignItems: "center",
-                justifyContent: "space-between",
+                // justifyContent: "space-between",
+                justifyContent: "center",
               }}
             >
-              <Button
+              {/* <Button
                 style={{
                   backgroundColor: "black",
                   borderRadius: 60,
@@ -163,7 +179,7 @@ function BuddiesScreen(props) {
                 }}
                 type="clear"
                 title="Spot"
-              />
+              /> */}
               <View
                 style={{
                   flexDirection: "row",
@@ -172,21 +188,44 @@ function BuddiesScreen(props) {
                 {tabLevel}
               </View>
             </View>
-            <Button
+            <View
               style={{
+                flexDirection: "row",
+                alignItems: "center",
                 marginTop: 20,
-                borderRadius: 60,
-                borderWidth: 2,
-                borderColor: "#f42c04",
+                justifyContent: "space-between",
               }}
-              titleStyle={{
-                color: "#f42c04",
-                fontSize: 30,
-              }}
-              type="clear"
-              title="Valider !"
-              onPress={() => onValidate()}
-            />
+            >
+              <Button
+                style={{
+                  borderRadius: 60,
+                  borderWidth: 2,
+                  borderColor: "#f42c04",
+                  paddingLeft: 65,
+                  paddingRight: 65,
+                }}
+                titleStyle={{
+                  color: "#f42c04",
+                  fontSize: 30,
+                }}
+                type="clear"
+                title="Valider !"
+                onPress={() => onValidate()}
+              />
+              <TouchableOpacity
+                style={{
+                  padding: 10,
+                  borderRadius: 60,
+                  borderWidth: 2,
+                  borderColor: "black",
+                  width: 50,
+                  alignItems: "center",
+                }}
+                onPress={() => onClear()}
+              >
+                <Entypo name="cross" size={24} color="black" />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       );
@@ -204,11 +243,10 @@ function BuddiesScreen(props) {
     Keyboard.dismiss();
   };
 
-  const [isSessionBtnClicked, setisSessionBtnClicked] = useState(false);
   const onBuddiesBtn = () => {
     console.log(">>> onBuddiesBtn");
     // setisSessionBtnClicked(isSessionBtnClicked === false ? true : false);
-    props.navigation.navigate('Session')
+    props.navigation.navigate("Session");
   };
 
   const searchInput = () => {
@@ -293,17 +331,27 @@ function BuddiesScreen(props) {
     return null;
   }
 
+  let filterParamsObject = {};
+  if (isValidatePressed) {
+    filterParamsObject = {
+      date,
+      level: myLevel,
+    };
+  }
+
   return (
     <>
       <View style={styles.container}>
-        <SessionPopUp visible={isSessionBtnClicked} />
+        {/* <SessionPopUp visible={isSessionBtnClicked} /> */}
         <BuddiePopUp user={props.userInfosModal} />
         <View style={{ alignItems: "center", paddingTop: 35 }}>
           <Text style={styles.title}>Buddies</Text>
         </View>
         {searchInput()}
         <View style={{ alignItems: "center" }}>{plusBtn()}</View>
-        {!isInputClicked && <BuddiesListFilter />}
+        {!isInputClicked && (
+          <BuddiesListFilter filterParams={filterParamsObject} />
+        )}
         {isInputClicked && <UserSearch navigation={props.navigation} />}
       </View>
       <Navbar navigation={props.navigation} />
